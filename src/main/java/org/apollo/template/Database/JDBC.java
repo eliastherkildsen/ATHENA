@@ -1,5 +1,5 @@
 package org.apollo.template.Database;
-/**
+/*
  * The JDBC class provides functionality to connect to a SQL database using JDBC.
  * It reads database connection properties from a configuration file and creates a connection.
  */
@@ -16,7 +16,6 @@ public class JDBC {
     private String URL;
     private Connection connection;
     private Properties properties;
-    private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
     /**
@@ -40,9 +39,9 @@ public class JDBC {
         Properties properties = new Properties();
 
         // Path to the database properties file
-        String DATBASE_PROPS_PATH = "src/main/java/org/apollo/template/Database/db.properties";
+        String DATABASE_PROPS_PATH = "src/main/java/org/apollo/template/Database/db.properties";
 
-        File file = new File(DATBASE_PROPS_PATH);
+        File file = new File(DATABASE_PROPS_PATH);
         InputStream input;
 
         try {
