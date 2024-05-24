@@ -41,7 +41,7 @@ public class LoggerMessage {
     private static void log(LogLevel level, Object instance, String message) {
         if (ConfigLoader.instance.getDebug() >= level.getDebugLevel()) {
             String className = instance instanceof Class ? ((Class<?>) instance).getSimpleName() : instance.getClass().getSimpleName();
-            System.out.printf("%s[%s]%s[%s]%s%" + (className.length() - SPACING) + "s %s%s%n",
+            System.out.printf("%s[%s]%s[ %s ]%s%" + (className.length() - SPACING) + "s %s%s%n",
                     AnsiColorCode.CYAN,
                     currentTime(),
                     level.getColorLevel(),
