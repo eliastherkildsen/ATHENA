@@ -31,7 +31,7 @@ public class MainController implements Initializable, Alertable<VBox> {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setView(ViewList.HOME, BorderPaneRegion.CENTER);
         setView(ViewList.MENU, BorderPaneRegion.LEFT);
-        System.out.printf("INITIALIZED");
+        LoggerMessage.info(this, "Main Controller Initialized");
     }
 
     /**
