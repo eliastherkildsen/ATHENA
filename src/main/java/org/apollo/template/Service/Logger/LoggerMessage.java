@@ -10,60 +10,86 @@ package org.apollo.template.Service.Logger;
 import org.apollo.template.Service.AnsiColorCode;
 import org.apollo.template.Service.ConfigLoader;
 
-public class LoggerMessage {
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
+/**
+ * Allows for logging of messages
+ */
+public class LoggerMessage {
     public static final int SPACING = 40;
 
     /**
-     * Shows a formatted Debug message in the cmd.
-     *
-     * @param instance Object
-     * @param message String
+     * Helper class for LoggerMessage,
+     * @return String CurrentTime
      */
-    public static void info (Object instance, String message){
-        if (ConfigLoader.instance.getDebug() == 1){
-            System.out.printf("%s[%s]%" + (instance.getClass().getSimpleName().length() - SPACING) +"s %s%s%n", AnsiColorCode.BLUE, instance.getClass().getSimpleName()
-                    , AnsiColorCode.GREEN, message, AnsiColorCode.RESET);
-        }
-    }
-    /**
-     * Shows a formatted Debug message in the cmd.
-     *
-     * @param instance Object
-     * @param message String
-     */
-    public static void error (Object instance, String message){
-        if (ConfigLoader.instance.getDebug() == 1) {
-            System.out.printf("%s[%s]%" + + (instance.getClass().getSimpleName().length() - SPACING) + "s %s%s%n", AnsiColorCode.BLUE, instance.getClass().getSimpleName()
-                    , AnsiColorCode.RED, message, AnsiColorCode.RESET);
-        }
+    private static String currentTime(){
+        // Get the current time
+        LocalTime currentTime = LocalTime.now();
+        // Define the format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        // Format the time and print to console
+        return currentTime.format(formatter);
     }
 
     /**
-     * Shows a formatted Debug message in the cmd.
-     * To handle edge cases like static methods.
-     *
-     * @param name String
-     * @param message String
+     * Shows a formatted log message in the cmd.
+     * @param level    LogLevel
+     * @param instance Object or Class
+     * @param message  String
      */
-    public static void info (String name, String message){
-        if (ConfigLoader.instance.getDebug() == 1) {
-            System.out.printf("%s[%s]%" + (name.length() - SPACING) + "s %s%s%n", AnsiColorCode.BLUE, name
-                    , AnsiColorCode.GREEN, message, AnsiColorCode.RESET);
-
+    private static void log(LogLevel level, Object instance, String message) {
+        if (ConfigLoader.instance.getDebug() >= level.getDebugLevel()) {
+            String className = instance instanceof Class ? ((Class<?>) instance).getSimpleName() : instance.getClass().getSimpleName();
+            System.out.printf("%s[%s]%s[%s]%s%" + (className.length() - SPACING) + "s %s%s%n",
+                    AnsiColorCode.CYAN,
+                    currentTime(),
+                    level.getColorLevel(),
+                    level,
+                    level.getColorMessage(),
+                    className,
+                    message,
+                    AnsiColorCode.RESET);
         }
     }
 
-    /**
-     * Shows a formatted Debug message in the cmd.
-     * To handle edge cases like Static methods.
-     *
-     * @param clazz Class
-     * @param message String
-     */
-    public static void error (Class<?> clazz, String message){
-        if (ConfigLoader.instance.getDebug() == 1) {
-            System.out.printf("%s[%s]%"+ (clazz.getSimpleName().length() - SPACING)+"s %s%s%n", AnsiColorCode.RED, clazz.getSimpleName(), AnsiColorCode.RED, message, AnsiColorCode.RESET);
-        }
+    public static void trace(Object instance, String message) {
+        log(LogLevel.TRACE, instance, message);
+    }
+
+    public static void info(Object instance, String message) {
+        log(LogLevel.INFO, instance, message);
+    }
+
+    public static void debug(Object instance, String message) {
+        log(LogLevel.DEBUG, instance, message);
+    }
+
+    public static void error(Object instance, String message) {
+        log(LogLevel.ERROR, instance, message);
+    }
+
+    public static void warning(Object instance, String message) {
+        log(LogLevel.WARNING, instance, message);
+    }
+
+    public static void trace(String name, String message) {
+        log(LogLevel.TRACE, name, message);
+    }
+
+    public static void info(String name, String message) {
+        log(LogLevel.INFO, name, message);
+    }
+
+    public static void debug(String name, String message) {
+        log(LogLevel.DEBUG, name, message);
+    }
+
+    public static void error(Class<?> clazz, String message) {
+        log(LogLevel.ERROR, clazz, message);
+    }
+
+    public static void warning(Class<?> clazz, String message) {
+        log(LogLevel.WARNING, clazz, message);
     }
 }

@@ -26,7 +26,6 @@ public class ConfigLoader {
         this.DEBUG = Integer.parseInt(loadDebug());
         instance = this;
     }
-
     private String loadDebug() {
         try {
             properties.load(new FileInputStream(CONFIG_FILE));
@@ -35,7 +34,6 @@ public class ConfigLoader {
         } catch (IOException e) {
             LoggerMessage.error(this, "Failed to load the config file. " +
                     "This can be due to the file not existing.... ");
-
             throw new RuntimeException(e);
         }
     }
@@ -43,6 +41,4 @@ public class ConfigLoader {
     public int getDebug(){
         return this.DEBUG;
     }
-
-
 }
