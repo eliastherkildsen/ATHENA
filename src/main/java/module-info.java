@@ -4,6 +4,7 @@ module org.apollo.template {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires java.sql;
 
     opens org.apollo.template to javafx.fxml;
     exports org.apollo.template;
