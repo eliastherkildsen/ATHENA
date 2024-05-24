@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
-import org.apollo.template.Service.Debugger.DebugMessage;
 
 
 public class HomeController {

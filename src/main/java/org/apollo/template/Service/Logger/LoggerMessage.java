@@ -5,12 +5,12 @@
  * @since 23.01.2024
  */
 
-package org.apollo.template.Service.Debugger;
+package org.apollo.template.Service.Logger;
 
 import org.apollo.template.Service.AnsiColorCode;
 import org.apollo.template.Service.ConfigLoader;
 
-public class DebugMessage {
+public class LoggerMessage {
 
     public static final int SPACING = 40;
 

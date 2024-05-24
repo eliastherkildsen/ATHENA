@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.apollo.template.View.UI.AlertComp;
 import org.apollo.template.Service.Alert.Alertable;
-import org.apollo.template.Service.Debugger.DebugMessage;
+import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.ViewLoader;
@@ -75,7 +75,7 @@ public class MainController implements Initializable, Alertable<VBox> {
 
     private MainController() {
         if (INSTANCE == null) {
-            DebugMessage.info(this, "Creating an instance of " + this);
+            LoggerMessage.info(this, "Creating an instance of " + this);
         }
     }
 

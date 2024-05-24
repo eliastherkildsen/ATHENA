@@ -1,7 +1,7 @@
 package org.apollo.template;
 
 import javafx.fxml.FXMLLoader;
-import org.apollo.template.Service.Debugger.DebugMessage;
+import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.ViewList;
 
 import java.io.IOException;
@@ -21,13 +21,13 @@ public class ViewLoader {
         loader.setLocation(ViewLoader.class.getResource(fxmlFileName.getFxmlFileName())); // Fetches FXML file
 
         // Log message.
-        DebugMessage.info("ViewLoader", "Loading view: " + fxmlFileName.getFxmlFileName());
+        LoggerMessage.info("ViewLoader", "Loading view: " + fxmlFileName.getFxmlFileName());
 
         try {
             return loader.load(); // Returns anchor pane.
 
         } catch (IOException e) {
-            DebugMessage.error("ViewLoader","Error loading FXML view: " + fxmlFileName + " " + e.getMessage());
+            LoggerMessage.error("ViewLoader","Error loading FXML view: " + fxmlFileName + " " + e.getMessage());
             return null;
         }
     }
