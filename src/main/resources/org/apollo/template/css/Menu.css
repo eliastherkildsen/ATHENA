@@ -1,0 +1,35 @@
+/* Color Scheme */
+.text {
+    -fx-text-fill: #f9fbf9;
+}
+.background {
+    -fx-background-color: #050a07;
+}
+.primary {
+    -fx-background-color: #589d6c;
+}
+.secondary {
+    -fx-background-color: #2d3a52;
+}
+.accent {
+    -fx-background-color: #49487f;
+}
+
+/* Button */
+.button {
+    -fx-background-color: #589d6c;
+    -fx-background-radius: 20;
+    -fx-font-size: 20px;
+    -fx-text-fill: #f9fbf9;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 1);
+}
+
+.button:hover {
+    -fx-font-weight: bold;
+    -fx-font-size: 19px;
+}
+
+/* Root VBox */
+.rootVbox {
+    -fx-background-color: background;
+}

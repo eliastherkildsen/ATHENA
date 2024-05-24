@@ -1,0 +1,43 @@
+.alertError {
+    -fx-background-color: #ff073a;
+    -fx-background-radius: 40;
+    -fx-border-radius: 40;
+    -fx-border-color: #ff073a;
+    -fx-padding: 10px; /* Add padding to the text */
+
+}
+
+.alertSuccess {
+    -fx-background-color: #02e302;
+    -fx-background-radius: 40;
+    -fx-border-radius: 40;
+    -fx-border-color: #02e302;
+    -fx-padding: 10px; /* Add padding to the text */
+
+}
+
+.alertInfo {
+    -fx-background-color: #FFFF00;
+    -fx-background-radius: 40;
+    -fx-border-radius: 40;
+    -fx-border-color: #FFFF00;
+    -fx-padding: 10px; /* Add padding to the text */
+}
+
+.text-area {
+    -fx-text-fill: black;
+}
+
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
