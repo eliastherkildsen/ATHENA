@@ -40,7 +40,14 @@ public class LoggerMessage {
      */
     private static void log(LogLevel level, Object instance, String message) {
         if (ConfigLoader.instance.getDebug() >= level.getDebugLevel()) {
-            String className = instance instanceof Class ? ((Class<?>) instance).getSimpleName() : instance.getClass().getSimpleName();
+            String className;
+            if (instance instanceof String) {
+                className = (String) instance;
+            } else if (instance instanceof Class) {
+                className = ((Class<?>) instance).getSimpleName();
+            } else {
+                className = instance.getClass().getSimpleName();
+            }
             System.out.printf("%s[%s]%s[ %s ]%s%" + (className.length() - SPACING) + "s %s%s%n",
                     AnsiColorCode.CYAN,
                     currentTime(),
