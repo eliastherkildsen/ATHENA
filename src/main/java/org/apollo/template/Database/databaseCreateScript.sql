@@ -83,7 +83,6 @@ CREATE TABLE tbl_booking(
     fld_catering BIT NOT NULL,
     fld_numberOfParticipants INTEGER NOT NULL,
     fld_userName VARCHAR(50) NOT NULL,
-
     fld_userID INTEGER,
     fld_roomID INTEGER,
     fld_meetingTypeID INTEGER,
