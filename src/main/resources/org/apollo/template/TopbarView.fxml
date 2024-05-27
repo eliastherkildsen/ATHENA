@@ -9,7 +9,7 @@
    <children>
       <VBox prefHeight="80.0" prefWidth="229.0">
          <children>
-            <Label prefHeight="40.0" prefWidth="201.0">
+            <Label fx:id="label_TimeLab" prefHeight="40.0" prefWidth="201.0">
                <font>
                   <Font size="24.0" />
                </font></Label>
