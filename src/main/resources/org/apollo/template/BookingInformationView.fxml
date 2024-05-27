@@ -45,19 +45,19 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="10.0" layoutY="27.0" maxWidth="300.0" prefWidth="300.0" />
+                              <TextField fx:id="textField_name" layoutX="10.0" layoutY="27.0" maxWidth="300.0" prefWidth="300.0" />
                               <Label layoutX="10.0" layoutY="52.0" text="Email">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="10.0" layoutY="69.0" maxWidth="300.0" prefWidth="300.0" />
+                              <TextField fx:id="textField_email" layoutX="10.0" layoutY="69.0" maxWidth="300.0" prefWidth="300.0" />
                               <Label layoutX="10.0" layoutY="94.0" text="Antal forventet deltager">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="10.0" layoutY="111.0" maxWidth="300.0" prefWidth="300.0" />
+                              <TextField fx:id="textfield_numberOfParticipants" layoutX="10.0" layoutY="111.0" maxWidth="300.0" prefWidth="300.0" />
                               <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
                                     <Button mnemonicParsing="false" text="Book" />
