@@ -25,4 +25,9 @@ public class MeetingType {
     public String getMeetingType() {
         return MEETING_TYPE;
     }
+
+    @Override
+    public String toString() {
+        return MEETING_TYPE;
+    }
 }
