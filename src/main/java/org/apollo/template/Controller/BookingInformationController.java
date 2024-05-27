@@ -2,7 +2,9 @@ package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.MeetingType;
@@ -24,6 +26,9 @@ public class BookingInformationController implements Initializable {
 
     @FXML
     private TextField textField_name, textField_email, textfield_numberOfParticipants;
+
+    @FXML
+    private CheckBox checkBoxTOS;
 
     @FXML
     private ChoiceBox<MeetingType> choiceBox_meetingType;
@@ -77,6 +82,13 @@ public class BookingInformationController implements Initializable {
             new Alert(MainController.getInstance(), 5, AlertType.INFO, "Der er ikke valgt antal deltager!")
                     .start();
 
+            return;
+        }
+
+        // checks if TOS has been accepted
+        if (!checkBoxTOS.isSelected()){
+            new Alert(MainController.getInstance(), 5, AlertType.INFO, "Du kan ikke booke et lokale hvis du ikke acceptere TOS.")
+                    .start();
             return;
         }
 
