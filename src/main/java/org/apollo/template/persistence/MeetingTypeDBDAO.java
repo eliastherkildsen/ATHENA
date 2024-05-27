@@ -1,9 +1,8 @@
-package org.apollo.template.persistence.MeetingTypeDAO;
+package org.apollo.template.persistence;
 
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.Model.MeetingType;
-import org.apollo.template.persistence.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
