@@ -2,6 +2,7 @@ package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import org.apollo.template.Service.Logger.LoggerMessage;
 
 
 /*
@@ -17,11 +18,14 @@ public class SystemChoseController {
     @FXML
     protected void onButton_adminClick(){
         //TODO: Link the admin view and logic.
+        LoggerMessage.info(this, "onButton_adminClick needs to be linked to a view.");
+
     }
 
     @FXML
     protected void onButton_infoScreen(){
         //TODO: Link the info screen view and logic
+        LoggerMessage.info(this, "onButton_infoScreen needs to be linked to a view.");
     }
 
 
