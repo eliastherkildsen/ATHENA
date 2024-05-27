@@ -17,7 +17,7 @@ public enum ViewList {
      * Menu view.
      */
     MENU("MenuView.fxml"),
-
+    BOOKINGINFO("BookingInformationView.fxml"),
     SYSTEMCHOSE("SystemChoseView.fxml"),
 
     /**
