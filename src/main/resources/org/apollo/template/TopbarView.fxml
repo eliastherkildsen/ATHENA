@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.TopbarController">
+   <children>
+      <VBox prefHeight="80.0" prefWidth="229.0">
+         <children>
+            <Label fx:id="label_TimeLab" prefHeight="40.0" prefWidth="201.0">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+            <Label fx:id="label_DateLabel" prefHeight="40.0" prefWidth="166.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets left="15.0" />
+         </padding>
+      </VBox>
+   </children>
+</HBox>
