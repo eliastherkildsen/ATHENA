@@ -23,7 +23,7 @@ public enum ViewList {
     /**
      * Info view.
      */
-    INFOSCREEN("InfoView.fxml");
+    INFOSCREEN("InfoView.fxml"),
 
     /**
      *  Topbar view
