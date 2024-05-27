@@ -3,6 +3,7 @@ package org.apollo.template.View.UI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -22,6 +23,8 @@ public class BookingComp extends HBox {
      * @param bookingTime String
      */
     public BookingComp(String bookingRoom, String bookerName, String bookingName, String bookingTime){
+        ScrollPane spane = new ScrollPane();
+
         Label labelBookingRoom = buildLabel(bookingRoom, 18, FontWeight.BOLD);
 
         Label labelBookerName = buildLabel(bookerName, 18, FontWeight.NORMAL);
@@ -30,7 +33,7 @@ public class BookingComp extends HBox {
 
         Label labelBookingTime = buildLabel(bookingTime, 18, FontWeight.NORMAL);
 
-        this.setPrefWidth(600);
+        this.setMinHeight(35);
         this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: #009FE3; -fx-background-radius: 40");
         this.getChildren().addAll(labelBookingRoom, addPane(), labelBookingName, addPane(), labelBookerName, addPane(), labelBookingTime);

@@ -16,7 +16,12 @@ public enum ViewList {
     /**
      * Menu view.
      */
-    MENU("MenuView.fxml");
+    MENU("MenuView.fxml"),
+
+    /**
+     * Info view.
+     */
+    INFOSCREEN("InfoView.fxml");
 
     private final String FXML_FILE_NAME; // FXML file name of the view
 

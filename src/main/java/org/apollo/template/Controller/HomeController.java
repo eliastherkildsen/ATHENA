@@ -7,8 +7,10 @@ import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.Logger.LoggerMessage;
+import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.BookingComp;
 import org.apollo.template.View.UI.ReservedRoomsVBox;
+import org.apollo.template.View.ViewList;
 
 import java.awt.print.Book;
 import java.net.URL;
@@ -26,6 +28,7 @@ public class HomeController implements Initializable {
     // region buttons
 
     public void onBtnError(){
+        MainController.getInstance().setView(ViewList.INFOSCREEN, BorderPaneRegion.CENTER);
         new Alert(MainController.getInstance(), 3, AlertType.ERROR, "This is a test of Error The test is to show of this Alert component \n ert component").start();
     }
     public void onBtnInfo(){
@@ -37,17 +40,6 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        LoggerMessage.info(this,"HomeController initialized");
-        Date newdate = Date.valueOf("2024-05-27");
-        List<BookingInformation> booking = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            BookingInformation book = new BookingInformation("A111", "SælgerMødeMellemFolk", "Alexander", "11:00", "12:00", newdate);
-            booking.add(book);
-        }
-
-        ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(booking);
-
-        root.getChildren().add(vboxRooms);
     }
 
 

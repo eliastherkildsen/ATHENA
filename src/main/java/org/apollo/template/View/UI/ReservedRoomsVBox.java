@@ -1,6 +1,7 @@
 package org.apollo.template.View.UI;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Logger.LoggerMessage;
@@ -35,9 +36,9 @@ public class ReservedRoomsVBox extends VBox {
 
                 BookingComp book = new BookingComp(i.getRoomName(), i.getUserName(), i.getBookingName(), time);
 
-                VBox.setMargin(book, new Insets(10));
+                this.setAlignment(Pos.CENTER);
+                this.setMargin(book, new Insets(10));
                 this.getChildren().add(book);
-
             }
         }
     }
