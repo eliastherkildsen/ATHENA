@@ -21,7 +21,17 @@ public enum ViewList {
     /**
      * AvailableRooms view.
      */
-    AVAILABLEROOMS("AvailableRoomsView.fxml");
+    AVAILABLEROOMS("AvailableRoomsView.fxml"),
+
+    /**
+     * System choose view.
+     */
+    SYSTEMCHOSE("SystemChoseView.fxml"),
+
+    /**
+     *  Topbar view.
+     */
+    TOPBAR("TopbarView.fxml");
 
     private final String FXML_FILE_NAME; // FXML file name of the view
 
@@ -29,11 +39,9 @@ public enum ViewList {
      * Constructs a ViewList enum value with the specified FXML file name and controller.
      *
      * @param fxmlFileName The name of the FXML file representing the view
-     * @param controller   The controller associated with the view
      */
     ViewList(String fxmlFileName) {
         this.FXML_FILE_NAME = fxmlFileName;
-
     }
 
     /**
