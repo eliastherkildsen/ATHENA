@@ -5,13 +5,15 @@ import java.sql.SQLData;
 
 public class BookingInformation {
 
+    private String roomName;
     private String bookingName;
     private String userName;
     private String startTime;
     private String endTime;
     private Date date;
 
-    public BookingInformation(String bookingName, String userName, String startTime, String endTime, Date date) {
+    public BookingInformation(String roomName,String bookingName, String userName, String startTime, String endTime, Date date) {
+        this.roomName = roomName;
         this.bookingName = bookingName;
         this.userName = userName;
         this.startTime = startTime;
@@ -57,5 +59,13 @@ public class BookingInformation {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 }
