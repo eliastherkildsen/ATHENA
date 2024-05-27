@@ -19,6 +19,11 @@ public enum ViewList {
     MENU("MenuView.fxml"),
 
     /**
+     * Booing info view.
+     */
+    BOOKINGINFO("BookingInformationView.fxml"),
+
+    /**
      * AvailableRooms view.
      */
     AVAILABLEROOMS("AvailableRoomsView.fxml"),

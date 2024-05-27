@@ -112,3 +112,25 @@ VALUES
 
 -- tbl_booking
 
+CREATE PROCEDURE AddEmailIfNotExists
+@EmailAddress NVARCHAR(255)
+AS
+BEGIN
+    -- Check if the email already exists
+    IF NOT EXISTS (SELECT 1 FROM tbl_userEmail WHERE fld_userEmail = @EmailAddress)
+        BEGIN
+            -- Insert the email into the table
+            INSERT INTO tbl_userEmail(fld_userEmail)
+            VALUES (@EmailAddress);
+
+            -- Indicate success
+            SELECT 'Email added successfully' AS Result;
+        END
+    ELSE
+        BEGIN
+            -- Indicate that the email already exists
+            SELECT 'Email already exists' AS Result;
+        END
+END;
+
+
