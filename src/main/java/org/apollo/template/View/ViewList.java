@@ -18,7 +18,13 @@ public enum ViewList {
      */
     MENU("MenuView.fxml"),
 
-    SYSTEMCHOSE("SystemChoseView.fxml");
+    SYSTEMCHOSE("SystemChoseView.fxml"),
+    MENU("MenuView.fxml"),
+
+    /**
+     *  Topbar view
+     */
+    TOPBAR("TopbarView.fxml");
 
     private final String FXML_FILE_NAME; // FXML file name of the view
 
