@@ -16,7 +16,9 @@ public enum ViewList {
     /**
      * Menu view.
      */
-    MENU("MenuView.fxml");
+    MENU("MenuView.fxml"),
+
+    SYSTEMCHOSE("SystemChoseView.fxml");
 
     private final String FXML_FILE_NAME; // FXML file name of the view
 
@@ -28,7 +30,6 @@ public enum ViewList {
      */
     ViewList(String fxmlFileName) {
         this.FXML_FILE_NAME = fxmlFileName;
-
     }
 
     /**
