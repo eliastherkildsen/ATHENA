@@ -39,7 +39,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <ChoiceBox maxWidth="300.0" prefWidth="300.0" />
+                              <ChoiceBox fx:id="choiceBox_meetingType" maxWidth="300.0" prefWidth="300.0" />
                               <Label layoutX="10.0" layoutY="10.0" text="Dit  Navn (valgfri)">
                                  <font>
                                     <Font size="16.0" />
@@ -60,7 +60,7 @@
                               <TextField fx:id="textfield_numberOfParticipants" layoutX="10.0" layoutY="111.0" maxWidth="300.0" prefWidth="300.0" />
                               <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Button mnemonicParsing="false" text="Book" />
+                                    <Button mnemonicParsing="false" onAction="#onButton_book" text="Book" />
                                  </children>
                               </HBox>
                            </children>
