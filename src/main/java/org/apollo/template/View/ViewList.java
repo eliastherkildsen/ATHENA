@@ -21,6 +21,11 @@ public enum ViewList {
     SYSTEMCHOSE("SystemChoseView.fxml"),
 
     /**
+     * Choose Time view
+     */
+    CHOOSETIME("ChooseTimeView.fxml"),
+
+    /**
      *  Topbar view
      */
     TOPBAR("TopbarView.fxml");
