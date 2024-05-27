@@ -30,7 +30,7 @@ public class BookingComp extends HBox {
 
         Label labelBookingTime = buildLabel(bookingTime, 18, FontWeight.NORMAL);
 
-
+        this.setPrefWidth(600);
         this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: #009FE3; -fx-background-radius: 40");
         this.getChildren().addAll(labelBookingRoom, addPane(), labelBookingName, addPane(), labelBookerName, addPane(), labelBookingTime);
