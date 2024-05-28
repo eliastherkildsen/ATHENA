@@ -7,10 +7,11 @@ import org.apollo.template.Model.ReservedRoomDate;
 import org.apollo.template.Service.Logger.LoggerMessage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class ReservedRoomsVBox extends VBox {
-    List rooms = new ArrayList();
 
     /**
      *
