@@ -33,11 +33,12 @@ public class AvailableRoomsController implements Initializable {
         Vbox_Listview.getChildren().add(availableComponent);
 
         // search for available rooms today's date
-        List<AvailableRoom> availableRooms = storedSqlProcedure(dateToday);
+        storedSqlProcedure(dateToday);
+        //TODO: List<AvailableRoom> availableRooms =
     }
 
-    private List<AvailableRoom> storedSqlProcedure(Date dateToday) {
-
+    private void storedSqlProcedure (Date dateToday) {
+    // TODO: List<AvailableRoom>
         try{
             PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXECUTE getAvailableRooms @BookingDate = ?");
             ps.setDate(1, dateToday);
