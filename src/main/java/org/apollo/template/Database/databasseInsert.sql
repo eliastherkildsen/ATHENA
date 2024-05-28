@@ -153,7 +153,10 @@ BEGIN
             INNER JOIN tbl_room ON tbl_booking.fld_roomID = tbl_room.fld_roomID
             INNER JOIN tbl_meetingType ON tbl_booking.fld_meetingTypeID = tbl_meetingType.fld_meetingTypeID
     WHERE
-        tbl_booking.fld_date = @BookingDate;
+        tbl_booking.fld_date = @BookingDate
+    ORDER BY
+        tbl_booking.fld_startTime ASC,
+    tbl_booking.fld_endTime ASC;
 END;
 go
 

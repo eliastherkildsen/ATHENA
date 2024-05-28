@@ -1,5 +1,6 @@
 package org.apollo.template.Model;
 
+
 public class ReservedRoomDate {
     /**
      * tbl_booking.fld_startTime,
