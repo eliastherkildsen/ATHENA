@@ -19,6 +19,7 @@ public enum ViewList {
     MENU("MenuView.fxml"),
     BOOKINGINFO("BookingInformationView.fxml"),
     SYSTEMCHOSE("SystemChoseView.fxml"),
+    BOOKINGCOMPLITE("BookingViewComplite.fxml"),
 
     /**
      *  Topbar view
