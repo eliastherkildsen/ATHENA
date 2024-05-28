@@ -6,6 +6,8 @@ import javafx.scene.layout.AnchorPane;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
+import org.apollo.template.View.BorderPaneRegion;
+import org.apollo.template.View.ViewList;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.BookingComp;
@@ -19,8 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
-public class HomeController implements Initializable {
+public class HomeController {
 
     @FXML
     private AnchorPane root;
@@ -37,9 +38,8 @@ public class HomeController implements Initializable {
     public void onBtnSuccess(){
         new Alert(MainController.getInstance(),3, AlertType.SUCCESS, "This is a test The test is to show of this \n asdasdkasdj akjs kdjas \n alksdlksadl ka lkasdl kalsk dl\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component").start();
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void onBtnAvailable(){
+        MainController.getInstance().setView(ViewList.AVAILABLEROOMS, BorderPaneRegion.CENTER);
     }
 
 

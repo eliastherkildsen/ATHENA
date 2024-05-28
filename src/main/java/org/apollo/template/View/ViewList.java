@@ -17,7 +17,20 @@ public enum ViewList {
      * Menu view.
      */
     MENU("MenuView.fxml"),
+
+    /**
+     * Booing info view.
+     */
     BOOKINGINFO("BookingInformationView.fxml"),
+
+    /**
+     * AvailableRooms view.
+     */
+    AVAILABLEROOMS("AvailableRoomsView.fxml"),
+
+    /**
+     * System choose view.
+     */
     SYSTEMCHOSE("SystemChoseView.fxml"),
 
     /**
@@ -26,7 +39,7 @@ public enum ViewList {
     INFOSCREEN("InfoView.fxml"),
 
     /**
-     *  Topbar view
+     *  Topbar view.
      */
     TOPBAR("TopbarView.fxml");
 
