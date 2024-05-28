@@ -1,12 +1,25 @@
 package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
+import org.apollo.template.Service.Logger.LoggerMessage;
+import org.apollo.template.View.BorderPaneRegion;
+import org.apollo.template.View.UI.BookingComp;
+import org.apollo.template.View.UI.ReservedRoomsVBox;
+import org.apollo.template.View.ViewList;
 
+import java.awt.print.Book;
+import java.net.URL;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class HomeController {
 
@@ -16,6 +29,7 @@ public class HomeController {
     // region buttons
 
     public void onBtnError(){
+        MainController.getInstance().setView(ViewList.INFOSCREEN, BorderPaneRegion.CENTER);
         new Alert(MainController.getInstance(), 3, AlertType.ERROR, "This is a test of Error The test is to show of this Alert component \n ert component").start();
     }
     public void onBtnInfo(){

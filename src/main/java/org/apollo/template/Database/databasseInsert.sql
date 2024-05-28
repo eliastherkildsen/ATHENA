@@ -141,6 +141,33 @@ BEGIN
         END
 END;
 
+-- Function for InfoScreen
+use db_Athena;
+go
+
+CREATE PROCEDURE GetBookingsByDate
+@BookingDate DATE -- We are doing this by date.
+AS
+BEGIN
+    -- SELECT the relevant data fields i want it to return.
+    SELECT
+        tbl_booking.fld_startTime,
+        tbl_booking.fld_endTime,
+        tbl_booking.fld_userName,
+        tbl_room.fld_roomName,
+        tbl_meetingType.fld_meetingType
+    FROM
+        tbl_booking
+            INNER JOIN tbl_room ON tbl_booking.fld_roomID = tbl_room.fld_roomID
+            INNER JOIN tbl_meetingType ON tbl_booking.fld_meetingTypeID = tbl_meetingType.fld_meetingTypeID
+    WHERE
+        tbl_booking.fld_date = @BookingDate
+    ORDER BY
+        tbl_booking.fld_startTime ASC,
+    tbl_booking.fld_endTime ASC;
+END;
+go
+
 
 
 -- Stored procedure to find available rooms on a given date
