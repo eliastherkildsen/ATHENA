@@ -16,10 +16,7 @@ import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.Service.TextFieldInputValidation;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
-import org.apollo.template.persistence.DAO;
-import org.apollo.template.persistence.MeetingTypeDBDAO;
-import org.apollo.template.persistence.MessagesBroker;
-import org.apollo.template.persistence.MessagesBrokerTopic;
+import org.apollo.template.persistence.*;
 
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -27,7 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class BookingInformationController implements Initializable {
+public class BookingInformationController implements Initializable, Subscriber {
     
     @FXML
     private TextField textField_name, textField_email, textfield_numberOfParticipants;
@@ -37,6 +34,7 @@ public class BookingInformationController implements Initializable {
 
     @FXML
     private ChoiceBox<MeetingType> choiceBox_meetingType;
+    private BookingInformation bookingInformation;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -65,7 +63,12 @@ public class BookingInformationController implements Initializable {
         choiceBox_meetingType.getItems().addAll(dao.readAll());
     }
 
-
+    @Override
+    public void update(Object o) {
+        if (o instanceof BookingInformation) {
+            bookingInformation = (BookingInformation) o;
+        }
+    }
 
     // region buttons
 
@@ -131,7 +134,6 @@ public class BookingInformationController implements Initializable {
 
         // publish bookingInformation obj.
         MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
-
 
 
     }

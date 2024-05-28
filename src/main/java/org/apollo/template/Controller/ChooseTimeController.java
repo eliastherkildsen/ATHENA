@@ -5,6 +5,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import org.apollo.template.Model.BookingInformation;
+import org.apollo.template.persistence.MessagesBroker;
+import org.apollo.template.persistence.MessagesBrokerTopic;
 
 import java.net.URL;
 import java.time.LocalTime;
@@ -136,6 +139,21 @@ public class ChooseTimeController implements Initializable {
         LocalTime t1 = LocalTime.parse(time1);
         LocalTime t2 = LocalTime.parse(time2);
         return t1.isBefore(t2);
+    }
+
+    @FXML
+    protected void onButton_book(){
+        // fetching start and end time.
+        String endTime = label_EndTime.getText();
+        String startTime = label_StartTime.getText();
+
+        // creating bookingInformation obj.
+        // TODO needs to check if time has been selected.
+        BookingInformation bookingInformation = new BookingInformation();
+        bookingInformation.setStartTime(startTime);
+        bookingInformation.setEndTime(endTime);
+
+        MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
 
     }
 }
