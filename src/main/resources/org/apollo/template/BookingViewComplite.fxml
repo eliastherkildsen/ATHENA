@@ -41,12 +41,12 @@
                      </font>
                   </Label>
                   <Label fx:id="lable_statuseMessage" layoutX="40.0" layoutY="20.0" text="STATUS BESKED" textFill="WHITE" />
-                  <Label layoutX="40.0" layoutY="37.0" text="MØDE TYPE" textFill="WHITE" />
-                  <Label layoutX="40.0" layoutY="54.0" text="MØDE INTERVAL" textFill="WHITE" />
-                  <Label layoutX="40.0" layoutY="71.0" text="MØDE DATO" textFill="WHITE" />
+                  <Label fx:id="lable_meetingType" layoutX="40.0" layoutY="37.0" text="MØDE TYPE" textFill="WHITE" />
+                  <Label fx:id="lable_meetingTime" layoutX="40.0" layoutY="54.0" text="MØDE INTERVAL" textFill="WHITE" />
+                  <Label fx:id="lable_meetingDate" layoutX="40.0" layoutY="71.0" text="MØDE DATO" textFill="WHITE" />
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="408.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Tilbage" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="button_back" mnemonicParsing="false" onAction="#onButton_Back" text="Tilbage" HBox.hgrow="ALWAYS" />
                      </children>
                      <VBox.margin>
                         <Insets right="30.0" />
