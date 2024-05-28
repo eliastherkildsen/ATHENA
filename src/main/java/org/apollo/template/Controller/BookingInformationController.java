@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.MeetingType;
@@ -38,6 +37,7 @@ public class BookingInformationController implements Initializable {
 
         // atatching input validation to textfield
         TextFieldInputValidation.attatchIntegerValidation(textfield_numberOfParticipants);
+
         // loading choisebox.
         loadMeetingTypeCB();
     }
