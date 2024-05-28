@@ -22,6 +22,7 @@ CREATE TABLE tbl_roomType(
 CREATE TABLE tbl_room(
      fld_roomID INTEGER IDENTITY (1,1) PRIMARY KEY,
      fld_roomName VARCHAR(50) NOT NULL,
+     fld_floor VARCHAR(10),
      fld_roomMaxPersonCount INTEGER,
      fld_roomTypeID INTEGER,
 
