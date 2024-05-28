@@ -44,6 +44,7 @@ public class InfoScreenController implements Initializable {
 
         /**
          * Running our stored SQL PROCEDURE
+         * NOTE: We are sorting the data we get by time in the stored PROCEDURE
          * Returns:
          *    SELECT
          *         tbl_booking.fld_startTime,
