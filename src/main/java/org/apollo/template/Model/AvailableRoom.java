@@ -50,4 +50,8 @@ public class AvailableRoom {
 
     // endregion
 
+    public String toString(){
+        return String.format("Lok. %s - %s. Sal - Lok. type: %s - Person kapacitet: %d", roomName, floor, roomType, personKapacity);
+    }
+
 }
