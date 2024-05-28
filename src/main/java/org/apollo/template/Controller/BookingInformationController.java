@@ -6,14 +6,20 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import org.apollo.template.Database.JDBC;
+import org.apollo.template.Model.BookingInformation;
+import org.apollo.template.Model.Email;
 import org.apollo.template.Model.MeetingType;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.EmailValidator;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.Service.TextFieldInputValidation;
+import org.apollo.template.View.BorderPaneRegion;
+import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.DAO;
 import org.apollo.template.persistence.MeetingTypeDBDAO;
+import org.apollo.template.persistence.MessagesBroker;
+import org.apollo.template.persistence.MessagesBrokerTopic;
 
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -22,7 +28,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class BookingInformationController implements Initializable {
-
+    
     @FXML
     private TextField textField_name, textField_email, textfield_numberOfParticipants;
 
@@ -40,6 +46,8 @@ public class BookingInformationController implements Initializable {
 
         // loading choisebox.
         loadMeetingTypeCB();
+
+        // setting up broker
     }
 
     /**
@@ -56,6 +64,7 @@ public class BookingInformationController implements Initializable {
         // loading meeting types from dao into choiceBox.
         choiceBox_meetingType.getItems().addAll(dao.readAll());
     }
+
 
 
     // region buttons
@@ -103,6 +112,26 @@ public class BookingInformationController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        // creating email
+        Email email = new Email(textField_email.getText());
+
+        // converting textfield_numberOfParticipants to int.
+        int numberOfParticipants = Integer.valueOf(textfield_numberOfParticipants.getText());
+
+        // create bookingInformation obj.
+        BookingInformation bookingInformation = new BookingInformation();
+        bookingInformation.setUserName(textField_name.getText());
+        bookingInformation.setEmail(email);
+        bookingInformation.setNumberOfParticipants(numberOfParticipants);
+        bookingInformation.setMeetingType(choiceBox_meetingType.getSelectionModel().getSelectedItem());
+
+        // sending the user to booking complite view.
+        MainController.getInstance().setView(ViewList.BOOKINGCOMPLITE, BorderPaneRegion.CENTER);
+
+        // publish bookingInformation obj.
+        MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
+
 
 
     }
