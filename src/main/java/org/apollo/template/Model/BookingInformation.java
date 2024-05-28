@@ -1,32 +1,109 @@
 package org.apollo.template.Model;
 
 import java.sql.Date;
-import java.sql.SQLData;
 
 public class BookingInformation {
 
-    private String roomName;
-    private String bookingName;
+    private int bookingId;
     private String userName;
     private String startTime;
     private String endTime;
     private Date date;
+    private boolean catering;
+    private int numberOfParticipants;
+    private int userId;
+    private int roomId;
+    private int meetingTypeId;
+    private MeetingType meetingType;
+    private int teamId;
+    private int departmentID;
 
-    public BookingInformation(String roomName,String bookingName, String userName, String startTime, String endTime, Date date) {
-        this.roomName = roomName;
-        this.bookingName = bookingName;
-        this.userName = userName;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.date = date;
+    /**
+     *
+     * @param startTime String
+     * @param endTime String
+     * @param date DateSQL
+     * @param catering int converts to boolean
+     * @param numberOfParticipants int
+     * @param userName String
+     * @param userId int
+     * @param roomId int
+     * @param meetingTypeId int
+     * @param departmentID int
+     * @param teamId int
+     */
+    public BookingInformation (
+            String startTime,
+            String endTime,
+            Date date,
+            int catering,
+            int numberOfParticipants,
+            String userName,
+            int userId,
+            int roomId,
+            int meetingTypeId,
+            int departmentID,
+            int teamId
+    ){
+        this.setStartTime(startTime);
+        this.setEndTime(endTime);
+        this.setDate(date);
+        this.setCateringBitToBoolean(catering);
+        this.setNumberOfParticipants(numberOfParticipants);
+        this.setUserName(userName);
+        this.setUserId(userId);
+        this.setRoomId(roomId);
+        this.setMeetingTypeId(meetingTypeId);
+        this.setDepartmentID(departmentID);
+        this.setTeamId(teamId);
     }
 
-    public String getBookingName() {
-        return bookingName;
+    /**
+     *
+     * @param startTime String
+     * @param endTime String
+     * @param date DateSQL
+     * @param catering Boolean
+     * @param numberOfParticipants int
+     * @param userName String
+     * @param userId int
+     * @param roomId int
+     * @param meetingTypeId int
+     * @param departmentID int
+     * @param teamId int
+     */
+    public BookingInformation (
+            String startTime,
+            String endTime,
+            Date date,
+            Boolean catering,
+            int numberOfParticipants,
+            String userName,
+            int userId,
+            int roomId,
+            int meetingTypeId,
+            int departmentID,
+            int teamId
+    ){
+        this.setStartTime(startTime);
+        this.setEndTime(endTime);
+        this.setDate(date);
+        this.setCatering(catering);
+        this.setNumberOfParticipants(numberOfParticipants);
+        this.setUserName(userName);
+        this.setUserId(userId);
+        this.setRoomId(roomId);
+        this.setMeetingTypeId(meetingTypeId);
+        this.setDepartmentID(departmentID);
+        this.setTeamId(teamId);
     }
 
-    public void setBookingName(String bookingName) {
-        this.bookingName = bookingName;
+    public int getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
     }
 
     public String getUserName() {
@@ -61,11 +138,75 @@ public class BookingInformation {
         this.date = date;
     }
 
-    public String getRoomName() {
-        return roomName;
+    public boolean isCatering() {
+        return catering;
     }
 
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
+    public int isCateringBit(){
+        if (catering == false)
+            return 0;
+        else {
+            return 1;
+        }
+    }
+
+    public void setCateringBitToBoolean(int bit){
+        if (bit == 0)
+            this.catering = false;
+        else {
+            this.catering = true;
+        }
+    }
+
+    public void setCatering(boolean catering) {
+        this.catering = catering;
+    }
+
+    public int getNumberOfParticipants() {
+        return numberOfParticipants;
+    }
+
+    public void setNumberOfParticipants(int numberOfParticipants) {
+        this.numberOfParticipants = numberOfParticipants;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    public int getMeetingTypeId() {
+        return meetingTypeId;
+    }
+
+    public void setMeetingTypeId(int meetingTypeId) {
+        this.meetingTypeId = meetingTypeId;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
+    public int getDepartmentID() {
+        return departmentID;
+    }
+
+    public void setDepartmentID(int departmentID) {
+        this.departmentID = departmentID;
     }
 }

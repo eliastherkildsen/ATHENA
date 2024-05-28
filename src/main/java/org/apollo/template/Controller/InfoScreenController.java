@@ -28,7 +28,7 @@ public class InfoScreenController implements Initializable {
         Date newdate = Date.valueOf("2024-05-27");
         List<BookingInformation> booking = new ArrayList<>();
         for (int i = 0; i < 40; i++) {
-            BookingInformation book = new BookingInformation("A111", "SælgerMødeMellemFolk", "Alexander Alexandersen", "11:00", "12:00", newdate);
+            BookingInformation book = new BookingInformation("10:00", "12:00", newdate, 1, 10, "Alexander Alexandersen", 1,1,1,1,1);
             booking.add(book);
         }
 

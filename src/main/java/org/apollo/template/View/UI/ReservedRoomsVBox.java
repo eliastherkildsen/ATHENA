@@ -27,14 +27,14 @@ public class ReservedRoomsVBox extends VBox {
             LoggerMessage.info(this, "Attempting to generate VBox with Bookings.");
 
             for (BookingInformation i : Bookinginformation) {
-                LoggerMessage.trace(i.getRoomName() + " | " + i.getBookingName() + " | " + i.getUserName(), "Adding to vbox");
+                LoggerMessage.trace(i.getRoomName() + " | " + i.getBookingId() + " | " + i.getUserName(), "Adding to vbox");
                 StringBuilder startEndTime = new StringBuilder();
                 startEndTime.append(i.getStartTime());
                 startEndTime.append(" - ");
                 startEndTime.append(i.getEndTime());
                 String time = startEndTime.toString();
 
-                BookingComp book = new BookingComp(i.getRoomName(), i.getUserName(), i.getBookingName(), time);
+                BookingComp book = new BookingComp(i.getRoomName(), i.getUserName(), i.getBookingId(), time); //TODO Needs to find the correct Booking from BookingID
 
                 this.setAlignment(Pos.CENTER);
                 this.setMargin(book, new Insets(10));
