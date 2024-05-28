@@ -29,7 +29,8 @@ public class MainController implements Initializable, Alertable<VBox> {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setView(ViewList.SYSTEMCHOSE, BorderPaneRegion.CENTER);
+        //setView(ViewList.SYSTEMCHOSE, BorderPaneRegion.CENTER);
+        setView(ViewList.BOOKINGINFO, BorderPaneRegion.CENTER);
         setView(ViewList.MENU, BorderPaneRegion.LEFT);
         setView(ViewList.TOPBAR, BorderPaneRegion.TOP);
         LoggerMessage.info(this, "Main Controller Initialized");
