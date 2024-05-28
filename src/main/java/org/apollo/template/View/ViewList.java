@@ -32,11 +32,17 @@ public enum ViewList {
      * System choose view.
      */
     SYSTEMCHOSE("SystemChoseView.fxml"),
+    BOOKINGCOMPLITE("BookingViewComplite.fxml"),
 
     /**
      * Info view.
      */
     INFOSCREEN("InfoView.fxml"),
+
+    /**
+     * Choose Time view
+     */
+    CHOOSETIME("ChooseTimeView.fxml"),
 
     /**
      *  Topbar view.
