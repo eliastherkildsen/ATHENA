@@ -7,6 +7,7 @@ module org.apollo.template {
     requires java.sql;
     requires java.logging;
     requires java.desktop;
+    requires jdk.compiler;
 
     opens org.apollo.template to javafx.fxml;
     exports org.apollo.template;

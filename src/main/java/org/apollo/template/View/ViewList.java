@@ -22,6 +22,7 @@ public enum ViewList {
      * Booing info view.
      */
     BOOKINGINFO("BookingInformationView.fxml"),
+    DELETEBOOKING("DeleteBookingView.fxml"),
 
     /**
      * AvailableRooms view.
