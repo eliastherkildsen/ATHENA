@@ -193,23 +193,27 @@ BEGIN
         tbl_room.fld_roomName,
         tbl_room.fld_floor,
         tbl_room.fld_roomMaxPersonCount,
-        tbl_booking.fld_date,
-        tbl_roomType.fld_roomTypeName,
-        BookedTime.total_booked_time_minutes
+        tbl_roomType.fld_roomTypeName
 
     FROM
         tbl_room
-            LEFT JOIN tbl_booking ON tbl_room.fld_roomID = tbl_booking.fld_roomID AND tbl_booking.fld_date = @BookingDate
-            INNER JOIN tbl_roomType ON tbl_room.fld_roomTypeID = tbl_roomType.fld_roomTypeID
             LEFT JOIN BookedTime ON tbl_room.fld_roomID = BookedTime.fld_roomID
+            INNER JOIN tbl_roomType ON tbl_room.fld_roomTypeID = tbl_roomType.fld_roomTypeID
 
     -- Filters the results to include only rooms that are either not booked on the specified date or have a total booked time less than 8 hours (480 minutes)
     WHERE
         BookedTime.total_booked_time_minutes < 480 OR BookedTime.total_booked_time_minutes IS NULL
 
+    -- Groups the results by four columns to ensure that we only see each room once in the list, even if there are multiple bookings on the selected day.
+    GROUP BY
+        tbl_room.fld_roomName,
+        tbl_room.fld_floor,
+        tbl_roomType.fld_roomTypeName,
+        tbl_room.fld_roomMaxPersonCount
+
     -- The available rooms are sorted by room name (ascending) and start time (ascending)
     ORDER BY
-        tbl_room.fld_roomName, tbl_booking.fld_startTime ASC;
+        tbl_room.fld_roomName ASC;
 
 END;
 
