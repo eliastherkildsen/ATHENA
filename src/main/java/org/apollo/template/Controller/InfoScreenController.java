@@ -3,9 +3,12 @@ package org.apollo.template.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.BookingInformation;
@@ -13,7 +16,9 @@ import org.apollo.template.Model.ReservedRoomDate;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.Logger.LoggerMessage;
+import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.ReservedRoomsVBox;
+import org.apollo.template.View.ViewList;
 
 import java.net.URL;
 import java.sql.Date;
@@ -38,7 +43,22 @@ public class InfoScreenController implements Initializable {
         //Preparing an arraylist with our reservations
         List<ReservedRoomDate> booking = new ArrayList<>();
 
-        //Getting todays date.
+        //Setting up the view with a Vbox
+        VBox mainVbox = new VBox();
+        mainVbox.setAlignment(Pos.CENTER);
+
+        //MinMax required on root to display all information correctly.
+        root.setMinHeight(700);
+        root.setMinWidth(800);
+        root.getChildren().add(mainVbox);
+
+        //Ensuring VBox is Center to AnchorPane
+        root.setTopAnchor(mainVbox, 0.0);
+        root.setRightAnchor(mainVbox, 0.0);
+        root.setLeftAnchor(mainVbox, 0.0);
+        root.setBottomAnchor(mainVbox, 0.0);
+
+        //Getting Todays date.
         Date dateToday = Date.valueOf(LocalDate.now());
         LoggerMessage.debug(this, "Todays date: " + dateToday);
 
@@ -93,35 +113,41 @@ public class InfoScreenController implements Initializable {
             spane.getStyleClass().add("edge-to-edge"); //Remove 'edge' around scrollPane
             spane.setContent(vboxRooms);
 
-            //MinMax required on root to display all information correctly.
-            root.setMinHeight(700);
-            root.setMinWidth(800);
-            root.getChildren().add(spane);
-
-            //Setting ScrollPane according to AnchorPane to display properly
-            root.setTopAnchor(spane, 0.0);
-            root.setRightAnchor(spane, 0.0);
-            root.setLeftAnchor(spane, 0.0);
-            root.setBottomAnchor(spane, 0.0);
+            mainVbox.getChildren().add(spane);
 
         } else {
-            //Otherwise lets inform them nothing was found.
+            //Otherwise let's inform them nothing was found.
 
             Label noresult = new Label("No Meetings Today");
             noresult.setText("No Planned Meetings Today");
             noresult.setFont(Font.font(40));
-            root.getChildren().add(noresult);
+            mainVbox.getChildren().add(noresult);
             noresult.setAlignment(Pos.CENTER);
-
-            root.setTopAnchor(noresult, 0.0);
-            root.setRightAnchor(noresult, 0.0);
-            root.setLeftAnchor(noresult, 0.0);
-            root.setBottomAnchor(noresult, 0.0);
 
         }
 
-        LoggerMessage.info(this,"InfoView initialized");
+        //Adding our button at the bottom of the screen.
+        bookRoomToday(mainVbox);
 
+        LoggerMessage.info(this,"InfoView initialized");
+    }
+
+    /**
+     * Helper method that adds a button.
+     * @param pane
+     */
+    private void bookRoomToday(Pane pane){
+        Button bookButton = new Button();
+        bookButton.setPrefSize(200,100);
+        bookButton.setText("BOOK");
+        bookButton.setAlignment(Pos.CENTER);
+
+        bookButton.setOnAction(event -> {
+            // Code to execute when the button is clicked
+            MainController.getInstance().setView(ViewList.AVAILABLEROOMS, BorderPaneRegion.CENTER);
+        });
+
+        pane.getChildren().add(bookButton);
     }
 
 
