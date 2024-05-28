@@ -39,6 +39,9 @@ public class BookingInformationController implements Initializable, Subscriber {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        // subscribing to messages broker
+        MessagesBroker.getInstance().subscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
+
         // atatching input validation to textfield
         TextFieldInputValidation.attatchIntegerValidation(textfield_numberOfParticipants);
 
@@ -64,10 +67,11 @@ public class BookingInformationController implements Initializable, Subscriber {
     }
 
     @Override
-    public void update(Object o) {
-        if (o instanceof BookingInformation) {
-            bookingInformation = (BookingInformation) o;
-        }
+    public void update(BookingInformation bookingInformation) {
+
+        this.bookingInformation = bookingInformation;
+
+
     }
 
     // region buttons
@@ -123,11 +127,14 @@ public class BookingInformationController implements Initializable, Subscriber {
         int numberOfParticipants = Integer.valueOf(textfield_numberOfParticipants.getText());
 
         // create bookingInformation obj.
-        BookingInformation bookingInformation = new BookingInformation();
         bookingInformation.setUserName(textField_name.getText());
         bookingInformation.setEmail(email);
         bookingInformation.setNumberOfParticipants(numberOfParticipants);
         bookingInformation.setMeetingType(choiceBox_meetingType.getSelectionModel().getSelectedItem());
+
+        System.out.println(bookingInformation.getStartTime());
+        System.out.println(bookingInformation.getEndTime());
+        System.out.println("UPDATING");
 
         // sending the user to booking complite view.
         MainController.getInstance().setView(ViewList.BOOKINGCOMPLITE, BorderPaneRegion.CENTER);

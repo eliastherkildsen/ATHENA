@@ -1,7 +1,9 @@
 package org.apollo.template.persistence;
 
+import org.apollo.template.Model.BookingInformation;
+
 public interface Subscriber {
 
-    void update(Object o);
+    void update(BookingInformation bookingInformation);
 
 }

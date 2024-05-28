@@ -22,6 +22,8 @@ public class BookingCompliteController implements Subscriber, Initializable {
     @FXML
     private Button button_back;
 
+    private BookingInformation bookingInformation;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -31,34 +33,24 @@ public class BookingCompliteController implements Subscriber, Initializable {
     }
 
     @Override
-    public void update(Object o) {
+    public void update(BookingInformation bookingInformation) {
 
-        // check if the obj is of type bookingInformation
-        if (o instanceof BookingInformation){
+       this.bookingInformation = bookingInformation;
 
-            //fetching data from BookingInformation(o)
+        // setting labels.
+        //lable_meetingDate.setText(bookingInformation.getDate().toString());
 
-            String meetingDate = String.valueOf(((BookingInformation) o).getDate());
-            String meetingTime = String.valueOf(((BookingInformation) o).getStartTime() + " - "
-                    + ((BookingInformation) o).getEndTime());
+        lable_meetingTime.setText(bookingInformation.getStartTime() + " - " + bookingInformation.getEndTime());
 
-            String meetingType = String.valueOf(((BookingInformation) o).getMeetingType());
+        lable_status.setText("SUCESS");
 
+        lable_statuseMessage.setText("Du har nu booket et lokale lol!");
 
-            // setting labels.
-            lable_meetingDate.setText(meetingDate);
-
-            lable_meetingTime.setText(meetingTime);
-
-            lable_status.setText("SUCESS");
-
-            lable_statuseMessage.setText("Du har nu booket et lokale lol!");
-
-            lable_meetingType.setText(meetingType);
-
-        }
+        lable_meetingType.setText(bookingInformation.getMeetingType().toString());
 
     }
+
+
 
     /**
      * Method for sending the user back to info screen view.

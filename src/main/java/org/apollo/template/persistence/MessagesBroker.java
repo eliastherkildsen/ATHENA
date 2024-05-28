@@ -1,6 +1,8 @@
 package org.apollo.template.persistence;
 
 import javafx.util.Pair;
+import org.apollo.template.Controller.BookingCompliteController;
+import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,7 @@ public class MessagesBroker {
      * @param topic MessagesBrokerTopic
      * @param messages String
      */
-    public void publish(MessagesBrokerTopic topic, Object messages){
+    public void publish(MessagesBrokerTopic topic, BookingInformation messages){
 
         // looping thrugh all pairs in subscriberList
         for (Pair<MessagesBrokerTopic, Subscriber> pair : subscriberList){
