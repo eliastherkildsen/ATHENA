@@ -3,7 +3,7 @@
     -fx-text-fill: #f9fbf9;
 }
 .background {
-    -fx-background-color: #050a07;
+    -fx-background-color: rgba(0, 159, 227, 0.5);
 }
 .primary {
     -fx-background-color: #589d6c;
