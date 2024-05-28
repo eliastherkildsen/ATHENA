@@ -78,8 +78,8 @@ CREATE TABLE tbl_department(
 
 CREATE TABLE tbl_booking(
     fld_bookingID INTEGER IDENTITY(1,1) PRIMARY KEY,
-    fld_startTime TIME NOT NULL,
-    fld_endTime TIME NOT NULL,
+    fld_startTime TIME(0) NOT NULL,
+    fld_endTime TIME(0) NOT NULL,
     fld_date DATE NOT NULL,
     fld_catering BIT NOT NULL,
     fld_numberOfParticipants INTEGER NOT NULL,

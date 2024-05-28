@@ -35,6 +35,16 @@ public enum ViewList {
     BOOKINGCOMPLITE("BookingViewComplite.fxml"),
 
     /**
+     * Info view.
+     */
+    INFOSCREEN("InfoView.fxml"),
+
+    /**
+     * Choose Time view
+     */
+    CHOOSETIME("ChooseTimeView.fxml"),
+
+    /**
      *  Topbar view.
      */
     TOPBAR("TopbarView.fxml");
