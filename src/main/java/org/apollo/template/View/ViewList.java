@@ -34,6 +34,11 @@ public enum ViewList {
     SYSTEMCHOSE("SystemChoseView.fxml"),
 
     /**
+     * Info view.
+     */
+    INFOSCREEN("InfoView.fxml"),
+
+    /**
      * Choose Time view
      */
     CHOOSETIME("ChooseTimeView.fxml"),
