@@ -111,6 +111,14 @@ VALUES
     ('Underviser');
 
 -- tbl_booking
+INSERT INTO tbl_booking (fld_startTime, fld_endTime, fld_date, fld_catering, fld_numberOfParticipants, fld_userName, fld_userID, fld_roomID, fld_meetingTypeID, fld_departmentID, fld_teamID)
+
+VALUES
+    ('08:00:00', '09:00:00', '2024-05-28', 1, 15, 'Mads', 3, 1, 3, 5, 4),
+    ('11:00:00', '12:30:00', '2024-05-28', 0, 17, 'Mads', 3, 1, 3, 5, 4),
+    ('09:15:00', '16:00:00', '2024-05-28', 0, 7, 'Lars', 5, 2, 3, 5, 4),
+    ('08:00:00', '09:15:00', '2024-05-28', 1, 11, 'Peter', 2, 2, 3, 5, 4),
+    ('13:00:00', '13:45:00', '2024-05-28', 0, 4, 'Kim', 4, 7, 2, 1, 1);
 
 CREATE PROCEDURE AddEmailIfNotExists
 @EmailAddress NVARCHAR(255)
