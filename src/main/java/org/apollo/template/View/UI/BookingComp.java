@@ -17,21 +17,21 @@ import javafx.scene.text.FontWeight;
 public class BookingComp extends HBox {
     /**
      * BookingComp builds an HBox with the information and format we require.
-     * @param bookingRoom String
-     * @param bookerName String
-     * @param bookingName String
-     * @param bookingTime String
+     * @param roomName String
+     * @param userName String
+     * @param meetingType String
+     * @param startAndEndTime String
      */
-    public BookingComp(String bookingRoom, String bookerName, String bookingName, String bookingTime){
+    public BookingComp(String roomName, String userName, String meetingType, String startAndEndTime){
         ScrollPane spane = new ScrollPane();
 
-        Label labelBookingRoom = buildLabel(bookingRoom, 18, FontWeight.BOLD);
+        Label labelBookingRoom = buildLabel(roomName, 18, FontWeight.BOLD);
 
-        Label labelBookerName = buildLabel(bookerName, 18, FontWeight.NORMAL);
+        Label labelBookerName = buildLabel(userName, 18, FontWeight.NORMAL);
 
-        Label labelBookingName = buildLabel(bookingName, 18, FontWeight.NORMAL);
+        Label labelBookingName = buildLabel(meetingType, 18, FontWeight.NORMAL);
 
-        Label labelBookingTime = buildLabel(bookingTime, 18, FontWeight.NORMAL);
+        Label labelBookingTime = buildLabel(startAndEndTime, 18, FontWeight.NORMAL);
 
         this.setMinHeight(35);
         this.setAlignment(Pos.CENTER);
