@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
+import org.apollo.template.View.BorderPaneRegion;
+import org.apollo.template.View.ViewList;
 
 
 public class HomeController {
@@ -21,6 +23,9 @@ public class HomeController {
     }
     public void onBtnSuccess(){
         new Alert(MainController.getInstance(),3, AlertType.SUCCESS, "This is a test The test is to show of this \n asdasdkasdj akjs kdjas \n alksdlksadl ka lkasdl kalsk dl\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component\nAlert component").start();
+    }
+    public void onBtnAvailable(){
+        MainController.getInstance().setView(ViewList.AVAILABLEROOMS, BorderPaneRegion.CENTER);
     }
 
 

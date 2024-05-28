@@ -2,6 +2,8 @@ package org.apollo.template.View.UI;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -16,64 +18,57 @@ public class AvailableComponent extends HBox {
 
     public AvailableComponent(String roomNo, String floor, int personKapacity, String inventory){
 
-        Label label_roomNo = buildLabel(roomNo, 18, FontWeight.BOLD);
-        Label label_floor = buildLabel(floor, 18, FontWeight.NORMAL);
-        Label label_personKap = buildLabelWithInt(personKapacity, 18, FontWeight.NORMAL);
+        // creates labels using the buildLabel methods
+        Label label_roomNo = buildLabel("Lok. ", roomNo, 18, FontWeight.BOLD);
+        Label label_floor = buildLabel("", floor, 18, FontWeight.BOLD);
+        Label label_personKap = buildLabel("Person kapacitet: ", String.valueOf(personKapacity), 18, FontWeight.BOLD);
+        Label label_inventory = buildLabel("IT-udstyr og inventar: ", inventory, 16, FontWeight.NORMAL);
 
+        // creates button to book the room
+        Button button_book = new Button("Book");
+        button_book.setPrefHeight(33.6);
+        button_book.setPrefWidth(60);
+
+
+        // creates hBox to hold room info + button "book"
+        HBox hbox_roomInfo = new HBox(label_roomNo,label_floor,label_personKap, button_book);
+        hbox_roomInfo.setAlignment(Pos.CENTER_LEFT);
+        hbox_roomInfo.setPadding(new Insets(10,10,5,10));
+        hbox_roomInfo.setSpacing(50);
+
+        HBox.setMargin(button_book, new Insets(0,0,0,450));
+
+
+        // creates hBox to hold inventory info
+        HBox hbox_inventory = new HBox(label_inventory);
+        hbox_inventory.setAlignment(Pos.CENTER_LEFT);
+        hbox_inventory.setPadding(new Insets(0,10,10,10));      // første = top , anden = højre, tredje = ned, fjerde = venstre
+        hbox_inventory.setSpacing(10);
+
+        // creates vBox to hold the hBoxes
+        VBox vbox = new VBox(hbox_roomInfo,hbox_inventory);
+        vbox.setPrefWidth(1200);
+
+        
+        // sets up the main hBox
+        this.setPrefWidth(600);
+        this.setAlignment(Pos.CENTER_LEFT);
+        this.setStyle("-fx-background-color: #f4f40a; -fx-background-radius: 40");
+        this.getChildren().add(vbox);
     }
 
-    private Label buildLabel(String text, int fontSize, FontWeight fontWeight) {
-        Label label = new Label(text);
+
+    private Label buildLabel(String text, String information, int fontSize, FontWeight fontWeight) {
+        // SPAS
+        String checkMark = "\u2713";
+
+
+
+        Label label = new Label(text + information + checkMark);
         label.setFont(Font.font("System", fontWeight, FontPosture.REGULAR, fontSize));
         this.setHgrow(label, Priority.ALWAYS);
-        this.setMargin(label, new Insets(0,20,0,20));
+        this.setMargin(label, new Insets(0, 20, 0, 20));
         return label;
-    }
-
-    private Label buildLabelWithInt(int number, int fontSize, FontWeight fontWeight) {
-
-        String kapacity = String.valueOf(number);
-
-        Label label = new Label(kapacity);
-        label.setFont(Font.font("System", fontWeight, FontPosture.REGULAR, fontSize));
-        this.setHgrow(label, Priority.ALWAYS);
-        this.setMargin(label, new Insets(0,20,0,20));
-        return label;
-    }
-
-
-
-
-    private void forNow(){
-        Label label_availableRoom = new Label();
-        label_availableRoom.setMaxHeight(77.5);
-        label_availableRoom.setMaxWidth(600);
-
-        getChildren().addAll(label_availableRoom);
-
-
-
-        VBox vbox = new VBox();
-
-
-
-        HBox hBox_roomInfo = new HBox();
-        hBox_roomInfo.setAlignment(Pos.CENTER_LEFT);
-
-        HBox hBox_inventoryInfo = new HBox();
-        hBox_inventoryInfo.setAlignment(Pos.CENTER_LEFT);
-
-        vbox.getChildren().addAll(hBox_roomInfo,hBox_inventoryInfo);
-
-
-        Label label_localNo = new Label();
-        Label label_floor = new Label();
-        Label label_personKapacity = new Label();
-
-        hBox_roomInfo.getChildren().addAll(label_localNo, label_floor, label_personKapacity);
-
-        Label label_inventory = new Label();
-        hBox_inventoryInfo.getChildren().addAll(label_inventory);
     }
 
 
