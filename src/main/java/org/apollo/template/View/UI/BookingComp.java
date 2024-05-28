@@ -23,20 +23,22 @@ public class BookingComp extends HBox {
      * @param startAndEndTime String
      */
     public BookingComp(String roomName, String userName, String meetingType, String startAndEndTime){
-        ScrollPane spane = new ScrollPane();
 
         Label labelBookingRoom = buildLabel(roomName, 18, FontWeight.BOLD);
+        labelBookingRoom.setPrefWidth(100);
 
         Label labelBookerName = buildLabel(userName, 18, FontWeight.NORMAL);
+        labelBookerName.setPrefWidth(200);
 
         Label labelBookingName = buildLabel(meetingType, 18, FontWeight.NORMAL);
+        labelBookingName.setPrefWidth(150);
 
         Label labelBookingTime = buildLabel(startAndEndTime, 18, FontWeight.NORMAL);
 
         this.setMinHeight(35);
-        this.setAlignment(Pos.CENTER);
+        this.setAlignment(Pos.CENTER_LEFT);
         this.setStyle("-fx-background-color: #009FE3; -fx-background-radius: 40");
-        this.getChildren().addAll(labelBookingRoom, addPane(), labelBookingName, addPane(), labelBookerName, addPane(), labelBookingTime);
+        this.getChildren().addAll(labelBookingRoom, labelBookingName, labelBookerName, addPane(), labelBookingTime);
     }
 
     /**

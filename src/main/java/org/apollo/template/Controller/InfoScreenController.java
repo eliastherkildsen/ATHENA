@@ -45,12 +45,22 @@ public class InfoScreenController implements Initializable {
 
         //Setting up the view with a Vbox
         VBox mainVbox = new VBox();
+        mainVbox.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
         mainVbox.setAlignment(Pos.CENTER);
+
+        Label header = new Label("No Meetings Today");
+        header.setText("No Planned Meetings Today");
+        header.setFont(Font.font(40));
+        mainVbox.getChildren().add(header);
+        header.setAlignment(Pos.CENTER);
+
+
 
         //MinMax required on root to display all information correctly.
         root.setMinHeight(700);
         root.setMinWidth(800);
         root.getChildren().add(mainVbox);
+        root.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
 
         //Ensuring VBox is Center to AnchorPane
         root.setTopAnchor(mainVbox, 0.0);
@@ -106,14 +116,18 @@ public class InfoScreenController implements Initializable {
         //If we got something from our stored Procedure we'll display that to the user.
         if (meetingsFound) {
             LoggerMessage.info(this,"Displaying results of today's bookings.");
-            ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(booking);
             //Setting up ScrolLPane
-            ScrollPane spane = new ScrollPane();
-            spane.setFitToWidth(true);
-            spane.getStyleClass().add("edge-to-edge"); //Remove 'edge' around scrollPane
-            spane.setContent(vboxRooms);
+            ScrollPane sPane = new ScrollPane();
+            sPane.setFitToWidth(true);
+            sPane.getStyleClass().add("edge-to-edge"); //Remove 'edge' around scrollPane
+            sPane.getStyleClass().add("custom-scroll-pane");
+            sPane.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
 
-            mainVbox.getChildren().add(spane);
+            ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(booking);
+            sPane.setContent(vboxRooms);
+
+            mainVbox.getChildren().add(sPane);
+            System.out.println("ScrollPane style: " + sPane.getStyle());
 
         } else {
             //Otherwise let's inform them nothing was found.
@@ -128,7 +142,7 @@ public class InfoScreenController implements Initializable {
 
         //Adding our button at the bottom of the screen.
         bookRoomToday(mainVbox);
-
+        //mainVbox.setStyle("-fx-background-color: rgba(0, 159, 227, 1);");
         LoggerMessage.info(this,"InfoView initialized");
     }
 
@@ -148,6 +162,10 @@ public class InfoScreenController implements Initializable {
         });
 
         pane.getChildren().add(bookButton);
+    }
+
+    public void laberGenerator(){
+
     }
 
 

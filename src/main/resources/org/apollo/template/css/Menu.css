@@ -3,7 +3,7 @@
     -fx-text-fill: #f9fbf9;
 }
 .background {
-    -fx-background-color: rgba(0, 159, 227, 0.5);
+    -fx-background-color: rgba(0, 159, 227, 0.6);
 }
 .primary {
     -fx-background-color: #589d6c;
@@ -27,6 +27,14 @@
 .button:hover {
     -fx-font-weight: bold;
     -fx-font-size: 19px;
+}
+
+.custom-scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.custom-scroll-pane .viewport {
+    -fx-background-color: rgba(0, 159, 227, 0);
 }
 
 /* Root VBox */
