@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.ErrorReportController">
+   <children>
+      <VBox alignment="TOP_CENTER" opacity="0.8" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #009FE3; -fx-background-radius: 30;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Label text="Fejlmeld lokale" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Label text="Fejlmelder navn:" textFill="WHITE" />
+                        <TextField />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Label text="Fejlmelder e-mail:" textFill="WHITE" />
+                        <TextField />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ChoiceBox prefWidth="150.0" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="button_add" mnemonicParsing="false" onAction="#onButton_add" text="Tilføj" />
+                              <Button fx:id="button_remove" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButton_remove" prefHeight="25.0" prefWidth="56.0" text="Fjern" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <ListView prefHeight="100.0" prefWidth="203.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox alignment="TOP_RIGHT">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+               <children>
+                  <TextArea prefHeight="200.0" prefWidth="200.0" />
+                  <Label text="0/500 tegn" textFill="WHITE" />
+               </children>
+            </VBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Button fx:id="button_save" mnemonicParsing="false" onAction="#onButton_save" text="Gem" />
+                  <Button fx:id="button_back" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButton_back" text="Tilbage" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
