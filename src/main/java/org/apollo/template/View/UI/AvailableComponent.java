@@ -37,7 +37,7 @@ public class AvailableComponent extends HBox {
         button = createButton("BOOK");
 
         // sets up the main hBox
-        this.setMinHeight(35);
+        this.setMinHeight(60);
         this.setPadding(new Insets(0, 20, 0, 0));
         this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: #009FE3; -fx-background-radius: 40");
@@ -70,7 +70,8 @@ public class AvailableComponent extends HBox {
     private Button createButton(String buttonText){
         Button button = new Button(buttonText);
         button.setPrefHeight(33.6);
-        button.setPrefWidth(60);
+        button.setPrefWidth(100);
+        //button.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 18));
         button.setStyle("-fx-background-color: #FBBB2C;");
         return button;
     }
@@ -90,4 +91,6 @@ public class AvailableComponent extends HBox {
     public Button getButton() {
         return button;
     }
+
+
 }
