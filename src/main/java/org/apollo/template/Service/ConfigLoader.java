@@ -33,7 +33,7 @@ public class ConfigLoader {
 
         } catch (IOException e) {
             LoggerMessage.error(this, "Failed to load the config file. " +
-                    "This can be due to the file not existing.... ");
+                    "This can be due to the file not existing.... \n" + e.getMessage());
             throw new RuntimeException(e);
         }
     }

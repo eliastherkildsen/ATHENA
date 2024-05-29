@@ -4,7 +4,6 @@ import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Logger.LoggerMessage;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,22 +20,53 @@ public class GenerateCSV {
     String csvFilePath = "data.csv";
     List<BookingInformation> bookingList = new ArrayList<>();
 
-    GenerateCSV(List<BookingInformation> bookingInformationList){
+    /**
+     * Generates a CSV file with predetermined values from List with BookingInformation objects
+     * @param bookingInformationList object
+     */
+    public GenerateCSV(List<BookingInformation> bookingInformationList){
         bookingList.addAll(bookingInformationList);
+        generateCSVFile();
     }
 
-    public void
-
-    public void generateCSV(){
+    public void generateCSVFile() {
+        BufferedWriter bufferedWriter = null;
         try {
+            LoggerMessage.debug(this, "Attempting to Generate CSV File");
             FileWriter writer = new FileWriter(csvFilePath);
-            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            bufferedWriter = new BufferedWriter(writer);
 
-            bufferedWriter.append("");
+            bufferedWriter.append("Date,RoomName,NumberOfParticipants,UserName,startTime,endTime");
+            bufferedWriter.newLine();
 
-
-        } catch (IOException e){
-            LoggerMessage.error(this, "File Writer Failed : " + e.getMessage());
+            for (BookingInformation bi : bookingList) {
+                LoggerMessage.debug(this, "Writing INFO :" + bi.getBookingId());
+                bufferedWriter.append(bi.getDate().toString()); // Assuming getDate returns a date in the correct format
+                bufferedWriter.append(",");
+                bufferedWriter.append(bi.getRoom().getRoomName());
+                bufferedWriter.append(",");
+                bufferedWriter.append(String.valueOf(bi.getNumberOfParticipants()));
+                bufferedWriter.append(",");
+                bufferedWriter.append(bi.getUserName());
+                bufferedWriter.append(",");
+                bufferedWriter.append(bi.getStartTime().toString()); // Assuming getStartTime returns a time in the correct format
+                bufferedWriter.append(",");
+                bufferedWriter.append(bi.getEndTime().toString()); // Assuming getEndTime returns a time in the correct format
+                bufferedWriter.newLine();
+            }
+            LoggerMessage.debug(this, "Successfully Written CSV File");
+        } catch (IOException e) {
+            LoggerMessage.error(this, "File Writer Failed: " + e.getMessage());
+            e.printStackTrace(); // Log the stack trace for better debugging
+        } finally {
+            if (bufferedWriter != null) {
+                try {
+                    bufferedWriter.close(); //Remembering to close the writer
+                } catch (IOException e) {
+                    LoggerMessage.error(this, "Failed to close BufferedWriter: " + e.getMessage());
+                    e.printStackTrace(); // Log the stack trace for better debugging
+                }
+            }
         }
 
     }
