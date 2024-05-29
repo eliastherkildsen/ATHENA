@@ -34,6 +34,7 @@ public enum ViewList {
      */
     SYSTEMCHOSE("SystemChoseView.fxml"),
     BOOKINGCOMPLITE("BookingViewComplite.fxml"),
+    ADMINMENU("AdminMenuBar.fxml"),
 
     /**
      * Info view.

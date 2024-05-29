@@ -114,8 +114,6 @@ public class BookingInformationController implements Initializable, Subscriber {
         // check if email exists in the database and creates it if not through SP.
         AddEmailIfNotExists.addEmailIfNotExists(email);
 
-
-
         // converting textfield_numberOfParticipants to int.
         int numberOfParticipants = Integer.valueOf(textfield_numberOfParticipants.getText());
 

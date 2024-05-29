@@ -1,0 +1,39 @@
+/*
+    colors
+
+    primary: FBBB2C
+    text:
+    background:
+
+ */
+
+
+/* Button */
+.button {
+    -fx-background-color: #FBBB2C;
+    -fx-background-radius: 20;
+    -fx-font-size: 20px;
+    -fx-text-fill: #f9fbf9;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 1);
+}
+
+.button:hover {
+    -fx-font-weight: bold;
+    -fx-font-size: 19px;
+}
+
+/*
+    background
+ */
+.background {
+    -fx-background-color: rgba(0, 159, 227, 0.6);
+}
+
+/*
+    text
+ */
+
+.label {
+    -fx-text-fill: #f9fbf9;
+    -fx-font-size: 26;
+}
