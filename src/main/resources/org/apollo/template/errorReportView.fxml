@@ -36,6 +36,12 @@
                         <TextField fx:id="textField_email" />
                      </children>
                   </HBox>
+                  <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="35.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Label text="Lokale" textFill="WHITE" />
+                        <ChoiceBox fx:id="roomChoiceBox" prefWidth="150.0" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
