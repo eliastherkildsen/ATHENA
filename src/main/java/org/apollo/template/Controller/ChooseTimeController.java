@@ -4,10 +4,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.BookingTime;
+import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
@@ -23,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class ChooseTimeController implements Initializable, Subscriber {
 
@@ -30,6 +33,8 @@ public class ChooseTimeController implements Initializable, Subscriber {
     private GridPane gridPane_ButtonGrid;
     @FXML
     private Button button_Start, button_End;
+    @FXML
+    private Label label_RoomName;
 
     private int cnt, noOfButtons = 32, institutionInterval = 15;
 
@@ -49,16 +54,15 @@ public class ChooseTimeController implements Initializable, Subscriber {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         MessagesBroker.getInstance().subscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
-        // On action for time selected buttons
-        button_Start.setOnAction(event -> {
-            startBool = true;
-            button_Start.setStyle("-fx-font-weight: bold; -fx-font-size: 18");
-        });
-        button_End.setOnAction(event -> {
-            endBool = true;
-            button_End.setStyle("-fx-font-weight: bold; -fx-font-size: 18");
-        });
 
+        System.out.println("initialized");
+
+    }
+
+    /**
+     * Method for generating all the buttons for the grid pane
+     */
+    private void generateGridButtons(){
         List<String> times = generateTimes(noOfButtons);
 
         while (cnt < noOfButtons){
@@ -82,6 +86,21 @@ public class ChooseTimeController implements Initializable, Subscriber {
             cnt++;
 
         }
+    }
+
+    /**
+     * Method for setting up the on action
+     */
+    private void setOnActionForStartAndEnd(){
+        // On action for time selected buttons
+        button_Start.setOnAction(event -> {
+            startBool = true;
+            button_Start.setStyle("-fx-font-weight: bold; -fx-font-size: 18");
+        });
+        button_End.setOnAction(event -> {
+            endBool = true;
+            button_End.setStyle("-fx-font-weight: bold; -fx-font-size: 18");
+        });
     }
 
     /**
@@ -164,8 +183,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
             PreparedStatement ps = conn.prepareStatement("EXECUTE getBookingsFromDate @BookingDate = ?, @RoomID = ?");
 
             ps.setDate(1, todaysDate);
-            // TODO change back to object
-            ps.setInt(2, bookingInformation.getRoomId() );
+            ps.setInt(2, bookingInformation.getRoomId());
             List<BookingTime> bookingTimes = new ArrayList<>();
 
             ResultSet rs = ps.executeQuery();
@@ -209,10 +227,32 @@ public class ChooseTimeController implements Initializable, Subscriber {
         for (Button button : buttonList) {
             LocalTime buttonTime = LocalTime.parse(button.getText(), formatter);
             if (!buttonTime.isBefore(start) && buttonTime.isAfter(end) && button.isDisabled()) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
+    }
+
+    /**
+     * Method for setting the room name label to the correct room
+     */
+    private void setRoomNameLabel(){
+
+        try{
+            PreparedStatement ps = conn.prepareStatement("EXECUTE getRoomNameFromID @RoomID = ?");
+
+            ps.setInt(1, bookingInformation.getRoomId());
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                label_RoomName.setText("Lokale " + rs.getString("fld_roomName"));
+            }
+
+        }catch (SQLException e){
+            LoggerMessage.error(this, "Error in setRoomNameLabel");
+        }
+
     }
 
 
@@ -228,11 +268,8 @@ public class ChooseTimeController implements Initializable, Subscriber {
         System.out.println(startTime);
         // Checks if there is any disabled times in the period selected.
         if (hasDisabledTimes(startTime, endTime)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid booking");
-            alert.setHeaderText("Cannot book selected period");
-            alert.setContentText("The selected period includes times that are already booked");
-            alert.showAndWait();
+            new org.apollo.template.Service.Alert.Alert(MainController.getInstance(), 5, AlertType.INFO, "The selected period includes times that are already booked.")
+                    .start();
             return;
         }
 
@@ -258,5 +295,10 @@ public class ChooseTimeController implements Initializable, Subscriber {
     @Override
     public void update(BookingInformation bookingInformation) {
         this.bookingInformation = bookingInformation;
+        System.out.println("Updated");
+
+        setRoomNameLabel();
+        setOnActionForStartAndEnd();
+        generateGridButtons();
     }
 }
