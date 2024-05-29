@@ -2,6 +2,7 @@ package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import org.apollo.template.Database.JDBC;
@@ -10,7 +11,9 @@ import org.apollo.template.Model.BookingTime;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
-import org.apollo.template.persistence.*;
+import org.apollo.template.persistence.PubSub.MessagesBroker;
+import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
+import org.apollo.template.persistence.PubSub.Subscriber;
 
 import java.net.URL;
 import java.sql.*;
@@ -193,6 +196,25 @@ public class ChooseTimeController implements Initializable, Subscriber {
         return false;
     }
 
+    /**
+     * Method that checks if there is any disabled times in the period selected.
+     * @param startTime Starting time of the period selected.
+     * @param endTime Ending time of the period selected.
+     * @return Returns true if the period selected contains a disabled time.
+     */
+    private boolean hasDisabledTimes(String startTime, String endTime){
+        LocalTime start = LocalTime.parse(startTime, formatter);
+        LocalTime end = LocalTime.parse(endTime, formatter);
+
+        for (Button button : buttonList) {
+            LocalTime buttonTime = LocalTime.parse(button.getText(), formatter);
+            if (!buttonTime.isBefore(start) && buttonTime.isAfter(end) && button.isDisabled()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
     @FXML
@@ -204,11 +226,22 @@ public class ChooseTimeController implements Initializable, Subscriber {
         System.out.println("------- Time chooser------");
         System.out.println(endTime);
         System.out.println(startTime);
+        // Checks if there is any disabled times in the period selected.
+        if (hasDisabledTimes(startTime, endTime)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid booking");
+            alert.setHeaderText("Cannot book selected period");
+            alert.setContentText("The selected period includes times that are already booked");
+            alert.showAndWait();
+            return;
+        }
 
         // creating bookingInformation obj.
         // TODO needs to check if time has been selected.
         bookingInformation.setStartTime(startTime);
         bookingInformation.setEndTime(endTime);
+        LocalDate currentDate = LocalDate.now();
+        bookingInformation.setDate(Date.valueOf(currentDate));
 
         System.out.println(bookingInformation.getStartTime() + " : " + bookingInformation.getEndTime());
 
