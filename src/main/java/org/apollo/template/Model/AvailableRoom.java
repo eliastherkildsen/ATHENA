@@ -1,20 +1,30 @@
 package org.apollo.template.Model;
 
 public class AvailableRoom {
-
+    private int roomID;
     private String roomName;
     private String floor;
     private String roomType;
     private int personKapacity;
 
-    public AvailableRoom(String roomName, String floor, String roomType, int personKapacity) {
+    public AvailableRoom(int roomID, String roomName, String floor, String roomType, int personKapacity) {
+        this.roomID = roomID;
         this.roomName = roomName;
         this.floor = floor;
         this.roomType = roomType;
         this.personKapacity = personKapacity;
     }
 
+
     // region getter and setter
+
+    public int getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(int roomID) {
+        this.roomID = roomID;
+    }
 
     public String getRoomName() {
         return roomName;
