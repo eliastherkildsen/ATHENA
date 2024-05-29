@@ -35,18 +35,19 @@ public class GetAvailableRooms {
             while (rs.next()) {
 
                 AvailableRoom availableRoom = new AvailableRoom(rs.getInt("fld_roomID"),
-                        rs.getString("fld_roomName"),
-                        rs.getString("fld_floor"),
-                        rs.getString("fld_roomTypeName"),
-                        rs.getInt("fld_roomMaxPersonCount"));
+                                                                rs.getString("fld_roomName"),
+                                                                rs.getString("fld_floor"),
+                                                                rs.getString("fld_roomTypeName"),
+                                                                rs.getInt("fld_roomMaxPersonCount"));
 
                 availableRooms.add(availableRoom);
             }
-
+            //TODO: right message?
+            LoggerMessage.debug("GetAvailableRooms", "Stored Procedure succeeded");
             return availableRooms;
 
         } catch (SQLException e) {
-            LoggerMessage.error("GetAvailableRooms", "Stored Procedure : getAvailableRooms didn't run as intended " + e.getMessage());
+            LoggerMessage.error("GetAvailableRooms", "Stored Procedure: getAvailableRooms didn't run as intended " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
