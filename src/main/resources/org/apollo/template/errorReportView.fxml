@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.ErrorReportController">
    <children>
-      <VBox alignment="TOP_CENTER" opacity="0.8" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #009FE3; -fx-background-radius: 30;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+      <VBox alignment="TOP_CENTER" layoutX="47.0" layoutY="35.0" opacity="0.8" prefHeight="265.0" prefWidth="453.0" style="-fx-background-color: #009FE3; -fx-background-radius: 30;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
          <children>
             <Label text="Fejlmeld lokale" textFill="WHITE">
                <font>
@@ -27,13 +27,13 @@
                   <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
                         <Label text="Fejlmelder navn:" textFill="WHITE" />
-                        <TextField />
+                        <TextField fx:id="textField_name" />
                      </children>
                   </HBox>
                   <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
                         <Label text="Fejlmelder e-mail:" textFill="WHITE" />
-                        <TextField />
+                        <TextField fx:id="textField_email" />
                      </children>
                   </HBox>
                </children>
@@ -42,7 +42,7 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <ChoiceBox prefWidth="150.0" />
+                        <ChoiceBox fx:id="inventoryItemsChoiceBox" prefWidth="150.0" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Button fx:id="button_add" mnemonicParsing="false" onAction="#onButton_add" text="Tilføj" />
@@ -51,7 +51,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <ListView prefHeight="100.0" prefWidth="203.0" />
+                  <ListView fx:id="inventoryItemsListView" prefHeight="100.0" prefWidth="203.0" />
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" />
@@ -62,8 +62,13 @@
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
                <children>
-                  <TextArea prefHeight="200.0" prefWidth="200.0" />
-                  <Label text="0/500 tegn" textFill="WHITE" />
+                  <TextArea fx:id="textArea_description" prefHeight="200.0" prefWidth="200.0" />
+                  <HBox alignment="TOP_RIGHT">
+                     <children>
+                        <Label fx:id="lable_totalChar" text="total char" textFill="WHITE" />
+                        <Label fx:id="lable_maxChar" text="/500 tegn" textFill="WHITE" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
