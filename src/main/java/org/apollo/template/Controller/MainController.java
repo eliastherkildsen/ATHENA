@@ -17,6 +17,7 @@ import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.ViewLoader;
 
+import javax.swing.text.View;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,7 +30,8 @@ public class MainController implements Initializable, Alertable<VBox> {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setView(ViewList.SYSTEMCHOSE, BorderPaneRegion.CENTER);
+        //setView(ViewList.SYSTEMCHOSE, BorderPaneRegion.CENTER);
+        setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);
         setView(ViewList.MENU, BorderPaneRegion.LEFT);
         setView(ViewList.TOPBAR, BorderPaneRegion.TOP);
         LoggerMessage.info(this, "Main Controller Initialized");
