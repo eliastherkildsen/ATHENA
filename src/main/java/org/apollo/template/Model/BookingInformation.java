@@ -9,6 +9,8 @@ public class BookingInformation {
     private int numberOfParticipants;
     private int roomId;
     private int teamId;
+    private int userID;
+    private int meetingTypeID;
     private int departmentID;
 
     private String userName;
@@ -47,6 +49,8 @@ public class BookingInformation {
                               int numberOfParticipants,
                               int roomId,
                               int teamId,
+                              int userID,
+                              int meetingTypeID,
                               int departmentID,
                               String userName,
                               String startTime,
@@ -71,6 +75,8 @@ public class BookingInformation {
         this.meetingType = meetingType;
         this.room = room;
         this.team = team;
+        this.userID = userID;
+        this.meetingTypeID = meetingTypeID;
     }
 
     /**
@@ -95,6 +101,8 @@ public class BookingInformation {
                               int numberOfParticipants,
                               int roomId,
                               int teamId,
+                              int userID,
+                              int meetingTypeID,
                               int departmentID,
                               String userName,
                               String startTime,
@@ -119,6 +127,8 @@ public class BookingInformation {
         this.meetingType = meetingType;
         this.room = room;
         this.team = team;
+        this.userID = userID;
+        this.meetingTypeID = meetingTypeID;
     }
 
     public BookingInformation(int bookingId,
@@ -126,6 +136,8 @@ public class BookingInformation {
                               int numberOfParticipants,
                               int roomId,
                               int teamId,
+                              int userID,
+                              int meetingTypeID,
                               int departmentID,
                               String userName,
                               String startTime,
@@ -142,6 +154,13 @@ public class BookingInformation {
         this.startTime = startTime;
         this.endTime = endTime;
         this.date = date;
+        this.meetingTypeID = meetingTypeID;
+        this.userID = userID;
+
+        this.email = null;
+        this.room = null;
+        this.team = null;
+        this.meetingType = null;
     }
 
     public int getBookingId() {
@@ -271,5 +290,21 @@ public class BookingInformation {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public int getMeetingTypeID() {
+        return meetingTypeID;
+    }
+
+    public void setMeetingTypeID(int meetingTypeID) {
+        this.meetingTypeID = meetingTypeID;
     }
 }
