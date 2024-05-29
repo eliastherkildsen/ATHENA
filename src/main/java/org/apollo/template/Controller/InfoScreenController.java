@@ -1,7 +1,9 @@
 package org.apollo.template.Controller;
 
+import com.sun.tools.javac.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -47,6 +49,7 @@ public class InfoScreenController implements Initializable {
 
         //Setting up the view with a Vbox
         VBox mainVbox = new VBox();
+        mainVbox.setSpacing(20);
         mainVbox.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
         mainVbox.setAlignment(Pos.CENTER);
 
@@ -135,6 +138,8 @@ public class InfoScreenController implements Initializable {
 
         //Adding our button at the bottom of the screen.
         bookRoomToday(mainVbox);
+        // adding delete booking bottom
+        deleteBooking(mainVbox);
         //mainVbox.setStyle("-fx-background-color: rgba(0, 159, 227, 1);");
         LoggerMessage.info(this,"InfoView initialized");
     }
@@ -156,6 +161,21 @@ public class InfoScreenController implements Initializable {
 
         pane.getChildren().add(bookButton);
     }
+
+    private void deleteBooking(Pane pane){
+        Button deleteBookingButton = new Button();
+        deleteBookingButton.setPrefSize(200,50);
+        deleteBookingButton.setText("SLET BOOKING");
+        deleteBookingButton.setAlignment(Pos.CENTER);
+
+        deleteBookingButton.setOnAction(event -> {
+            // Code to execute when the button is clicked
+            MainController.getInstance().setView(ViewList.DELETEBOOKING, BorderPaneRegion.CENTER);
+        });
+
+        pane.getChildren().add(deleteBookingButton);
+    }
+
 
     /**
      *
