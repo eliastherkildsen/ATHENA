@@ -165,7 +165,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
             ps.setDate(1, todaysDate);
             // TODO change back to object
-            ps.setInt(2, 1 );
+            ps.setInt(2, bookingInformation.getRoomId() );
             List<BookingTime> bookingTimes = new ArrayList<>();
 
             ResultSet rs = ps.executeQuery();
