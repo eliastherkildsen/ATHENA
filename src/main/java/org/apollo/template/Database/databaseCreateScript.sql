@@ -16,7 +16,7 @@ CREATE TABLE tbl_inventory(
 CREATE TABLE tbl_roomType(
      fld_roomTypeID INTEGER IDENTITY (1,1) PRIMARY KEY,
      fld_roomTypeName VARCHAR(50) NOT NULL,
-     fld_roomTypeDescription VARCHAR(256)
+     fld_roomTypeDescription VARCHAR(512)
 );
 
 CREATE TABLE tbl_room(
