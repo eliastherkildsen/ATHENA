@@ -5,87 +5,162 @@ import java.sql.Date;
 public class BookingInformation {
 
     private int bookingId;
+    private boolean catering;
+    private int numberOfParticipants;
+    private int roomId;
+    private int teamId;
+    private int userID;
+    private int meetingTypeID;
+    private int departmentID;
+
     private String userName;
     private String startTime;
     private String endTime;
     private Date date;
-    private boolean catering;
-    private int numberOfParticipants;
+
     private Email email;
-    private int roomId;
     private MeetingType meetingType;
-    private int teamId;
-    private int departmentID;
+    private Room room;
+    private Team team;
 
     public BookingInformation() {
 
     }
 
     /**
-     * @param startTime String
-     * @param endTime String
-     * @param date DateSQL
-     * @param catering int converts to boolean
-     * @param numberOfParticipants int
-     * @param userName String
-     * @param roomId int
-     * @param departmentID int
-     * @param teamId int
+     *
+     * @param bookingId
+     * @param catering
+     * @param numberOfParticipants
+     * @param roomId
+     * @param teamId
+     * @param departmentID
+     * @param userName
+     * @param startTime
+     * @param endTime
+     * @param date
+     * @param email
+     * @param meetingType
+     * @param room
+     * @param team
      */
-    public BookingInformation (
-            String startTime,
-            String endTime,
-            Date date,
-            int catering,
-            int numberOfParticipants,
-            String userName,
-            int roomId,
-            int departmentID,
-            int teamId
-    ){
-        this.setStartTime(startTime);
-        this.setEndTime(endTime);
-        this.setDate(date);
-        this.setCateringBitToBoolean(catering);
-        this.setNumberOfParticipants(numberOfParticipants);
-        this.setUserName(userName);
-        this.setRoomId(roomId);
-        this.setDepartmentID(departmentID);
-        this.setTeamId(teamId);
+    public BookingInformation(int bookingId,
+                              boolean catering,
+                              int numberOfParticipants,
+                              int roomId,
+                              int teamId,
+                              int userID,
+                              int meetingTypeID,
+                              int departmentID,
+                              String userName,
+                              String startTime,
+                              String endTime,
+                              Date date,
+                              Email email,
+                              MeetingType meetingType,
+                              Room room,
+                              Team team)
+    {
+        this.bookingId = bookingId;
+        this.catering = catering;
+        this.numberOfParticipants = numberOfParticipants;
+        this.roomId = roomId;
+        this.teamId = teamId;
+        this.departmentID = departmentID;
+        this.userName = userName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = date;
+        this.email = email;
+        this.meetingType = meetingType;
+        this.room = room;
+        this.team = team;
+        this.userID = userID;
+        this.meetingTypeID = meetingTypeID;
     }
 
     /**
      *
-     * @param startTime String
-     * @param endTime String
-     * @param date DateSQL
-     * @param catering Boolean
-     * @param numberOfParticipants int
-     * @param userName String
-     * @param roomId int
-     * @param departmentID int
-     * @param teamId int
+     * @param bookingId
+     * @param catering
+     * @param numberOfParticipants
+     * @param roomId
+     * @param teamId
+     * @param departmentID
+     * @param userName
+     * @param startTime
+     * @param endTime
+     * @param date
+     * @param email
+     * @param meetingType
+     * @param room
+     * @param team
      */
-    public BookingInformation (
-            String startTime,
-            String endTime,
-            Date date,
-            Boolean catering,
-            int numberOfParticipants,
-            String userName,
-            int roomId,
-            int departmentID,
-            int teamId
-    ){
-        this.setStartTime(startTime);
-        this.setEndTime(endTime);
-        this.setDate(date);
-        this.setCatering(catering);
-        this.setNumberOfParticipants(numberOfParticipants);
-        this.setUserName(userName);
-        this.setRoomId(roomId);
-        this.setDepartmentID(departmentID);
-        this.setTeamId(teamId);
+    public BookingInformation(int bookingId,
+                              int catering,
+                              int numberOfParticipants,
+                              int roomId,
+                              int teamId,
+                              int userID,
+                              int meetingTypeID,
+                              int departmentID,
+                              String userName,
+                              String startTime,
+                              String endTime,
+                              Date date,
+                              Email email,
+                              MeetingType meetingType,
+                              Room room,
+                              Team team)
+    {
+        this.bookingId = bookingId;
+        setCateringBitToBoolean(catering);
+        this.numberOfParticipants = numberOfParticipants;
+        this.roomId = roomId;
+        this.teamId = teamId;
+        this.departmentID = departmentID;
+        this.userName = userName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = date;
+        this.email = email;
+        this.meetingType = meetingType;
+        this.room = room;
+        this.team = team;
+        this.userID = userID;
+        this.meetingTypeID = meetingTypeID;
+    }
+
+    public BookingInformation(int bookingId,
+                              int catering,
+                              int numberOfParticipants,
+                              int roomId,
+                              int teamId,
+                              int userID,
+                              int meetingTypeID,
+                              int departmentID,
+                              String userName,
+                              String startTime,
+                              String endTime,
+                              Date date)
+    {
+        this.bookingId = bookingId;
+        setCateringBitToBoolean(catering);
+        this.numberOfParticipants = numberOfParticipants;
+        this.roomId = roomId;
+        this.teamId = teamId;
+        this.departmentID = departmentID;
+        this.userName = userName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = date;
+        this.meetingTypeID = meetingTypeID;
+        this.userID = userID;
+
+        this.email = null;
+        this.room = null;
+        this.team = null;
+        this.meetingType = null;
     }
 
     public int getBookingId() {
@@ -199,5 +274,37 @@ public class BookingInformation {
 
     public void setMeetingType(MeetingType meetingType) {
         this.meetingType = meetingType;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public int getMeetingTypeID() {
+        return meetingTypeID;
+    }
+
+    public void setMeetingTypeID(int meetingTypeID) {
+        this.meetingTypeID = meetingTypeID;
     }
 }
