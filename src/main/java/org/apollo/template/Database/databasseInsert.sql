@@ -111,6 +111,14 @@ VALUES
     ('Underviser');
 
 -- tbl_booking
+INSERT INTO tbl_booking (fld_startTime, fld_endTime, fld_date, fld_catering, fld_numberOfParticipants, fld_userName, fld_userID, fld_roomID, fld_meetingTypeID, fld_departmentID, fld_teamID)
+
+VALUES
+    ('08:00:00', '09:00:00', '2024-05-28', 1, 15, 'Mads', 3, 1, 3, 5, 4),
+    ('11:00:00', '12:30:00', '2024-05-28', 0, 17, 'Mads', 3, 1, 3, 5, 4),
+    ('09:15:00', '16:00:00', '2024-05-28', 0, 7, 'Lars', 5, 2, 3, 5, 4),
+    ('08:00:00', '09:15:00', '2024-05-28', 1, 11, 'Peter', 2, 2, 3, 5, 4),
+    ('13:00:00', '13:45:00', '2024-05-28', 0, 4, 'Kim', 4, 7, 2, 1, 1);
 
 CREATE PROCEDURE AddEmailIfNotExists
 @EmailAddress NVARCHAR(255)
@@ -132,5 +140,83 @@ BEGIN
             SELECT 'Email already exists' AS Result;
         END
 END;
+
+-- Function for InfoScreen
+use db_Athena;
+go
+
+CREATE PROCEDURE GetBookingsByDate
+@BookingDate DATE -- We are doing this by date.
+AS
+BEGIN
+    -- SELECT the relevant data fields i want it to return.
+    SELECT
+        tbl_booking.fld_startTime,
+        tbl_booking.fld_endTime,
+        tbl_booking.fld_userName,
+        tbl_room.fld_roomName,
+        tbl_meetingType.fld_meetingType
+    FROM
+        tbl_booking
+            INNER JOIN tbl_room ON tbl_booking.fld_roomID = tbl_room.fld_roomID
+            INNER JOIN tbl_meetingType ON tbl_booking.fld_meetingTypeID = tbl_meetingType.fld_meetingTypeID
+    WHERE
+        tbl_booking.fld_date = @BookingDate
+    ORDER BY
+        tbl_booking.fld_startTime ASC,
+    tbl_booking.fld_endTime ASC;
+END;
+go
+
+
+
+-- Stored procedure to find available rooms on a given date
+CREATE PROCEDURE getAvailableRooms (@BookingDate DATE)
+AS
+BEGIN
+
+    -- Calculates the total booking time for each room on the specified date ('NULL' if no booking yet)
+    WITH BookedTime AS (
+        SELECT
+            fld_roomID,
+            SUM(DATEDIFF(MINUTE, fld_startTime, fld_endTime)) AS total_booked_time_minutes
+        FROM
+            tbl_booking
+        WHERE
+            fld_date = @BookingDate
+        GROUP BY
+            fld_roomID
+    )
+
+    -- Selects selected fields from 3 tables related to each other using INNER JOIN and LEFT JOIN - these are to be presented when displaying available rooms
+    SELECT
+        tbl_room.fld_roomName,
+        tbl_room.fld_floor,
+        tbl_room.fld_roomMaxPersonCount,
+        tbl_roomType.fld_roomTypeName
+
+    FROM
+        tbl_room
+            LEFT JOIN BookedTime ON tbl_room.fld_roomID = BookedTime.fld_roomID
+            INNER JOIN tbl_roomType ON tbl_room.fld_roomTypeID = tbl_roomType.fld_roomTypeID
+
+    -- Filters the results to include only rooms that are either not booked on the specified date or have a total booked time less than 8 hours (480 minutes)
+    WHERE
+        BookedTime.total_booked_time_minutes < 480 OR BookedTime.total_booked_time_minutes IS NULL
+
+    -- Groups the results by four columns to ensure that we only see each room once in the list, even if there are multiple bookings on the selected day.
+    GROUP BY
+        tbl_room.fld_roomName,
+        tbl_room.fld_floor,
+        tbl_roomType.fld_roomTypeName,
+        tbl_room.fld_roomMaxPersonCount
+
+    -- The available rooms are sorted by room name (ascending) and start time (ascending)
+    ORDER BY
+        tbl_room.fld_roomName ASC;
+
+END;
+
+
 
 

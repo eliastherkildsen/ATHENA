@@ -48,7 +48,8 @@ public class LoggerMessage {
             } else {
                 className = instance.getClass().getSimpleName();
             }
-            System.out.printf("%s[%s]%s[ %s ]%s%" + (className.length() - SPACING) + "s %s%s%n",
+            //System.out.println(className.length());
+            System.out.printf("%s[%s]%s[ %s ]%s%s %" + (className.length() - SPACING) + "s %s%n",
                     AnsiColorCode.CYAN,
                     currentTime(),
                     level.getColorLevel(),

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.BookingCompliteController">
+   <children>
+      <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/alsion.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Lokale 301" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <VBox opacity="0.8" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: #009FE3;" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="50.0" right="50.0" top="30.0" />
+               </VBox.margin>
+               <children>
+                  <Label fx:id="lable_status" text="STATUS" textFill="WHITE">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lable_statuseMessage" layoutX="40.0" layoutY="20.0" text="STATUS BESKED" textFill="WHITE" />
+                  <Label fx:id="lable_meetingType" layoutX="40.0" layoutY="37.0" text="MØDE TYPE" textFill="WHITE" />
+                  <Label fx:id="lable_meetingTime" layoutX="40.0" layoutY="54.0" text="MØDE INTERVAL" textFill="WHITE" />
+                  <Label fx:id="lable_meetingDate" layoutX="40.0" layoutY="71.0" text="MØDE DATO" textFill="WHITE" />
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="408.0">
+                     <children>
+                        <Button fx:id="button_back" mnemonicParsing="false" onAction="#onButton_Back" text="Tilbage" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <VBox.margin>
+                        <Insets right="30.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets left="30.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+         <padding>
+            <Insets top="30.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
