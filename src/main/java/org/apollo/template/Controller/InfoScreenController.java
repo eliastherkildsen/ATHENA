@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.BookingInformation;
@@ -20,6 +21,7 @@ import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.ReservedRoomsVBox;
 import org.apollo.template.View.ViewList;
 
+import java.awt.*;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -45,12 +47,14 @@ public class InfoScreenController implements Initializable {
 
         //Setting up the view with a Vbox
         VBox mainVbox = new VBox();
+        mainVbox.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
         mainVbox.setAlignment(Pos.CENTER);
 
         //MinMax required on root to display all information correctly.
         root.setMinHeight(700);
         root.setMinWidth(800);
         root.getChildren().add(mainVbox);
+        root.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
 
         //Ensuring VBox is Center to AnchorPane
         root.setTopAnchor(mainVbox, 0.0);
@@ -98,37 +102,40 @@ public class InfoScreenController implements Initializable {
             }
 
         } catch (SQLException e) {
+            LoggerMessage.warning(this,"Have you installed, ");
             LoggerMessage.error(this,"Stored Procedure : GetBookingsByDate didn't run as intended " + e.getMessage());
             throw new RuntimeException(e);
         }
 
-
         //If we got something from our stored Procedure we'll display that to the user.
         if (meetingsFound) {
             LoggerMessage.info(this,"Displaying results of today's bookings.");
-            ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(booking);
-            //Setting up ScrolLPane
-            ScrollPane spane = new ScrollPane();
-            spane.setFitToWidth(true);
-            spane.getStyleClass().add("edge-to-edge"); //Remove 'edge' around scrollPane
-            spane.setContent(vboxRooms);
 
-            mainVbox.getChildren().add(spane);
+            laberGenerator(mainVbox,"Dagens Møder og Bookinger:",40,Pos.CENTER_LEFT);
+            //Setting up ScrolLPane
+            ScrollPane sPane = new ScrollPane();
+            sPane.setFitToWidth(true);
+            sPane.getStyleClass().add("edge-to-edge"); //Remove 'edge' around scrollPane
+            sPane.getStyleClass().add("custom-scroll-pane");
+            sPane.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
+
+            //Populate the ScrollPane with my Bookings.
+            ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(booking);
+            sPane.setContent(vboxRooms);
+
+            //Add Scrollpane to the scene
+            mainVbox.getChildren().add(sPane);
+            System.out.println("ScrollPane style: " + sPane.getStyle());
 
         } else {
             //Otherwise let's inform them nothing was found.
 
-            Label noresult = new Label("No Meetings Today");
-            noresult.setText("No Planned Meetings Today");
-            noresult.setFont(Font.font(40));
-            mainVbox.getChildren().add(noresult);
-            noresult.setAlignment(Pos.CENTER);
-
+            laberGenerator(mainVbox,"Ingen planlagte møder/bookinger i dag.", 40, Pos.CENTER);
         }
 
         //Adding our button at the bottom of the screen.
         bookRoomToday(mainVbox);
-
+        //mainVbox.setStyle("-fx-background-color: rgba(0, 159, 227, 1);");
         LoggerMessage.info(this,"InfoView initialized");
     }
 
@@ -148,6 +155,22 @@ public class InfoScreenController implements Initializable {
         });
 
         pane.getChildren().add(bookButton);
+    }
+
+    /**
+     *
+     * @param container
+     * @param labelText
+     * @param fontSize
+     * @param alignment
+     */
+    public void laberGenerator(Pane container, String labelText, int fontSize, Pos alignment ){
+        Label label = new Label();
+        label.setText(labelText);
+        label.setTextFill(Paint.valueOf("WHITE"));
+        label.setFont(Font.font(fontSize));
+        container.getChildren().add(label);
+        label.setAlignment(alignment);
     }
 
 
