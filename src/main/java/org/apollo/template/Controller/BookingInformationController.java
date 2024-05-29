@@ -17,7 +17,6 @@ import org.apollo.template.Service.TextFieldInputValidation;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.*;
-
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

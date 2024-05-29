@@ -15,6 +15,10 @@ import javafx.scene.text.FontWeight;
  * BookingComp is a compont that builds a HBox with the infromation we want displayed.
  */
 public class BookingComp extends HBox {
+
+    private int bookingID;
+    private BookingCompColors bookingCompColor;
+
     /**
      * BookingComp builds an HBox with the information and format we require.
      * @param roomName String
@@ -23,6 +27,7 @@ public class BookingComp extends HBox {
      * @param startAndEndTime String
      */
     public BookingComp(String roomName, String userName, String meetingType, String startAndEndTime){
+
         ScrollPane spane = new ScrollPane();
 
         Label labelBookingRoom = buildLabel(roomName, 18, FontWeight.BOLD);
@@ -37,6 +42,37 @@ public class BookingComp extends HBox {
         this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: #009FE3; -fx-background-radius: 40");
         this.getChildren().addAll(labelBookingRoom, addPane(), labelBookingName, addPane(), labelBookerName, addPane(), labelBookingTime);
+    }
+
+    public BookingComp(String roomName, String userName, String meetingType, String startAndEndTime, int bookingID){
+        ScrollPane spane = new ScrollPane();
+
+        Label labelBookingRoom = buildLabel(roomName, 18, FontWeight.BOLD);
+
+        Label labelBookerName = buildLabel(userName, 18, FontWeight.NORMAL);
+
+        Label labelBookingName = buildLabel(meetingType, 18, FontWeight.NORMAL);
+
+        Label labelBookingTime = buildLabel(startAndEndTime, 18, FontWeight.NORMAL);
+
+        // setting booking comp color.
+        setBookingCompColor(BookingCompColors.NORMAL);
+
+        this.setMinHeight(35);
+        this.setAlignment(Pos.CENTER);
+        this.setStyle("-fx-background-color: "+ this.bookingCompColor.getColor() + "; -fx-background-radius: 40");
+        this.getChildren().addAll(labelBookingRoom, addPane(), labelBookingName, addPane(), labelBookerName, addPane(), labelBookingTime);
+
+        this.bookingID = bookingID;
+    }
+
+    public int getBookingID() {
+        return bookingID;
+    }
+
+    public void setBookingCompColor(BookingCompColors bookingCompColor) {
+        this.bookingCompColor = bookingCompColor;
+        this.setStyle("-fx-background-color: "+ this.bookingCompColor.getColor() + "; -fx-background-radius: 40");
     }
 
     /**
