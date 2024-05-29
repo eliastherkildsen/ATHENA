@@ -1,4 +1,4 @@
-package org.apollo.template.persistence;
+package org.apollo.template.persistence.PubSub;
 
 import org.apollo.template.Model.BookingInformation;
 

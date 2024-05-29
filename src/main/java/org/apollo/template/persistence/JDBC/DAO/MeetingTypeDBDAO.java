@@ -1,4 +1,4 @@
-package org.apollo.template.persistence;
+package org.apollo.template.persistence.JDBC.DAO;
 
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Service.Logger.LoggerMessage;

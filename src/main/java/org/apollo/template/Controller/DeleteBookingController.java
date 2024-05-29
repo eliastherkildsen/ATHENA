@@ -1,7 +1,5 @@
 package org.apollo.template.Controller;
 
-import com.sun.tools.javac.Main;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,14 +16,16 @@ import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.BookingComp;
 import org.apollo.template.View.UI.BookingCompColors;
 import org.apollo.template.View.ViewList;
-import org.apollo.template.persistence.BookingInformationDAO;
-import org.apollo.template.persistence.DAO;
+import org.apollo.template.persistence.JDBC.DAO.BookingInformationDAO;
+import org.apollo.template.persistence.JDBC.DAO.DAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.apollo.template.persistence.JDBC.StoredProcedure.LoadbookedRoomsByEmail.loadBookedRoomsByEmail;
 
 public class DeleteBookingController {
 
@@ -83,28 +83,15 @@ public class DeleteBookingController {
         if (!validateEnteredEmail(email)) return;
 
         // load booked rooms by email
-        loadBookedRoomsByEmail(email);
-
-    }
-
-    /**
-     * Method for findeing bookings by email. calls method for loading thies,
-     * @param email String
-     */
-    private void loadBookedRoomsByEmail(String email) {
-        ResultSet rs;
-
-        // load all bookings from user email
         try {
-            PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC FindbookingByEmail @EmailAddress = ? ");
-            ps.setString(1, email);
-            rs = ps.executeQuery();
-            loadBookedRooms(rs);
-            rs.close();
+            loadBookedRooms(loadBookedRoomsByEmail(email));
         } catch (SQLException e) {
-            LoggerMessage.error(this, "in onButton_search; An error occurred " + e.getMessage());
+            throw new RuntimeException(e);
         }
+
     }
+
+
 
     /**
      * Method for validating emails
