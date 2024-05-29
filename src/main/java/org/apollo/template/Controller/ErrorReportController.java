@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.apollo.template.Model.Email;
 import org.apollo.template.Model.InventoryItems;
+import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.EmailValidator;
@@ -14,6 +15,7 @@ import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 import org.apollo.template.persistence.JDBC.DAO.InventoryItemDAO;
+import org.apollo.template.persistence.JDBC.DAO.RoomDAODB;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,6 +32,9 @@ public class ErrorReportController implements Initializable {
     private ChoiceBox<InventoryItems> inventoryItemsChoiceBox;
 
     @FXML
+    private ChoiceBox<Room> roomChoiceBox;
+
+    @FXML
     private ListView<InventoryItems> inventoryItemsListView;
 
     @FXML
@@ -44,6 +49,7 @@ public class ErrorReportController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         // setting lable for max characters in the description text area.
         lable_maxChar.setText("/" + MAX_CHARS + " Tegn");
 
@@ -54,8 +60,13 @@ public class ErrorReportController implements Initializable {
                         textArea_description.textProperty()
                 )
         );
+        // load inventory cb
         loadInventoryItems();
+
+        // load room cb
+        loadRoomData();
     }
+
 
     @FXML
     protected void onButton_back(){
@@ -129,6 +140,17 @@ public class ErrorReportController implements Initializable {
         //loading items into choisbox
         inventoryItemsChoiceBox.getItems().addAll(inventoryItemsDAO.readAll());
 
-
     }
+
+    private void loadRoomData() {
+        // clearing room choice box to prevent replica data.
+        roomChoiceBox.getItems().clear();
+
+        // creating dao.
+        DAO<Room> roomDAO = new RoomDAODB();
+
+        //loading items into choisbox
+        roomChoiceBox.getItems().addAll(roomDAO.readAll());
+    }
+
 }
