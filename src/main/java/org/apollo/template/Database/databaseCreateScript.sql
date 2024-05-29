@@ -50,6 +50,7 @@ CREATE TABLE tbl_errorReport(
     fld_reportDate DATE NOT NULL,
     fld_inventoryID INTEGER,
     fld_userID INTEGER,
+    fld_reportDescription VARCHAR(264),
 
     FOREIGN KEY (fld_inventoryID) REFERENCES tbl_inventory (fld_inventoryID),
     FOREIGN KEY (fld_userID) REFERENCES tbl_userEmail(fld_userID)
