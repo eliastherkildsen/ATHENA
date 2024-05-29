@@ -153,16 +153,16 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 bookingInformation = new BookingInformation(
-                        rs.getString("fld_startTime"),
-                        rs.getString("fld_endTime"),
-                        rs.getDate("fld_date"),
+                        rs.getInt("fld_bookingID"),
                         rs.getInt("fld_catering"),
                         rs.getInt("fld_numberOfParticipants"),
-                        rs.getString("fld_userName"),
-
                         rs.getInt("fld_roomID"),
+                        rs.getInt("fld_teamID"),
                         rs.getInt("fld_departmentID"),
-                        rs.getInt("fld_teamID")
+                        rs.getString("fld_userName"),
+                        rs.getString("fld_startTime"),
+                        rs.getString("fld_endTime"),
+                        rs.getDate("fld_date")
                 );
             }
         } catch (SQLException e) {
@@ -196,15 +196,16 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             rs = ps.executeQuery();
             while (rs.next()) {
                 BookingInformation bookingInformation = new BookingInformation(
-                        rs.getString("fld_startTime"),
-                        rs.getString("fld_endTime"),
-                        rs.getDate("fld_date"),
+                        rs.getInt("fld_bookingID"),
                         rs.getInt("fld_catering"),
                         rs.getInt("fld_numberOfParticipants"),
-                        rs.getString("fld_userName"),
                         rs.getInt("fld_roomID"),
+                        rs.getInt("fld_teamID"),
                         rs.getInt("fld_departmentID"),
-                        rs.getInt("fld_teamID")
+                        rs.getString("fld_userName"),
+                        rs.getString("fld_startTime"),
+                        rs.getString("fld_endTime"),
+                        rs.getDate("fld_date")
                 );
                 bookingList.add(bookingInformation);
             }
