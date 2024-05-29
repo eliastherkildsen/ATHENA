@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.AvailableRoom;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Logger.LoggerMessage;
@@ -18,6 +17,7 @@ import org.apollo.template.persistence.PubSub.MessagesBroker;
 import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,7 +28,6 @@ public class AvailableRoomsController implements Initializable {
     @FXML
     private VBox vbox_Listview;
 
-    private AvailableComponent availableComponent;
     private BookingInformation bookingInformation = new BookingInformation();
 
 
@@ -36,45 +35,65 @@ public class AvailableRoomsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         // getting today's date
-        //Date dateToday = Date.valueOf(LocalDate.now());
-        Date dateToday = Date.valueOf("2024-05-28");
+        Date dateToday = Date.valueOf(LocalDate.now());
 
         // search for available rooms today's date and saves them as a List
         List<AvailableRoom> roomsAvailableToday = GetAvailableRooms.getAvailableRooms(dateToday);
 
-        // indsæt
+        // inserts available rooms into custom components and adds these components to the view
         insertComponents(roomsAvailableToday);
-
     }
 
 
     /**
-     *
-     * @param availableRooms
+     * Method for inserting available rooms into custom components and adding them to the view.
+     * Each component is also associated with a booking button and its corresponding action.
+     * @param availableRooms the list of available rooms today's date
      */
     private void insertComponents(List<AvailableRoom> availableRooms) {
 
-        for (AvailableRoom availableRoom : availableRooms) {
-            AvailableComponent availableComponent = new AvailableComponent(availableRoom);
-
-            vbox_Listview.getChildren().add(availableComponent);
-
-            Button button_book = availableComponent.getButton();
-            button_book.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-
-                    // create bookingInformation obj.
-                    bookingInformation.setRoomId(availableRoom.getRoomID());
-
-                    // sending the user to booking complite view.
-                    MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);
-
-                    // publish bookingInformation obj.
-                    MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
-
-                }
-            });
+        if (availableRooms.isEmpty()){
+            LoggerMessage.info(this, "No available rooms");
         }
+        else {
+            for (AvailableRoom availableRoom : availableRooms) {
+
+                // creates a custom component object using the available room object
+                AvailableComponent availableComponent = new AvailableComponent(availableRoom);
+
+                // adds the custom component to the view
+                vbox_Listview.getChildren().add(availableComponent);
+
+                Button button_book = availableComponent.getButton();
+                button_bookOnAction(button_book, availableRoom);
+            }
+
+            LoggerMessage.debug(this, "Available rooms added to view");
+        }
+    }
+
+
+    /**
+     * This method sets the action for the booking button to handle room booking events.
+     * @param button_book the button that will trigger the booking action
+     * @param availableRoom the room object that is available for booking
+     */
+    private void button_bookOnAction(Button button_book, AvailableRoom availableRoom) {
+
+        button_book.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                // create booking information object
+                bookingInformation.setRoomId(availableRoom.getRoomID());
+
+                // sending the user to choose time view
+                MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);
+
+                // publish booking information object
+                MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
+            }
+        });
+
     }
 }

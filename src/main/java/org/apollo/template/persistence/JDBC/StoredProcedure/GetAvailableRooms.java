@@ -3,7 +3,6 @@ package org.apollo.template.persistence.JDBC.StoredProcedure;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.AvailableRoom;
 import org.apollo.template.Service.Logger.LoggerMessage;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
