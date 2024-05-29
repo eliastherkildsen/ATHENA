@@ -39,9 +39,9 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             ps.setInt(4, bookingInformation.isCateringBit());
             ps.setInt(5, bookingInformation.getNumberOfParticipants());
             ps.setString(6, bookingInformation.getUserName());
-            //ps.setInt(7, bookingInformation.getUserId());
+            ps.setInt(7, bookingInformation.getUserID());
             ps.setInt(8, bookingInformation.getRoomId());
-            //ps.setInt(9, bookingInformation.getMeetingTypeId());
+            ps.setInt(9, bookingInformation.getMeetingTypeID());
             ps.setInt(10, bookingInformation.getDepartmentID());
             ps.setInt(11, bookingInformation.getTeamId());
             ps.executeUpdate();
@@ -115,9 +115,9 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             ps.setInt(4, bookingInformation.isCateringBit());
             ps.setInt(5, bookingInformation.getNumberOfParticipants());
             ps.setString(6, bookingInformation.getUserName());
-            //ps.setInt(7, bookingInformation.getUserId());
+            ps.setInt(7, bookingInformation.getUserID());
             ps.setInt(8, bookingInformation.getRoomId());
-            //ps.setInt(9, bookingInformation.getMeetingTypeId());
+            ps.setInt(9, bookingInformation.getMeetingTypeID());
             ps.setInt(10, bookingInformation.getDepartmentID());
             ps.setInt(11, bookingInformation.getTeamId());
             ps.setInt(12, bookingInformation.getBookingId());
@@ -153,16 +153,18 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 bookingInformation = new BookingInformation(
-                        rs.getString("fld_startTime"),
-                        rs.getString("fld_endTime"),
-                        rs.getDate("fld_date"),
+                        rs.getInt("fld_bookingID"),
                         rs.getInt("fld_catering"),
                         rs.getInt("fld_numberOfParticipants"),
-                        rs.getString("fld_userName"),
-
                         rs.getInt("fld_roomID"),
+                        rs.getInt("fld_teamID"),
+                        rs.getInt("fld_userID"),
+                        rs.getInt("fld_meetingTypeID"),
                         rs.getInt("fld_departmentID"),
-                        rs.getInt("fld_teamID")
+                        rs.getString("fld_userName"),
+                        rs.getString("fld_startTime"),
+                        rs.getString("fld_endTime"),
+                        rs.getDate("fld_date")
                 );
             }
         } catch (SQLException e) {
@@ -196,15 +198,18 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             rs = ps.executeQuery();
             while (rs.next()) {
                 BookingInformation bookingInformation = new BookingInformation(
-                        rs.getString("fld_startTime"),
-                        rs.getString("fld_endTime"),
-                        rs.getDate("fld_date"),
+                        rs.getInt("fld_bookingID"),
                         rs.getInt("fld_catering"),
                         rs.getInt("fld_numberOfParticipants"),
-                        rs.getString("fld_userName"),
                         rs.getInt("fld_roomID"),
+                        rs.getInt("fld_teamID"),
+                        rs.getInt("fld_userID"),
+                        rs.getInt("fld_meetingTypeID"),
                         rs.getInt("fld_departmentID"),
-                        rs.getInt("fld_teamID")
+                        rs.getString("fld_userName"),
+                        rs.getString("fld_startTime"),
+                        rs.getString("fld_endTime"),
+                        rs.getDate("fld_date")
                 );
                 bookingList.add(bookingInformation);
             }

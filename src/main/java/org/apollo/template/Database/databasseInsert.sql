@@ -190,6 +190,7 @@ BEGIN
 
     -- Selects selected fields from 3 tables related to each other using INNER JOIN and LEFT JOIN - these are to be presented when displaying available rooms
     SELECT
+        tbl_room.fld_roomID,
         tbl_room.fld_roomName,
         tbl_room.fld_floor,
         tbl_room.fld_roomMaxPersonCount,
@@ -204,8 +205,9 @@ BEGIN
     WHERE
         BookedTime.total_booked_time_minutes < 480 OR BookedTime.total_booked_time_minutes IS NULL
 
-    -- Groups the results by four columns to ensure that we only see each room once in the list, even if there are multiple bookings on the selected day.
+    -- Groups the results by five columns to ensure that we only see each room once in the list, even if there are multiple bookings on the selected day.
     GROUP BY
+        tbl_room.fld_roomID,
         tbl_room.fld_roomName,
         tbl_room.fld_floor,
         tbl_roomType.fld_roomTypeName,
