@@ -5,23 +5,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.Email;
 import org.apollo.template.Model.MeetingType;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.EmailValidator;
-import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.Service.TextFieldInputValidation;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
-import org.apollo.template.persistence.*;
+import org.apollo.template.persistence.JDBC.DAO.DAO;
+import org.apollo.template.persistence.JDBC.DAO.MeetingTypeDBDAO;
+import org.apollo.template.persistence.JDBC.StoredProcedure.AddEmailIfNotExists;
+import org.apollo.template.persistence.PubSub.MessagesBroker;
+import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
+import org.apollo.template.persistence.PubSub.Subscriber;
 
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class BookingInformationController implements Initializable, Subscriber {
@@ -108,20 +108,11 @@ public class BookingInformationController implements Initializable, Subscriber {
             return;
         }
 
-        // check if email exists in the database and creates it if not through SP.
-        // TODO: placing SQL in the controller? needs second opinion.
-        try {
-            PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC AddEmailIfNotExists @EmailAddress = ?");
-            ps.setString(1, textField_email.getText());
-            ResultSet rs = ps.executeQuery();
-            LoggerMessage.debug(this, "JDBC: " + rs.next());
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
         // creating email
         Email email = new Email(textField_email.getText());
+
+        // check if email exists in the database and creates it if not through SP.
+        AddEmailIfNotExists.addEmailIfNotExists(email);
 
         // converting textfield_numberOfParticipants to int.
         int numberOfParticipants = Integer.valueOf(textfield_numberOfParticipants.getText());

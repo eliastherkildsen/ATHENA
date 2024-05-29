@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.apollo.template.View.UI.AlertComp;
+import org.apollo.template.View.UI.AlertCompMessage;
 
 /**
  * The Alert class provides functionality to display alerts on a JavaFX StackPane.

@@ -1,63 +1,48 @@
 package org.apollo.template.View.UI;
 
-import javafx.scene.control.TextArea;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import org.apollo.template.Service.Alert.AlertType;
 
-public class AlertComp extends TextArea {
-
-    private final int MIN_HEIGHT = 100;
-    private final int MIN_WIDTH = 300;
-    private final int MAX_WIDTH = 300;
-    private final int LINE_SIZE_IN_PX = 21; // the amount the text area grows with for each "\n" in the message.
+public class AlertComp extends VBox{
+    Label label = new Label();
 
     public AlertComp(AlertType alertType, String message) {
+        AlertCompMessage alert = new AlertCompMessage(alertType, message);
 
-        // setting text of the Text area.
-        super(message);
+        label.setText(String.valueOf(alertType));
+        label.setFont(Font.font(15));
+        label.setAlignment(Pos.CENTER);
 
-        int totalNumberOfLines = getLineCount();
+        applyStyle(alertType);
 
-        setMouseTransparent(true); // Enable ensures that the client can not interact with the alert.
-        setWrapText(true);         // Enable text wrapping
-        applyStyle(alertType);     // setting css props.
+        this.getChildren().addAll(label,alert);
+        this.setAlignment(Pos.CENTER);
 
-        // setting max width to keep the alert component stay consistent on its width property.
-        setMaxWidth(MAX_WIDTH);
-        setMinWidth(MIN_WIDTH);
+        //We have to magic number a bit here to ensure that all of the text field gets in.
+        this.setMinHeight(alert.getMIN_HEIGHT() + 25);
+        this.setMaxHeight(alert.getMax_Height());
 
-
-        // setting height constraints.
-        setMaxHeight(LINE_SIZE_IN_PX * totalNumberOfLines); // Allow the TextArea to shrink if needed
-        setMinHeight(MIN_HEIGHT);
-
+        //We have to magic number a bit here to ensure that all of the text field gets in.
+        this.setMinWidth(alert.getMIN_WIDTH() + 25);
+        this.setMaxWidth(alert.getMAX_WIDTH() + 25);
     }
 
-    /**
-     * Get the number of lines in the TextArea.
-     * @return The number of lines.
-     */
-    public int getLineCount() {
-        String text = getText();
-        if (text == null || text.isEmpty()) {
-            return 0;
-        }
-        return text.split("\n", -1).length;
-    }
-
-    /**
-     * Method for loading the right style on the AlertComponent.
-     * @param alertType associated value for determining the style to be used.
-     */
     private void applyStyle(AlertType alertType) {
         switch (alertType) {
             case ERROR:
                 getStyleClass().add("alertError");
+                label.getStyleClass().add("alertError");
                 break;
             case SUCCESS:
                 getStyleClass().add("alertSuccess");
+                label.getStyleClass().add("alertSuccess");
                 break;
             case INFO:
                 getStyleClass().add("alertInfo");
+                label.getStyleClass().add("alertInfo");
                 break;
         }
 

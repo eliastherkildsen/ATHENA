@@ -1,31 +1,63 @@
 .alertError {
-    -fx-background-color: #ff073a;
+    -fx-background-color: rgba(79, 79, 79, 0.8);
     -fx-background-radius: 40;
     -fx-border-radius: 40;
-    -fx-border-color: #ff073a;
+    -fx-border-color: rgba(79, 79, 79, 1);
     -fx-padding: 10px; /* Add padding to the text */
+    -fx-text-fill: white; /* Set text color to white */
+}
 
+.alertError .label {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-padding: 0; /* Add padding to the text */
+    -fx-text-fill: WHITE; /* Set text color to white */
 }
 
 .alertSuccess {
-    -fx-background-color: #02e302;
+    -fx-background-color: rgba(39, 230, 118, 0.8);
     -fx-background-radius: 40;
     -fx-border-radius: 40;
-    -fx-border-color: #02e302;
+    -fx-border-color: rgba(39, 230, 118, 1);
     -fx-padding: 10px; /* Add padding to the text */
 
+}
+
+.alertSuccess .label {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-padding: 0; /* Add padding to the text */
+    -fx-text-fill: WHITE; /* Set text color to white */
 }
 
 .alertInfo {
-    -fx-background-color: #FFFF00;
+    -fx-background-color: rgba(0, 159, 227, 0.8);
     -fx-background-radius: 40;
     -fx-border-radius: 40;
-    -fx-border-color: #FFFF00;
+    -fx-border-color: rgba(0, 159, 227, 1);
     -fx-padding: 10px; /* Add padding to the text */
 }
 
+.alertInfo .label {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-padding: 0; /* Add padding to the text */
+    -fx-text-fill: WHITE; /* Set text color to white */
+}
+
+.alertText {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
 .text-area {
-    -fx-text-fill: black;
+    -fx-text-fill: WHITE;
 }
 
 

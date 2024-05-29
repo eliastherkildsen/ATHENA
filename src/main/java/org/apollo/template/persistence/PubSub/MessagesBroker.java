@@ -1,7 +1,6 @@
-package org.apollo.template.persistence;
+package org.apollo.template.persistence.PubSub;
 
 import javafx.util.Pair;
-import org.apollo.template.Controller.BookingCompliteController;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import java.util.ArrayList;
