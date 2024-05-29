@@ -40,24 +40,6 @@ public class ChooseTimeController implements Initializable {
                 String selectedTime = button.getText();
                 handleTimeSelection(selectedTime);
 
-//                if (label_StartTime.getText().isEmpty()){
-//                    label_StartTime.setText(button.getText());
-//
-//                } else if (label_StartTime.getText().hashCode() < button.getText().hashCode()){
-//                    label_EndTime.setText(button.getText());
-//
-//                } else if (label_EndTime.getText().isEmpty() ){
-//                    label_EndTime.setText(label_StartTime.getText());
-//                    label_StartTime.setText(button.getText());
-//
-//                } else if (label_StartTime.getText().hashCode() > button.getText().hashCode()){
-//                    label_StartTime.setText(button.getText());
-//
-//                } else if (label_EndTime.getText().hashCode() < button.getText().hashCode()){
-//                    label_EndTime.setText(button.getText());
-//                }
-
-
             });
 
             gridPane_ButtonGrid.add(button, cnt%4, cnt/4);
