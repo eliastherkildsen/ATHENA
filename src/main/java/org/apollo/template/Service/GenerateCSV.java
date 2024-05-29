@@ -6,6 +6,8 @@ import org.apollo.template.Service.Logger.LoggerMessage;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,12 @@ public class GenerateCSV {
         BufferedWriter bufferedWriter = null;
         try {
             LoggerMessage.debug(this, "Attempting to Generate CSV File");
+
+            LocalDateTime dateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+            this.csvFilePath = "booking_information_" + dateTime.format(formatter) + ".csv";
+
+
             FileWriter writer = new FileWriter(csvFilePath);
             bufferedWriter = new BufferedWriter(writer);
 
