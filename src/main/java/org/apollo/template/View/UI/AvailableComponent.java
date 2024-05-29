@@ -18,6 +18,11 @@ public class AvailableComponent extends HBox {
     private AvailableRoom availableRoom;
     private Button button;
 
+
+    /**
+     * Builds the Available component
+     * @param availableRoom the room object that is available for booking
+     */
     public AvailableComponent(AvailableRoom availableRoom){
 
         this.availableRoom = availableRoom;
@@ -28,9 +33,8 @@ public class AvailableComponent extends HBox {
         Label label_personKap = buildLabel(String.format("Person kapacitet: %d", availableRoom.getPersonKapacity()), 18, FontWeight.NORMAL);
         Label label_roomType = buildLabel(String.format("Type: %s", availableRoom.getRoomType()), 16, FontWeight.NORMAL);
 
-        // creates button to book the room
+        // creates button with button text
         button = createButton("BOOK");
-
 
         // sets up the main hBox
         this.setMinHeight(35);
@@ -41,6 +45,13 @@ public class AvailableComponent extends HBox {
     }
 
 
+    /**
+     * This method creates the label to be displayed in the HBox with the specified text, font size, and font weight.
+     * @param text the text to be displayed in the label
+     * @param fontSize the fontSize of the text
+     * @param fontWeight the fontWeight of the text (e.g., FontWeight.NORMAL, FontWeight.BOLD)
+     * @return a Label with a given text a given fontSize and a given fontWeight
+     */
     private Label buildLabel(String text, int fontSize, FontWeight fontWeight) {
 
         Label label = new Label(text);
@@ -50,6 +61,12 @@ public class AvailableComponent extends HBox {
         return label;
     }
 
+
+    /**
+     * This method creates a button with a button text
+     * @param buttonText the text to be displayed on the button
+     * @return the created button
+     */
     private Button createButton(String buttonText){
         Button button = new Button(buttonText);
         button.setPrefHeight(33.6);
@@ -58,11 +75,17 @@ public class AvailableComponent extends HBox {
         return button;
     }
 
+
+    /**
+     * This method creates a pane
+     * @return the created pane
+     */
     private Pane addPane (){
         Pane pane = new Pane();
         this.setHgrow(pane, Priority.ALWAYS);
         return pane;
     }
+
 
     public Button getButton() {
         return button;
