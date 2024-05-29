@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AvailableRoomsController implements Initializable, Subscriber {
+public class AvailableRoomsController implements Initializable {
 
     //TODO: remember temporarily button in HomeController
 
@@ -90,6 +90,7 @@ public class AvailableRoomsController implements Initializable, Subscriber {
 
                     // publish bookingInformation obj.
                     MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
+
                 }
             });
 
@@ -140,10 +141,5 @@ public class AvailableRoomsController implements Initializable, Subscriber {
             }
 
 
-            @Override
-            public void update (BookingInformation bookingInformation){
 
-                this.bookingInformation = bookingInformation;
-
-            }
 }
