@@ -7,9 +7,9 @@ import javafx.scene.control.Label;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
-import org.apollo.template.persistence.MessagesBroker;
-import org.apollo.template.persistence.MessagesBrokerTopic;
-import org.apollo.template.persistence.Subscriber;
+import org.apollo.template.persistence.PubSub.MessagesBroker;
+import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
+import org.apollo.template.persistence.PubSub.Subscriber;
 
 import java.net.URL;
 import java.util.ResourceBundle;
