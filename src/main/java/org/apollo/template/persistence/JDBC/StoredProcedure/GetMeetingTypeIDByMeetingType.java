@@ -1,25 +1,24 @@
 package org.apollo.template.persistence.JDBC.StoredProcedure;
 
 import org.apollo.template.Database.JDBC;
-import org.apollo.template.Model.Email;
+import org.apollo.template.Model.MeetingType;
 import org.apollo.template.Service.Logger.LoggerMessage;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GetEmailIDByEmailAdress {
+public class GetMeetingTypeIDByMeetingType {
 
-    public static int getEmailIDByEmailName(Email email){
+    public static int getMeetingTypeIDByMeetingType(MeetingType meetingType){
         ResultSet rs;
 
-        // load all bookings from user email
         try {
-            PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC getEmailIDByEmailAdress @emailAdress = ? ");
-            ps.setString(1, email.getEmail());
+            PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC getMeetingTypeIDByMeetingType @meetingType = ? ");
+            ps.setString(1, meetingType.getMeetingType());
             rs = ps.executeQuery();
             while (rs.next()){
-                return rs.getInt("fld_userID");
+                return rs.getInt("fld_meetingTypeID");
             }
         } catch (SQLException e) {
 
@@ -28,7 +27,4 @@ public class GetEmailIDByEmailAdress {
 
         return -1;
     }
-
 }
-
-

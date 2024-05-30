@@ -14,9 +14,12 @@ import org.apollo.template.Service.EmailValidator;
 import org.apollo.template.Service.TextFieldInputValidation;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
+import org.apollo.template.persistence.JDBC.DAO.BookingInformationDAO;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 import org.apollo.template.persistence.JDBC.DAO.MeetingTypeDBDAO;
 import org.apollo.template.persistence.JDBC.StoredProcedure.AddEmailIfNotExists;
+import org.apollo.template.persistence.JDBC.StoredProcedure.GetEmailIDByEmailAdress;
+import org.apollo.template.persistence.JDBC.StoredProcedure.GetMeetingTypeIDByMeetingType;
 import org.apollo.template.persistence.PubSub.MessagesBroker;
 import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
 import org.apollo.template.persistence.PubSub.Subscriber;
@@ -35,6 +38,8 @@ public class BookingInformationController implements Initializable, Subscriber {
     @FXML
     private ChoiceBox<MeetingType> choiceBox_meetingType;
     private BookingInformation bookingInformation;
+
+    private boolean adhocBool = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,6 +71,7 @@ public class BookingInformationController implements Initializable, Subscriber {
         choiceBox_meetingType.getItems().addAll(dao.readAll());
     }
 
+
     @Override
     public void update(BookingInformation bookingInformation) {
 
@@ -73,6 +79,7 @@ public class BookingInformationController implements Initializable, Subscriber {
 
 
     }
+
 
     // region buttons
 
@@ -126,6 +133,26 @@ public class BookingInformationController implements Initializable, Subscriber {
         System.out.println(bookingInformation.getStartTime());
         System.out.println(bookingInformation.getEndTime());
         System.out.println("UPDATING");
+
+        // Check if adhoc
+        if (adhocBool) {
+            // Sets the department to adhoc
+            bookingInformation.setDepartmentID(2);
+            // Sets the team to anonymous
+            bookingInformation.setTeamId(2);
+        }
+
+        // Inserts the meetingTypeID
+        bookingInformation.setMeetingTypeID(GetMeetingTypeIDByMeetingType.
+                getMeetingTypeIDByMeetingType(bookingInformation.getMeetingType()));
+
+        // Inserts the userID
+        bookingInformation.setUserID(GetEmailIDByEmailAdress.getEmailIDByEmailName(email));
+        System.out.println(bookingInformation.toString());
+
+        DAO<BookingInformation> bookingInformationDAO = new BookingInformationDAO();
+        bookingInformationDAO.add(bookingInformation);
+        System.out.println("Booking inserted");
 
         // sending the user to booking complite view.
         MainController.getInstance().setView(ViewList.BOOKINGCOMPLITE, BorderPaneRegion.CENTER);
