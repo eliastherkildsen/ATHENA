@@ -35,7 +35,7 @@ public class GetAvailableRooms {
 
                 AvailableRoom availableRoom = new AvailableRoom(rs.getInt("fld_roomID"),
                                                                 rs.getString("fld_roomName"),
-                                                                rs.getString("fld_floor"),
+                                                                rs.getInt("fld_floor"),
                                                                 rs.getString("fld_roomTypeName"),
                                                                 rs.getInt("fld_roomMaxPersonCount"));
 

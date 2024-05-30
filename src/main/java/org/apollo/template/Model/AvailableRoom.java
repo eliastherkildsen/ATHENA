@@ -1,15 +1,15 @@
 package org.apollo.template.Model;
 
-public class AvailableRoom {
+public class AvailableRoom extends Room{
 
     private int roomID;
     private String roomName;
-    private String floor;
+    private int floor;
     private String roomType;
     private int personKapacity;
 
 
-    public AvailableRoom(int roomID, String roomName, String floor, String roomType, int personKapacity) {
+    public AvailableRoom(int roomID, String roomName, int floor, String roomType, int personKapacity) {
         this.roomID = roomID;
         this.roomName = roomName;
         this.floor = floor;
@@ -32,11 +32,11 @@ public class AvailableRoom {
         this.roomName = roomName;
     }
 
-    public String getFloor() {
+    public int getFloor() {
         return floor;
     }
 
-    public void setFloor(String floor) {
+    public void setFloor(int floor) {
         this.floor = floor;
     }
 
@@ -64,7 +64,7 @@ public class AvailableRoom {
      * @return a string containing information about the room (name, floor, type, and capacity)
      */
     public String toString(){
-        return String.format("Lok. %s - %s. Sal - Lok. type: %s - Person kapacitet: %d", roomName, floor, roomType, personKapacity);
+        return String.format("Lok. %s - %d. Sal - Lok. type: %s - Person kapacitet: %d", roomName, floor, roomType, personKapacity);
     }
 
 }
