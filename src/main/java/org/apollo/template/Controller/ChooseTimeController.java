@@ -208,7 +208,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
             }
 
         } catch (SQLException e){
-            LoggerMessage.error(this, "Error in checkIfStartTime");
+            LoggerMessage.error(this, "Error in checkIfStartTime: \n" + e.getMessage());
         }
 
         return false;
@@ -250,7 +250,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
             }
 
         }catch (SQLException e){
-            LoggerMessage.error(this, "Error in setRoomNameLabel");
+            LoggerMessage.error(this, "Error in setRoomNameLabel: \n" + e.getMessage());
         }
 
     }
