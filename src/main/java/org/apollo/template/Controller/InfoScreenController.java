@@ -101,6 +101,7 @@ public class InfoScreenController implements Initializable {
                     booking.add(reservation);
                     //LoggerMessage.debug(this, "ResultSet : " + rs.getString("fld_userName"));
                     LoggerMessage.debug(this, "Size of ArrayList : " + booking.size());
+                    LoggerMessage.info(this,"Arraylist Created.");
                 } while (rs.next());
             }
 
@@ -128,7 +129,6 @@ public class InfoScreenController implements Initializable {
 
             //Add Scrollpane to the scene
             mainVbox.getChildren().add(sPane);
-            System.out.println("ScrollPane style: " + sPane.getStyle());
 
         } else {
             //Otherwise let's inform them nothing was found.
