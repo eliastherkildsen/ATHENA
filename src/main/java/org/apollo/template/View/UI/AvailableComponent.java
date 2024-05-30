@@ -10,7 +10,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import org.apollo.template.Model.AvailableRoom;
 import org.apollo.template.Model.Room;
 
 
