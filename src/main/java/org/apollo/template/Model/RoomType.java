@@ -5,6 +5,8 @@ public class RoomType {
     private String roomTypeName;
     private String roomTypeDescription;
 
+    public RoomType(){}
+
     public RoomType(int roomTypeID, String roomTypeName, String roomTypeDescription) {
         this.roomTypeID = roomTypeID;
         this.roomTypeName = roomTypeName;

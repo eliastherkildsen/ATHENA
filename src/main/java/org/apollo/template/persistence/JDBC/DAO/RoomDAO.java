@@ -47,8 +47,8 @@ public class RoomDAO implements DAO<Room> {
     public void delete(Room room) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("DELETE FROM tbl_room WHERE fld_roomName = ?");
-            ps.setString(1, room.getRoomName());
+            ps = conn.prepareStatement("DELETE FROM tbl_room WHERE fld_roomID = ?");
+            ps.setInt(1, room.getRoomId());
             ps.executeQuery();
             LoggerMessage.info(this, "In delete; deleted; " + room.getRoomName());
 

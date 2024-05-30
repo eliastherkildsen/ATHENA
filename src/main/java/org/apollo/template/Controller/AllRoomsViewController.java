@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import org.apollo.template.Model.Room;
+import org.apollo.template.View.BorderPaneRegion;
+import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 
@@ -31,6 +33,6 @@ public class AllRoomsViewController implements Initializable {
 
     @FXML
     protected void onButton_CreateRoom(){
-
+        MainController.getInstance().setView(ViewList.CREATEROOM, BorderPaneRegion.CENTER);
     }
 }

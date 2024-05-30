@@ -53,6 +53,11 @@ public enum ViewList {
     ALLROOMS("AllRoomsView.fxml"),
 
     /**
+     * Create Room
+     */
+    CREATEROOM("CreateRoomView.fxml"),
+
+    /**
      *  Topbar view.
      */
     TOPBAR("TopbarView.fxml");

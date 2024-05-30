@@ -30,6 +30,13 @@ public class Room {
         this.roomType = roomType;
     }
 
+    public Room(int roomMaxPersonCount, int floor, String roomName, RoomType roomType){
+        this.roomMaxPersonCount = roomMaxPersonCount;
+        this.floor = floor;
+        this.roomName = roomName;
+        this.roomType = roomType;
+    }
+
     public int getRoomId() {
         return roomId;
     }
