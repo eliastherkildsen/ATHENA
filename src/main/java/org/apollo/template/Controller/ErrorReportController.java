@@ -117,6 +117,7 @@ public class ErrorReportController implements Initializable {
 
     private void uploadErrorReport(ErrorReport errorReport) {
 
+        // get email id from emailName
 
 
     }

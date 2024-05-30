@@ -54,7 +54,23 @@ public class RoomDAODB implements DAO<Room> {
 
     @Override
     public void update(Room room) {
-        //todo: create update
+        try {
+            PreparedStatement ps = conn.prepareStatement("UPDATE tbl_room SET fld_roomName = ?, " +
+                    "fld_roomMaxPersonCount = ?, fld_floor = ?, fld_roomTypeID = ? WHERE fld_roomID = ?");
+
+            ps.setString(1, room.getRoomName());
+            ps.setInt(2, room.getRoomMaxPersonCount());
+            ps.setInt(3, room.getFloor());
+            ps.setInt(4, room.getRoomTypeID());
+            ps.setInt(5, room.getRoomId());
+
+            ps.executeQuery();
+            ps.close();
+            LoggerMessage.info(this, "In update; updated room: " + room.getRoomName());
+
+        } catch (SQLException e) {
+            LoggerMessage.error(this, "IN update; An error occurred " + e.getMessage());
+        }
     }
 
 
