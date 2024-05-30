@@ -7,12 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ErrorReportDAODB implements DAO<ErrorReportDAODB> {
+public class ErrorReportDAO implements DAO<ErrorReportDAO> {
 
     private Connection conn = JDBC.get().getConnection();
 
     @Override
-    public void add(ErrorReportDAODB errorReportDAODB) {
+    public void add(ErrorReportDAO errorReportDAO) {
 
         try {
             PreparedStatement ps =  conn.prepareStatement("INSERT INTO tbl_errorReport (fld_archived, " +
@@ -25,22 +25,22 @@ public class ErrorReportDAODB implements DAO<ErrorReportDAODB> {
 
 
     @Override
-    public void delete(ErrorReportDAODB errorReportDAODB) {
+    public void delete(ErrorReportDAO errorReportDAO) {
 
     }
 
     @Override
-    public void update(ErrorReportDAODB errorReportDAODB) {
+    public void update(ErrorReportDAO errorReportDAO) {
 
     }
 
     @Override
-    public ErrorReportDAODB read(int id) {
+    public ErrorReportDAO read(int id) {
         return null;
     }
 
     @Override
-    public List<ErrorReportDAODB> readAll() {
+    public List<ErrorReportDAO> readAll() {
         return List.of();
     }
 }

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeetingTypeDBDAO implements DAO<MeetingType> {
+public class MeetingTypeDAO implements DAO<MeetingType> {
 
     // fetching connection from JDBC
     private Connection conn = JDBC.get().getConnection();
@@ -84,7 +84,7 @@ public class MeetingTypeDBDAO implements DAO<MeetingType> {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement("UPDATE FROM tbl_meetingType SET fld_meetingTypeID = ? WHERE fld_meetingType = ?");
+            ps = conn.prepareStatement("UPDATE tbl_meetingType SET fld_meetingTypeID = ? WHERE fld_meetingType = ?");
             ps.setInt(1, meetingType.getMeetingTypeID());       //replacing the placeholder.
             ps.setString(1, meetingType.getMeetingType());      //replacing the placeholder.
             ps.executeQuery();                                               //executing quarry
