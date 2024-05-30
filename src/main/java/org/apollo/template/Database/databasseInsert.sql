@@ -21,26 +21,26 @@ VALUES
     ('Værksted', 'Et lokale med maskiner til at arbejde med rå matrialer');
 
 -- tbl_room
-INSERT INTO tbl_room (fld_roomName, fld_roomMaxPersonCount, fld_roomTypeID)
+INSERT INTO tbl_room (fld_roomName, fld_roomMaxPersonCount, fld_roomTypeID, fld_floor)
 VALUES
 
     -- 3 sal på alsion.
-    ('305', 30, 3),
-    ('306', 18, 2),
-    ('307', 18, 2),
-    ('315', 20, 2),
-    ('316', 35, 2),
+    ('305', 30, 3, 3),
+    ('306', 18, 2, 3),
+    ('307', 18, 2, 3),
+    ('315', 20, 2, 3),
+    ('316', 35, 2, 3),
     -- 4 sal på alsion
-    ('400', 12, 4),
-    ('401', 30, 2),
-    ('402', 30, 2),
-    ('403', 12, 2),
-    ('404', 30, 2),
-    ('405', 16, 2),
-    ('406', 18, 2),
-    ('407', 18, 2),
-    ('409', 26, 2),
-    ('410', 18, 2);
+    ('400', 12, 4, 4),
+    ('401', 30, 2, 4),
+    ('402', 30, 2, 4),
+    ('403', 12, 2, 4),
+    ('404', 30, 2, 4),
+    ('405', 16, 2, 4),
+    ('406', 18, 2, 4),
+    ('407', 18, 2, 4),
+    ('409', 26, 2, 4),
+    ('410', 18, 2, 4);
 
 -- tbl_roomInventory
 INSERT INTO tbl_roomInventory (fld_roomID, fld_inventoryID)
