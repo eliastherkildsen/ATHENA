@@ -41,12 +41,12 @@ public class GetAvailableRooms {
 
                 availableRooms.add(availableRoom);
             }
-            //TODO: right message?
-            LoggerMessage.debug("GetAvailableRooms", "Stored Procedure succeeded");
+
+            LoggerMessage.info("GetAvailableRooms", "Stored Procedure succeeded");
             return availableRooms;
 
         } catch (SQLException e) {
-            LoggerMessage.error("GetAvailableRooms", "Stored Procedure: getAvailableRooms didn't run as intended " + e.getMessage());
+            LoggerMessage.error("GetAvailableRooms", "Stored Procedure: getAvailableRooms didn't run as intended\n" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
