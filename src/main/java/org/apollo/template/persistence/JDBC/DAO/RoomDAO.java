@@ -98,7 +98,7 @@ public class RoomDAO implements DAO<Room> {
     public Room read(int id) {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Room room = null;
+        Room room = new Room();
 
         try {
             ps = conn.prepareStatement("SELECT * FROM tbl_room WHERE fld_roomID = ?");
@@ -147,7 +147,7 @@ public class RoomDAO implements DAO<Room> {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Room room = null;
+                Room room = new Room();
                 room.setRoomId(rs.getInt("fld_roomID"));
                 room.setRoomName(rs.getString("fld_roomName"));
                 room.setRoomMaxPersonCount(rs.getInt("fld_roomMaxPersonCount"));

@@ -131,7 +131,7 @@ public class BookingInformationController implements Initializable, Subscriber {
         System.out.println(bookingInformation.getStartTime());
         System.out.println(bookingInformation.getEndTime());
         System.out.println("UPDATING");
-
+        // TODO: Make logic for none-adhoc bookings
         // Check if adhoc
         if (bookingInformation.getAdhocBool()) {
             // Sets the department to adhoc

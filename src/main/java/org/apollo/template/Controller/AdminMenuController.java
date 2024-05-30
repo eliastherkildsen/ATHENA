@@ -11,6 +11,11 @@ public class AdminMenuController {
         MainController.getInstance().setView(ViewList.ERRORREPORT, BorderPaneRegion.CENTER);
     }
 
+    @FXML
+    protected void onButton_Room(){
+        MainController.getInstance().setView(ViewList.ALLROOMS, BorderPaneRegion.CENTER);
+    }
+
 
 
 

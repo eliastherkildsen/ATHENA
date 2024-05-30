@@ -48,6 +48,11 @@ public enum ViewList {
     CHOOSETIME("ChooseTimeView.fxml"),
 
     /**
+     * All Rooms view
+     */
+    ALLROOMS("AllRoomsView.fxml"),
+
+    /**
      *  Topbar view.
      */
     TOPBAR("TopbarView.fxml");

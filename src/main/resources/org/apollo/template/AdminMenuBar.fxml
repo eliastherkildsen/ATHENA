@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxWidth="300.0" minWidth="300.0" prefHeight="767.0" prefWidth="300.0" styleClass="background" stylesheets="@css/AdminMenu.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.AdminMenuController">
+<AnchorPane maxWidth="300.0" minWidth="300.0" prefHeight="767.0" prefWidth="300.0" styleClass="background" stylesheets="@css/AdminMenu.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.AdminMenuController">
    <children>
       <VBox alignment="TOP_CENTER" layoutY="-96.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="300.0" spacing="30.0" stylesheets="@css/AdminMenu.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -16,7 +16,7 @@
                <children>
                   <Label text="Kontrolpanel" />
                   <Button mnemonicParsing="false" text="Indstillinger" />
-                  <Button mnemonicParsing="false" text="Lokaler" />
+                  <Button mnemonicParsing="false" onAction="#onButton_Room" text="Lokaler" />
                   <Button mnemonicParsing="false" text="afdelinger" />
                </children>
                <opaqueInsets>
