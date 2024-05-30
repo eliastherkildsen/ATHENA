@@ -15,8 +15,10 @@ import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
+import org.apollo.template.persistence.JDBC.DAO.ErrorReportDAODB;
 import org.apollo.template.persistence.JDBC.DAO.InventoryItemDAO;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAODB;
+import org.apollo.template.persistence.JDBC.StoredProcedure.GetEmailIDByEmailAdress;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -113,17 +115,32 @@ public class ErrorReportController implements Initializable {
         ErrorReport errorReport = new ErrorReport(room, email, selectedInventoryItems, description, false, LocalDate.now());
         uploadErrorReport(errorReport);
 
+        // informing user that error report has been created and sending user back.
+        new Alert(MainController.getInstance(), 5, AlertType.INFO, "Fejlmeldingen er nu gemt.")
+                .start();
+
     }
 
+    /**
+     * Method for uploading an errorport to the database.
+     * @param errorReport ErrorReport.
+     */
     private void uploadErrorReport(ErrorReport errorReport) {
 
         // get email id from emailName
+        int emailID = GetEmailIDByEmailAdress.getEmailIDByEmailName(errorReport.getEmail());
+        errorReport.getEmail().setEmailID(emailID);
 
+        // storing the error report in the database.
+        DAO<ErrorReport> dao = new ErrorReportDAODB();
+        dao.add(errorReport);
 
     }
 
 
-    // method for loading inventory items.
+    /**
+     * method for loading inventory items.
+     */
     private void loadInventoryItems(){
         // clearing inventory choice box to prevent replica data.
         inventoryItemsChoiceBox.getItems().clear();
@@ -136,6 +153,9 @@ public class ErrorReportController implements Initializable {
 
     }
 
+    /**
+     * Method for loading room data.
+     */
     private void loadRoomData() {
         // clearing room choice box to prevent replica data.
         roomChoiceBox.getItems().clear();

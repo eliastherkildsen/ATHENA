@@ -17,6 +17,10 @@ public class InventoryItems {
         this.description = description;
     }
 
+    public InventoryItems(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

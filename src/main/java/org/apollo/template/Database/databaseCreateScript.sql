@@ -51,9 +51,11 @@ CREATE TABLE tbl_errorReport(
     fld_inventoryID INTEGER,
     fld_userID INTEGER,
     fld_reportDescription VARCHAR(256),
+    fld_roomID INTEGER
 
     FOREIGN KEY (fld_inventoryID) REFERENCES tbl_inventory (fld_inventoryID),
-    FOREIGN KEY (fld_userID) REFERENCES tbl_userEmail(fld_userID)
+    FOREIGN KEY (fld_userID) REFERENCES tbl_userEmail(fld_userID),
+    FOREIGN KEY (fld_roomID) REFERENCES tbl_room(fld_roomID)
 );
 
 

@@ -15,10 +15,12 @@ public class GetEmailIDByEmailAdress {
 
         // load all bookings from user email
         try {
-            PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC getEmailIDByEmailAdress @EmailAddress = ? ");
+            PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC getEmailIDByEmailAdress @emailAdress = ? ");
             ps.setString(1, email.getEmail());
             rs = ps.executeQuery();
-            return rs.getInt("fld_userID");
+            while (rs.next()){
+                return rs.getInt("fld_userID");
+            }
         } catch (SQLException e) {
 
             LoggerMessage.error("LoadbookedRoomsByEmail", "in onButton_search; An error occurred " + e.getMessage());
