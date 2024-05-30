@@ -27,7 +27,31 @@ public class BookingComp extends HBox {
      * @param startAndEndTime String
      */
     public BookingComp(String roomName, String userName, String meetingType, String startAndEndTime){
+        generateComp(roomName, userName, meetingType, startAndEndTime);
+    }
 
+    /**
+     * BookingComp builds an HBox with the information and format we require.
+     * @param roomName String Label
+     * @param userName String Label
+     * @param meetingType String Label
+     * @param startAndEndTime String Label
+     * @param bookingID int holding data
+     */
+    public BookingComp(String roomName, String userName, String meetingType, String startAndEndTime, int bookingID){
+        generateComp(roomName, userName, meetingType, startAndEndTime);
+
+        this.bookingID = bookingID;
+    }
+
+    /**
+     * Helper method that generates our Comp.
+     * @param roomName String
+     * @param userName String
+     * @param meetingType String
+     * @param startAndEndTime String
+     */
+    private void generateComp (String roomName, String userName, String meetingType, String startAndEndTime){
         Label labelBookingRoom = buildLabel(roomName, 18, FontWeight.BOLD);
         labelBookingRoom.setPrefWidth(100);
 
@@ -39,32 +63,14 @@ public class BookingComp extends HBox {
 
         Label labelBookingTime = buildLabel(startAndEndTime, 18, FontWeight.NORMAL);
 
-        this.setMinHeight(35);
-        this.setAlignment(Pos.CENTER_LEFT);
-        this.setStyle("-fx-background-color: #009FE3; -fx-background-radius: 40");
-        this.getChildren().addAll(labelBookingRoom, labelBookingName, labelBookerName, addPane(), labelBookingTime);
-    }
-
-    public BookingComp(String roomName, String userName, String meetingType, String startAndEndTime, int bookingID){
-        ScrollPane spane = new ScrollPane();
-
-        Label labelBookingRoom = buildLabel(roomName, 18, FontWeight.BOLD);
-
-        Label labelBookerName = buildLabel(userName, 18, FontWeight.NORMAL);
-
-        Label labelBookingName = buildLabel(meetingType, 18, FontWeight.NORMAL);
-
-        Label labelBookingTime = buildLabel(startAndEndTime, 18, FontWeight.NORMAL);
-
         // setting booking comp color.
         setBookingCompColor(BookingCompColors.NORMAL);
 
+        // Setting this in regard to how we want it to look.
         this.setMinHeight(35);
-        this.setAlignment(Pos.CENTER);
+        this.setAlignment(Pos.CENTER_LEFT);
         this.setStyle("-fx-background-color: "+ this.bookingCompColor.getColor() + "; -fx-background-radius: 40");
-        this.getChildren().addAll(labelBookingRoom, addPane(), labelBookingName, addPane(), labelBookerName, addPane(), labelBookingTime);
-
-        this.bookingID = bookingID;
+        this.getChildren().addAll(labelBookingRoom, labelBookingName, labelBookerName, addPane(), labelBookingTime);
     }
 
     public int getBookingID() {

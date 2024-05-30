@@ -6,8 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.BookingInformation;
+import org.apollo.template.Model.BookingInformationSimple;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.EmailValidator;
@@ -15,11 +15,11 @@ import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.BookingComp;
 import org.apollo.template.View.UI.BookingCompColors;
+import org.apollo.template.View.UI.ReservedRoomsVBox;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.BookingInformationDAO;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -122,25 +122,32 @@ public class DeleteBookingController {
      * @throws SQLException
      */
     private void loadBookedRooms(ResultSet rs) throws SQLException {
-
+        List<BookingInformationSimple> bookingInformationSimpleList = new ArrayList<>();
         while (rs.next()){
 
             int bookingId = Integer.parseInt(rs.getString("fld_bookingID"));
             String roomName = rs.getString("fld_roomName");
             String username = rs.getString("fld_userName");
             String meetingType = rs.getString("fld_meetingType");
-            String startAndEndTime = rs.getString("fld_startTime");
-            startAndEndTime += " " + rs.getString("fld_endTime");
+            String start = rs.getString("fld_startTime");
+            String end = rs.getString("fld_endTime");
 
-            BookingComp bookingComp = new BookingComp(roomName, username, meetingType, startAndEndTime, bookingId);
-            attatchOnAction(bookingComp);
-
-            bookingCompList.add(bookingComp);
-
+            //Creating our information holder object with data from the DB/search
+            BookingInformationSimple bookingInformationSimple = new BookingInformationSimple(start, end, username, roomName, meetingType, bookingId);
+            bookingInformationSimpleList.add(bookingInformationSimple);
         }
 
+        //Creating our Component using the list of information we generated above.
+        ReservedRoomsVBox reservedRoomsVBox = new ReservedRoomsVBox(bookingInformationSimpleList);
 
-        vbox_booking.getChildren().addAll(bookingCompList);
+        //Getting our add action on our components
+        for (BookingComp bookingComp : reservedRoomsVBox.getBookingComps()) {
+            attatchOnAction(bookingComp);
+            bookingCompList.add(bookingComp);
+        }
+
+        //Adding our Vbox of bookings to the container we want them displayed in.
+        vbox_booking.getChildren().add(reservedRoomsVBox);
     }
 
     /**

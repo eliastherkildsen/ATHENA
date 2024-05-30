@@ -1,9 +1,7 @@
 package org.apollo.template.Controller;
 
-import com.sun.tools.javac.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,16 +12,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import org.apollo.template.Database.JDBC;
-import org.apollo.template.Model.BookingInformation;
-import org.apollo.template.Model.ReservedRoomDate;
-import org.apollo.template.Service.Alert.Alert;
-import org.apollo.template.Service.Alert.AlertType;
+import org.apollo.template.Model.BookingInformationSimple;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.ReservedRoomsVBox;
 import org.apollo.template.View.ViewList;
 
-import java.awt.*;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -45,7 +39,7 @@ public class InfoScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Preparing an arraylist with our reservations
-        List<ReservedRoomDate> booking = new ArrayList<>();
+        List<BookingInformationSimple> booking = new ArrayList<>();
 
         //Setting up the view with a Vbox
         VBox mainVbox = new VBox();
@@ -91,7 +85,7 @@ public class InfoScreenController implements Initializable {
             } else {
                 //Else lets do stuff with the result - Do while to ensure all results are included.
                 do {
-                    ReservedRoomDate reservation = new ReservedRoomDate(
+                    BookingInformationSimple reservation = new BookingInformationSimple(
                             rs.getString("fld_startTime"),
                             rs.getString("fld_endTime"),
                             rs.getString("fld_userName"),
@@ -101,6 +95,7 @@ public class InfoScreenController implements Initializable {
                     booking.add(reservation);
                     //LoggerMessage.debug(this, "ResultSet : " + rs.getString("fld_userName"));
                     LoggerMessage.debug(this, "Size of ArrayList : " + booking.size());
+                    LoggerMessage.info(this,"Arraylist Created.");
                 } while (rs.next());
             }
 
@@ -128,7 +123,6 @@ public class InfoScreenController implements Initializable {
 
             //Add Scrollpane to the scene
             mainVbox.getChildren().add(sPane);
-            System.out.println("ScrollPane style: " + sPane.getStyle());
 
         } else {
             //Otherwise let's inform them nothing was found.

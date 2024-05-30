@@ -147,7 +147,7 @@ public class RoomDAO implements DAO<Room> {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Room room = null;
+                Room room = new Room();
                 room.setRoomID(rs.getInt("fld_roomID"));
                 room.setRoomName(rs.getString("fld_roomName"));
                 room.setRoomMaxPersonCount(rs.getInt("fld_roomMaxPersonCount"));

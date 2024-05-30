@@ -1,7 +1,7 @@
 package org.apollo.template.Model;
 
 
-public class ReservedRoomDate {
+public class BookingInformationSimple {
     /**
      * tbl_booking.fld_startTime,
      *         tbl_booking.fld_endTime,
@@ -13,13 +13,23 @@ public class ReservedRoomDate {
     private String userName;
     private String roomName;
     private String meetingType;
+    private int bookingID = -1;
 
-    public ReservedRoomDate(String startTime, String endTime, String userName, String roomName, String meetingType) {
+    public BookingInformationSimple(String startTime, String endTime, String userName, String roomName, String meetingType) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.userName = userName;
         this.roomName = roomName;
         this.meetingType = meetingType;
+    }
+
+    public BookingInformationSimple(String startTime, String endTime, String userName, String roomName, String meetingType, int bookingID) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.userName = userName;
+        this.roomName = roomName;
+        this.meetingType = meetingType;
+        this.bookingID = bookingID;
     }
 
     public String getStartTime() {
@@ -40,5 +50,8 @@ public class ReservedRoomDate {
 
     public String getMeetingType() {
         return meetingType;
+    }
+    public int getBookingID() {
+        return bookingID;
     }
 }
