@@ -45,14 +45,17 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             ps.setInt(10, bookingInformation.getDepartmentID());
             ps.setInt(11, bookingInformation.getTeamId());
             ps.executeUpdate();
+            LoggerMessage.info(this, "In add; added; " + bookingInformation.getBookingId());
+
+
         } catch (SQLException e) {
-            LoggerMessage.error(this, "In add; an error encountered: " + e.getMessage());
+            LoggerMessage.error(this,"In add; An error occurred " + e.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "Failed to close PreparedStatement: " + e.getMessage());
+                    LoggerMessage.error(this,"In add; Error occurred during closing of PreparedStatement : " + e.getMessage());
                 }
             }
         }
@@ -66,14 +69,16 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             ps = conn.prepareStatement("DELETE FROM tbl_booking WHERE fld_bookingID = ?");
             ps.setInt(1, bookingInformation.getBookingId());
             ps.executeUpdate();
+            LoggerMessage.info(this, "In delete; deleted; " + bookingInformation.getBookingId());
+
         } catch (SQLException e) {
-            LoggerMessage.error(this, "In delete; an error encountered: " + e.getMessage());
+            LoggerMessage.error(this,"In delete; An error occurred " + e.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "Failed to close PreparedStatement: " + e.getMessage());
+                    LoggerMessage.error(this,"In delete; Error occurred during closing of PreparedStatement : " + e.getMessage());
                 }
             }
         }
@@ -110,14 +115,16 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             ps.setInt(11, bookingInformation.getTeamId());
             ps.setInt(12, bookingInformation.getBookingId());
             ps.executeUpdate();
+            LoggerMessage.info(this,"In update; updated; " + bookingInformation.getBookingId());
+
         } catch (SQLException e) {
-            LoggerMessage.error(this, "In update; an error encountered: " + e.getMessage());
+            LoggerMessage.error(this,"In update; An error occurred " + e.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "Failed to close PreparedStatement: " + e.getMessage());
+                    LoggerMessage.error(this,"In update; Error occurred during closing of PreparedStatement : " + e.getMessage());
                 }
             }
         }
@@ -131,7 +138,9 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
         try {
             ps = conn.prepareStatement("SELECT * FROM tbl_booking WHERE fld_bookingID = ?");
             ps.setInt(1, id);
+
             rs = ps.executeQuery();
+
             if (rs.next()) {
                 bookingInformation = new BookingInformation(
                         rs.getInt("fld_bookingID"),
@@ -148,21 +157,22 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
                         rs.getDate("fld_date")
                 );
             }
+            LoggerMessage.debug(this,"In read; read; " + bookingInformation.getBookingId());
         } catch (SQLException e) {
-            LoggerMessage.error(this, "In read; an error encountered: " + e.getMessage());
+            LoggerMessage.error(this,"In read; An error occurred " + e.getMessage());
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this, "Failed to close ResultSet: " + e.getMessage());
-                }
-            }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "Failed to close PreparedStatement: " + e.getMessage());
+                    LoggerMessage.error(this,"In read; Error occurred during closing of PreparedStatement : " + e.getMessage());
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    LoggerMessage.error(this,"In read; Error occurred during closing of ResultSet : " + e.getMessage());
                 }
             }
         }
@@ -193,22 +203,23 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
                         rs.getDate("fld_date")
                 );
                 bookingList.add(bookingInformation);
+                LoggerMessage.info(this, "In readAll; list; " + bookingList.size());
             }
         } catch (SQLException e) {
             LoggerMessage.error(this, "In readAll; an error encountered: " + e.getMessage());
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this, "Failed to close ResultSet: " + e.getMessage());
-                }
-            }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "Failed to close PreparedStatement: " + e.getMessage());
+                    LoggerMessage.error(this,"In readAll; Error occurred during closing of PreparedStatement : " + e.getMessage());
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    LoggerMessage.error(this,"In readAll; Error occurred during closing of ResultSet : " + e.getMessage());
                 }
             }
         }

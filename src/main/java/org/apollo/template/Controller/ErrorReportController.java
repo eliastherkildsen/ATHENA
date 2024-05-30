@@ -16,11 +16,10 @@ import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 import org.apollo.template.persistence.JDBC.DAO.InventoryItemDAO;
-import org.apollo.template.persistence.JDBC.DAO.RoomDAODB;
+import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ErrorReportController implements Initializable {
@@ -140,7 +139,7 @@ public class ErrorReportController implements Initializable {
         roomChoiceBox.getItems().clear();
 
         // creating dao.
-        DAO<Room> roomDAO = new RoomDAODB();
+        DAO<Room> roomDAO = new RoomDAO();
 
         //loading items into choisbox
         roomChoiceBox.getItems().addAll(roomDAO.readAll());
