@@ -36,13 +36,6 @@ public class RoomDAODB implements DAO<Room> {
 
     }
 
-    @Override
-    public void addAll(List<Room> list) {
-        // TODO: this is highly in effective, and needs to be rewritten. Right now the ps is opened and closed everytime!
-        for (Room room : list){
-            add(room);
-        }
-    }
 
     @Override
     public void delete(Room room) {
@@ -58,23 +51,13 @@ public class RoomDAODB implements DAO<Room> {
         }
     }
 
-    @Override
-    public void deleteAll(List<Room> list) {
-        // TODO: this is highly in effective, and needs to be rewritten. Right now the ps is opened and closed everytime!
-        for (Room room : list){
-            delete(room);
-        }
-    }
 
     @Override
     public void update(Room room) {
         //todo: create update
     }
 
-    @Override
-    public void updateAll(List<Room> t) {
-        //todo: create update all
-    }
+
 
     @Override
     public Room read(int id) {

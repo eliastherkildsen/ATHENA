@@ -58,12 +58,6 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
         }
     }
 
-    @Override
-    public void addAll(List<BookingInformation> list) {
-        for (BookingInformation bookingInformation : list) {
-            add(bookingInformation);
-        }
-    }
 
     @Override
     public void delete(BookingInformation bookingInformation) {
@@ -85,12 +79,6 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
         }
     }
 
-    @Override
-    public void deleteAll(List<BookingInformation> list) {
-        for (BookingInformation bookingInformation : list) {
-            delete(bookingInformation);
-        }
-    }
 
     @Override
     public void update(BookingInformation bookingInformation) {
@@ -132,13 +120,6 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
                     LoggerMessage.error(this, "Failed to close PreparedStatement: " + e.getMessage());
                 }
             }
-        }
-    }
-
-    @Override
-    public void updateAll(List<BookingInformation> list) {
-        for (BookingInformation bookingInformation : list) {
-            update(bookingInformation);
         }
     }
 

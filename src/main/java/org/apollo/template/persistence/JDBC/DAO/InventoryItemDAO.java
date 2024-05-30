@@ -38,16 +38,6 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
     }
 
     @Override
-    public void addAll(List<InventoryItems> list) {
-
-        // TODO: this is highly in effective, and needs to be rewritten. Right now the ps is opened and closed everytime!
-        for (InventoryItems inventoryItems : list){
-            add(inventoryItems);
-        }
-
-    }
-
-    @Override
     public void delete(InventoryItems inventoryItems) {
         PreparedStatement ps = null;
 
@@ -66,23 +56,10 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
     }
 
     @Override
-    public void deleteAll(List<InventoryItems> list) {
-
-        // TODO: this is highly in effective, and needs to be rewritten. Right now the ps is opened and closed everytime!
-        for (InventoryItems inventoryItems : list){
-            delete(inventoryItems);
-        }
-    }
-
-    @Override
     public void update(InventoryItems inventoryItems) {
 
     }
 
-    @Override
-    public void updateAll(List<InventoryItems> t) {
-
-    }
 
     @Override
     public InventoryItems read(int id) {
