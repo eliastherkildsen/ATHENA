@@ -1,12 +1,14 @@
 package org.apollo.template.Model;
 
 public class AvailableRoom {
+
     private int roomID;
     private String roomName;
     private String floor;
     private String roomType;
     private int personKapacity;
 
+    // TODO: java doc?
     public AvailableRoom(int roomID, String roomName, String floor, String roomType, int personKapacity) {
         this.roomID = roomID;
         this.roomName = roomName;
@@ -18,13 +20,9 @@ public class AvailableRoom {
 
     // region getter and setter
 
-    public int getRoomID() {
-        return roomID;
-    }
+    public int getRoomID() { return roomID; }
 
-    public void setRoomID(int roomID) {
-        this.roomID = roomID;
-    }
+    public void setRoomID(int roomID) { this.roomID = roomID; }
 
     public String getRoomName() {
         return roomName;
@@ -60,6 +58,11 @@ public class AvailableRoom {
 
     // endregion
 
+
+    /**
+     * This method constructs a string containing information about the room, including its name, floor, room type, and capacity
+     * @return a string containing information about the room (name, floor, type, and capacity)
+     */
     public String toString(){
         return String.format("Lok. %s - %s. Sal - Lok. type: %s - Person kapacitet: %d", roomName, floor, roomType, personKapacity);
     }

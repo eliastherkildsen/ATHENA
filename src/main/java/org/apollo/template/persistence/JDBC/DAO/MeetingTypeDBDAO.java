@@ -51,16 +51,6 @@ public class MeetingTypeDBDAO implements DAO<MeetingType> {
     }
 
     @Override
-    public void addAll(List<MeetingType> list) {
-        // TODO: this is highly in effective, and needs to be rewritten. Right now the ps is opened and closed everytime!
-        for (MeetingType meetingType : list){
-            add(meetingType);
-        }
-
-
-    }
-
-    @Override
     public void delete(MeetingType meetingType) {
 
         // establishing preparedStatement
@@ -89,14 +79,6 @@ public class MeetingTypeDBDAO implements DAO<MeetingType> {
     }
 
     @Override
-    public void deleteAll(List<MeetingType> list) {
-        // TODO: this is highly in effective, and needs to be rewritten. Right now the ps is opened and closed everytime!
-        for( MeetingType meetingType : list){
-            delete(meetingType);
-        }
-    }
-
-    @Override
     public void update(MeetingType meetingType) {
         // establishing preparedStatement
         PreparedStatement ps = null;
@@ -120,16 +102,6 @@ public class MeetingTypeDBDAO implements DAO<MeetingType> {
             }
         }
 
-
-
-    }
-
-    @Override
-    public void updateAll(List<MeetingType> t) {
-        // TODO: this is highly in effective, and needs to be rewritten. Right now the ps is opened and closed everytime!
-        for (MeetingType meetingType : t){
-            update(meetingType);
-        }
     }
 
     @Override

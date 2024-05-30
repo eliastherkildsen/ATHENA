@@ -251,7 +251,6 @@ public class BookingInformation {
         this.roomId = roomId;
     }
 
-
     public int getTeamId() {
         return teamId;
     }
@@ -306,5 +305,27 @@ public class BookingInformation {
 
     public void setMeetingTypeID(int meetingTypeID) {
         this.meetingTypeID = meetingTypeID;
+    }
+
+    @Override
+    public String toString() {
+        return "BookingInformation{" +
+                "bookingId=" + bookingId +
+                ", catering=" + catering +
+                ", numberOfParticipants=" + numberOfParticipants +
+                ", roomId=" + roomId +
+                ", teamId=" + teamId +
+                ", userID=" + userID +
+                ", meetingTypeID=" + meetingTypeID +
+                ", departmentID=" + departmentID +
+                ", userName='" + userName + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", date=" + date +
+                ", email=" + email +
+                ", meetingType=" + meetingType +
+                ", room=" + room +
+                ", team=" + team +
+                '}';
     }
 }

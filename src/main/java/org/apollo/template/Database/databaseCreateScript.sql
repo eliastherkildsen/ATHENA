@@ -16,7 +16,7 @@ CREATE TABLE tbl_inventory(
 CREATE TABLE tbl_roomType(
      fld_roomTypeID INTEGER IDENTITY (1,1) PRIMARY KEY,
      fld_roomTypeName VARCHAR(50) NOT NULL,
-     fld_roomTypeDescription VARCHAR(256)
+     fld_roomTypeDescription VARCHAR(512)
 );
 
 CREATE TABLE tbl_room(
@@ -50,6 +50,7 @@ CREATE TABLE tbl_errorReport(
     fld_reportDate DATE NOT NULL,
     fld_inventoryID INTEGER,
     fld_userID INTEGER,
+    fld_reportDescription VARCHAR(256),
 
     FOREIGN KEY (fld_inventoryID) REFERENCES tbl_inventory (fld_inventoryID),
     FOREIGN KEY (fld_userID) REFERENCES tbl_userEmail(fld_userID)

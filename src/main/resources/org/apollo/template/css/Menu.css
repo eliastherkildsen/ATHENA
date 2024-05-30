@@ -37,6 +37,10 @@
     -fx-background-color: rgba(0, 159, 227, 0);
 }
 
+.custom-Vbox {
+    -fx-spacing: 10;
+}
+
 /* Root VBox */
 .rootVbox {
     -fx-background-color: background;

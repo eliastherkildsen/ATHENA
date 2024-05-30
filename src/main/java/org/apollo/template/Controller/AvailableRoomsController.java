@@ -4,25 +4,20 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.AvailableRoom;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.AvailableComponent;
 import org.apollo.template.View.ViewList;
+import org.apollo.template.persistence.JDBC.StoredProcedure.GetAvailableRooms;
 import org.apollo.template.persistence.PubSub.MessagesBroker;
 import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
-import org.apollo.template.persistence.PubSub.Subscriber;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,11 +26,8 @@ public class AvailableRoomsController implements Initializable {
     //TODO: remember temporarily button in HomeController
 
     @FXML
-    private VBox vbox_listDD, vbox_Listview;
-    @FXML
-    //private ScrollPane scrollPaneView;
+    private VBox vbox_Listview;
 
-    private AvailableComponent availableComponent;
     private BookingInformation bookingInformation = new BookingInformation();
 
 
@@ -43,103 +35,65 @@ public class AvailableRoomsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         // getting today's date
-        //Date dateToday = Date.valueOf(LocalDate.now());
-        Date dateToday = Date.valueOf("2024-05-28");
+        Date dateToday = Date.valueOf(LocalDate.now());
 
         // search for available rooms today's date and saves them as a List
-        List<AvailableRoom> roomsAvailableToday = storedSqlProcedure(dateToday);
+        List<AvailableRoom> roomsAvailableToday = GetAvailableRooms.getAvailableRooms(dateToday);
 
-        vbox_Listview.setPadding(new Insets(10));
-
-        // TODO: comment
+        // inserts available rooms into custom components and adds these components to the view
         insertComponents(roomsAvailableToday);
-
-
-
-/*
-        button_book.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);
-            }
-        });
-
- */
-
-        // TODO: custom component
-        //Vbox_Listview.getChildren().add(availableComponent);
     }
 
+
+    /**
+     * Method for inserting available rooms into custom components and adding them to the view.
+     * Each component is also associated with a booking button and its corresponding action.
+     * @param availableRooms the list of available rooms today's date
+     */
     private void insertComponents(List<AvailableRoom> availableRooms) {
 
-        for (AvailableRoom availableRoom : availableRooms) {
-            AvailableComponent availableComponent = new AvailableComponent(availableRoom);
+        if (availableRooms.isEmpty()){
+            LoggerMessage.info(this, "No available rooms");
+        }
+        else {
+            for (AvailableRoom availableRoom : availableRooms) {
 
-            vbox_Listview.getChildren().add(availableComponent);
+                // creates a custom component object using the available room object
+                AvailableComponent availableComponent = new AvailableComponent(availableRoom);
 
-            Button button_book = availableComponent.getButton();
-            button_book.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
+                // adds the custom component to the view
+                vbox_Listview.getChildren().add(availableComponent);
 
-                    // create bookingInformation obj.
-                    bookingInformation.setRoomId(availableRoom.getRoomID());
+                Button button_book = availableComponent.getButton();
+                button_bookOnAction(button_book, availableRoom);
+            }
 
-                    // sending the user to booking complite view.
-                    MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);
-
-                    // publish bookingInformation obj.
-                    MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
-
-                }
-            });
-
-
+            LoggerMessage.debug(this, "Available rooms added to view");
         }
     }
 
 
-
-    // TODO: move to another class?
-
     /**
-     * This method executes our stored SQL procedure "getAvailableRooms",
-     * which finds all rooms with available booking times for today's date.
-     * NOTE: We sort the data based on total booking time in our stored procedure.
-     * - Rooms are considered available if they are not booked or if the total booking
-     * time for today's date is < 480 minutes (8 hours).
-     *
-     * @param dateToday The today's date for which available rooms are being searched.
-     * @return A List of AvailableRoom objects containing available rooms for today's date
+     * This method sets the action for the booking button to handle room booking events.
+     * @param button_book the button that will trigger the booking action
+     * @param availableRoom the room object that is available for booking
      */
-            private List<AvailableRoom> storedSqlProcedure(Date dateToday){
+    private void button_bookOnAction(Button button_book, AvailableRoom availableRoom) {
 
-                List<AvailableRoom> availableRooms = new ArrayList<>();
+        button_book.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
 
-                try {
-                    PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXECUTE getAvailableRooms @BookingDate = ?");
-                    ps.setDate(1, dateToday);
-                    ResultSet rs = ps.executeQuery();
+                // create booking information object
+                bookingInformation.setRoomId(availableRoom.getRoomID());
 
-                    while (rs.next()) {
+                // sending the user to choose time view
+                MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);
 
-                        AvailableRoom availableRoom = new AvailableRoom(rs.getInt("fld_roomID"),
-                                rs.getString("fld_roomName"),
-                                rs.getString("fld_floor"),
-                                rs.getString("fld_roomTypeName"),
-                                rs.getInt("fld_roomMaxPersonCount"));
-
-                        availableRooms.add(availableRoom);
-                    }
-
-                    return availableRooms;
-
-                } catch (SQLException e) {
-                    LoggerMessage.error(this, "Stored Procedure : getAvailableRooms didn't run as intended " + e.getMessage());
-                    throw new RuntimeException(e);
-                }
+                // publish booking information object
+                MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
             }
+        });
 
-
-
+    }
 }
