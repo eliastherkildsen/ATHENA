@@ -41,7 +41,20 @@
     -fx-spacing: 10;
 }
 
+#button_home {
+    -fx-background-color: transparent; /* Set the background color */
+    -fx-padding: 10px, 10px, 5px, 5px;
+}
+
+#button_adminLogin {
+    -fx-background-color: transparent; /* Set the background color */
+    -fx-padding: 10px, 10px, 5px, 5px;
+}
+
+
 /* Root VBox */
 .rootVbox {
     -fx-background-color: background;
 }
+
+
