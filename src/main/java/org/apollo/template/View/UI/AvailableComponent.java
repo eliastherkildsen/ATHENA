@@ -42,6 +42,7 @@ public class AvailableComponent extends HBox {
         this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: #009FE3; -fx-background-radius: 40");
         this.getChildren().addAll(label_roomNo, addPane(),label_floor, addPane(), label_roomType, addPane(), label_personKap, addPane(),button);
+
     }
 
 
@@ -71,7 +72,6 @@ public class AvailableComponent extends HBox {
         Button button = new Button(buttonText);
         button.setPrefHeight(33.6);
         button.setPrefWidth(100);
-        //button.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 18));
         button.setStyle("-fx-background-color: #FBBB2C;");
         return button;
     }
@@ -92,5 +92,5 @@ public class AvailableComponent extends HBox {
         return button;
     }
 
-
 }
+
