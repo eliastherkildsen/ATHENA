@@ -4,6 +4,8 @@ import org.apollo.template.Model.BookingInformation;
 
 public interface Subscriber {
 
-    void update(BookingInformation bookingInformation);
+    void update(Object o);
 
 }
+
+

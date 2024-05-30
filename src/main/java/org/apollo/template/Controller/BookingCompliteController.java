@@ -27,27 +27,31 @@ public class BookingCompliteController implements Subscriber, Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        // subscribing to messages broker
+        // subscribing to messages broker for topic BOOKING_INFORMATION
         MessagesBroker.getInstance().subscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
 
     }
 
     @Override
-    public void update(BookingInformation bookingInformation) {
+    public void update(Object o) {
+        // validating that the object o is instanceof Bookinginformation
+        if (o instanceof BookingInformation) {
+            this.bookingInformation = (BookingInformation) o;
 
-       this.bookingInformation = bookingInformation;
+            // setting labels.
+            //lable_meetingDate.setText(bookingInformation.getDate().toString());
 
-        // setting labels.
-        //lable_meetingDate.setText(bookingInformation.getDate().toString());
+            lable_meetingTime.setText(bookingInformation.getStartTime() + " - " + bookingInformation.getEndTime());
 
-        lable_meetingTime.setText(bookingInformation.getStartTime() + " - " + bookingInformation.getEndTime());
+            lable_status.setText("SUCESS");
 
-        lable_status.setText("SUCESS");
+            lable_statuseMessage.setText("Du har nu booket et lokale");
 
-        lable_statuseMessage.setText("Du har nu booket et lokale lol!");
+            lable_meetingType.setText(bookingInformation.getMeetingType().toString());
 
-        lable_meetingType.setText(bookingInformation.getMeetingType().toString());
+            lable_meetingDate.setText(bookingInformation.getDate().toString());
 
+        }
     }
 
 
