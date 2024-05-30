@@ -42,7 +42,6 @@ public class AvailableComponent extends HBox {
         this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: #009FE3; -fx-background-radius: 40");
         this.getChildren().addAll(label_roomNo, addPane(),label_floor, addPane(), label_roomType, addPane(), label_personKap, addPane(),button);
-
     }
 
 
@@ -91,6 +90,5 @@ public class AvailableComponent extends HBox {
     public Button getButton() {
         return button;
     }
-
 }
 

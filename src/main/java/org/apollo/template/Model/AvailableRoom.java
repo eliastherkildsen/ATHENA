@@ -8,7 +8,7 @@ public class AvailableRoom {
     private String roomType;
     private int personKapacity;
 
-    // TODO: java doc?
+
     public AvailableRoom(int roomID, String roomName, String floor, String roomType, int personKapacity) {
         this.roomID = roomID;
         this.roomName = roomName;
