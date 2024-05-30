@@ -263,3 +263,15 @@ BEGIN
 END;
 
 
+CREATE PROCEDURE getMeetingTypeIDByMeetingType(@meetingType varchar(50))
+AS
+BEGIN
+    SELECT
+        fld_meetingTypeID
+    FROM
+        tbl_meetingType
+    WHERE
+        fld_meetingType = @meetingType
+END;
+
+
