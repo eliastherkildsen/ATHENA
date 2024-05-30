@@ -9,6 +9,10 @@ public class Email {
         this.email = email;
     }
 
+    public Email(int emailID) {
+        this.emailID = emailID;
+    }
+
     public Email(int emailID, String email) {
         this.emailID = emailID;
         this.email = email;
@@ -20,5 +24,13 @@ public class Email {
 
     public int getEmailID() {
         return emailID;
+    }
+
+    public void setEmailID(int emailID) {
+        this.emailID = emailID;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

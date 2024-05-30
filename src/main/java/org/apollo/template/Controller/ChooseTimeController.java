@@ -227,10 +227,10 @@ public class ChooseTimeController implements Initializable, Subscriber {
         for (Button button : buttonList) {
             LocalTime buttonTime = LocalTime.parse(button.getText(), formatter);
             if (!buttonTime.isBefore(start) && buttonTime.isAfter(end) && button.isDisabled()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**

@@ -246,6 +246,32 @@ END
 
     END;
 
+-- Stored procedure to finde email id by email adress
+    USE db_Athena
+go
 
+CREATE PROCEDURE getEmailIDByEmailAdress(@emailAdress varchar(256))
+AS
+BEGIN
+    SELECT
+        fld_userID
+    FROM
+        tbl_userEmail
+    WHERE
+        fld_userEmail = @emailAdress
+
+END;
+
+
+CREATE PROCEDURE getMeetingTypeIDByMeetingType(@meetingType varchar(50))
+AS
+BEGIN
+    SELECT
+        fld_meetingTypeID
+    FROM
+        tbl_meetingType
+    WHERE
+        fld_meetingType = @meetingType
+END;
 
 

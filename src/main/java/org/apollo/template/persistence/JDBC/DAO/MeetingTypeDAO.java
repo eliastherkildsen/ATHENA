@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeetingTypeDBDAO implements DAO<MeetingType> {
+public class MeetingTypeDAO implements DAO<MeetingType> {
 
     // fetching connection from JDBC
     private Connection conn = JDBC.get().getConnection();
@@ -51,16 +51,6 @@ public class MeetingTypeDBDAO implements DAO<MeetingType> {
     }
 
     @Override
-    public void addAll(List<MeetingType> list) {
-        // TODO: this is highly in effective, and needs to be rewritten. Right now the ps is opened and closed everytime!
-        for (MeetingType meetingType : list){
-            add(meetingType);
-        }
-
-
-    }
-
-    @Override
     public void delete(MeetingType meetingType) {
 
         // establishing preparedStatement
@@ -89,20 +79,12 @@ public class MeetingTypeDBDAO implements DAO<MeetingType> {
     }
 
     @Override
-    public void deleteAll(List<MeetingType> list) {
-        // TODO: this is highly in effective, and needs to be rewritten. Right now the ps is opened and closed everytime!
-        for( MeetingType meetingType : list){
-            delete(meetingType);
-        }
-    }
-
-    @Override
     public void update(MeetingType meetingType) {
         // establishing preparedStatement
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement("UPDATE FROM tbl_meetingType SET fld_meetingTypeID = ? WHERE fld_meetingType = ?");
+            ps = conn.prepareStatement("UPDATE tbl_meetingType SET fld_meetingTypeID = ? WHERE fld_meetingType = ?");
             ps.setInt(1, meetingType.getMeetingTypeID());       //replacing the placeholder.
             ps.setString(1, meetingType.getMeetingType());      //replacing the placeholder.
             ps.executeQuery();                                               //executing quarry
@@ -120,16 +102,6 @@ public class MeetingTypeDBDAO implements DAO<MeetingType> {
             }
         }
 
-
-
-    }
-
-    @Override
-    public void updateAll(List<MeetingType> t) {
-        // TODO: this is highly in effective, and needs to be rewritten. Right now the ps is opened and closed everytime!
-        for (MeetingType meetingType : t){
-            update(meetingType);
-        }
     }
 
     @Override

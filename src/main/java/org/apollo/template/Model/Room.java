@@ -13,6 +13,14 @@ public class Room {
     public Room() {
     }
 
+    public Room(int roomId, int roomMaxPersonCount, int roomTypeID, int floor, String roomName) {
+        this.roomId = roomId;
+        this.roomMaxPersonCount = roomMaxPersonCount;
+        this.roomTypeID = roomTypeID;
+        this.floor = floor;
+        this.roomName = roomName;
+    }
+
     public Room(int roomId, int roomMaxPersonCount, int roomTypeID, int floor, String roomName, RoomType roomType) {
         this.roomId = roomId;
         this.roomMaxPersonCount = roomMaxPersonCount;
@@ -60,5 +68,10 @@ public class Room {
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
+    }
+
+    @Override
+    public String toString() {
+        return "sal. " + floor + " lok " + roomName;
     }
 }
