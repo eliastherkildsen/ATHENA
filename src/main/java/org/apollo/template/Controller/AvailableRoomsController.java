@@ -55,20 +55,27 @@ public class AvailableRoomsController implements Initializable {
         if (availableRooms.isEmpty()){
             LoggerMessage.info(this, "No available rooms");
         }
+
         else {
-            for (AvailableRoom availableRoom : availableRooms) {
 
-                // creates a custom component object using the available room object
-                AvailableComponent availableComponent = new AvailableComponent(availableRoom);
+            try {
+                for (AvailableRoom availableRoom : availableRooms) {
 
-                // adds the custom component to the view
-                vbox_Listview.getChildren().add(availableComponent);
+                    // creates a custom component object using the available room object
+                    AvailableComponent availableComponent = new AvailableComponent(availableRoom);
 
-                Button button_book = availableComponent.getButton();
-                button_bookOnAction(button_book, availableRoom);
+                    // adds the custom component to the view
+                    vbox_Listview.getChildren().add(availableComponent);
+
+                    Button button_book = availableComponent.getButton();
+                    button_bookOnAction(button_book, availableRoom);
+                }
+
+                LoggerMessage.info(this, "Available rooms added to view");
+
+            } catch (Exception e) {
+                LoggerMessage.error(this, "Failed to add available rooms to view\n" + e.getMessage());
             }
-
-            LoggerMessage.debug(this, "Available rooms added to view");
         }
     }
 
@@ -87,6 +94,8 @@ public class AvailableRoomsController implements Initializable {
                 // create booking information object
                 bookingInformation.setRoomId(availableRoom.getRoomID());
                 bookingInformation.setAdhocBool(true);
+                LoggerMessage.info(this, "bookingInformation created");
+
 
                 // sending the user to choose time view
                 MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);
