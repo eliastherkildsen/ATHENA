@@ -111,7 +111,7 @@ public class ErrorReportController implements Initializable {
         //saving room
         Room room = roomChoiceBox.getSelectionModel().getSelectedItem();
 
-        // creating error report obj. w builder pattern.
+        // creating error report obj.
         ErrorReport errorReport = new ErrorReport(room, email, selectedInventoryItems, description, false, LocalDate.now());
         uploadErrorReport(errorReport);
 

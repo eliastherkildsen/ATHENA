@@ -24,21 +24,22 @@ public class ErrorReportDAODB implements DAO<ErrorReport> {
             PreparedStatement ps =  conn.prepareStatement("INSERT INTO tbl_errorReport (fld_archived, fld_reportDate," +
                     " fld_inventoryID, fld_userID, fld_reportDescription, fld_roomID) VALUES (?, ?, ?, ?, ?, ?)");
 
-            //ps.setBoolean(1, errorReport.isArchived());
-
+            // these conversions is done due to MSSQL only accepting a bit and not a boolean.
             if (errorReport.isArchived()){
                 ps.setInt(1, 1);
             } else {
                 ps.setInt(1, 0);
             }
 
+            // replacing sql place holders
             ps.setDate(2, Date.valueOf(errorReport.getReportDate()));
             ps.setInt(3, errorReport.getInventoryItems().getId());
             ps.setInt(4, errorReport.getEmail().getEmailID());
             ps.setString(5, errorReport.getErrorReportDescription());
             ps.setInt(6, errorReport.getRoom().getRoomId());
-
             ps.executeUpdate();
+
+            // closing the prepared statement.
             ps.close();
 
             LoggerMessage.info(this, "in add; added new error report : " + errorReport);
@@ -54,7 +55,10 @@ public class ErrorReportDAODB implements DAO<ErrorReport> {
         try {
             PreparedStatement ps =  conn.prepareStatement("DELETE FROM tbl_errorReport WHERE fld_errorReportID = ?");
             ps.executeQuery();
+
+            // closing the prepared statement.
             ps.close();
+
             LoggerMessage.info(this, "in delete; removed error report : " + errorReport);
         } catch (SQLException e) {
             LoggerMessage.error(this, "in delete: an error occurred " + e.getMessage());
@@ -74,9 +78,8 @@ public class ErrorReportDAODB implements DAO<ErrorReport> {
             ps.setInt(4, errorReport.getEmail().getEmailID());
             ps.setString(5, errorReport.getErrorReportDescription());
             ps.setInt(6, errorReport.getRoom().getRoomId());
-
-
             ps.executeQuery();
+            // closing the prepared statement.
             ps.close();
             LoggerMessage.info(this, "in update; removed error report : " + errorReport);
         } catch (SQLException e) {
