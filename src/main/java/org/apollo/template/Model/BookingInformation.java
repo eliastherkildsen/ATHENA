@@ -23,6 +23,8 @@ public class BookingInformation {
     private Room room;
     private Team team;
 
+    private Boolean adhocBool;
+
     public BookingInformation() {
 
     }
@@ -307,6 +309,14 @@ public class BookingInformation {
         this.meetingTypeID = meetingTypeID;
     }
 
+    public Boolean getAdhocBool() {
+        return adhocBool;
+    }
+
+    public void setAdhocBool(Boolean adhocBool) {
+        this.adhocBool = adhocBool;
+    }
+
     @Override
     public String toString() {
         return "BookingInformation{" +
@@ -326,6 +336,7 @@ public class BookingInformation {
                 ", meetingType=" + meetingType +
                 ", room=" + room +
                 ", team=" + team +
+                ", adhoc=" + adhocBool +
                 '}';
     }
 }

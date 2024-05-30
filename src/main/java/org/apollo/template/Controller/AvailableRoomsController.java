@@ -86,6 +86,7 @@ public class AvailableRoomsController implements Initializable {
 
                 // create booking information object
                 bookingInformation.setRoomId(availableRoom.getRoomID());
+                bookingInformation.setAdhocBool(true);
 
                 // sending the user to choose time view
                 MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);

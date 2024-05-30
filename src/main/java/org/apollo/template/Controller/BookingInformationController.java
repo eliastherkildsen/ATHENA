@@ -39,8 +39,6 @@ public class BookingInformationController implements Initializable, Subscriber {
     private ChoiceBox<MeetingType> choiceBox_meetingType;
     private BookingInformation bookingInformation;
 
-    private boolean adhocBool = true;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -135,7 +133,7 @@ public class BookingInformationController implements Initializable, Subscriber {
         System.out.println("UPDATING");
 
         // Check if adhoc
-        if (adhocBool) {
+        if (bookingInformation.getAdhocBool()) {
             // Sets the department to adhoc
             bookingInformation.setDepartmentID(2);
             // Sets the team to anonymous
@@ -148,7 +146,6 @@ public class BookingInformationController implements Initializable, Subscriber {
 
         // Inserts the userID
         bookingInformation.setUserID(GetEmailIDByEmailAdress.getEmailIDByEmailName(email));
-        System.out.println(bookingInformation.toString());
 
         DAO<BookingInformation> bookingInformationDAO = new BookingInformationDAO();
         bookingInformationDAO.add(bookingInformation);
