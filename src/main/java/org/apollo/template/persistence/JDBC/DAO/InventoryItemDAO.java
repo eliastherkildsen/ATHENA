@@ -3,8 +3,6 @@ package org.apollo.template.persistence.JDBC.DAO;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.InventoryItems;
 import org.apollo.template.Service.Logger.LoggerMessage;
-
-import java.io.ObjectStreamClass;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,7 +55,22 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
 
     @Override
     public void update(InventoryItems inventoryItems) {
+        PreparedStatement ps = null;
 
+        try {
+            ps = conn.prepareStatement("UPDATE tbl_inventory SET fld_inventoryName = ?, fld_inventoryDescription = ? WHERE fld_inventoryID = ?");
+            ps.setString(1, inventoryItems.getName());
+            ps.setString(2, inventoryItems.getDescription());
+            ps.setInt(3, inventoryItems.getId());
+            ps.executeQuery();
+            ps.close();
+
+            LoggerMessage.info(this, "UPDATE, " + inventoryItems.getName() + " FROM tbl_inventoryItem");
+
+
+        } catch (SQLException e) {
+            LoggerMessage.error(this, "IN UPDATE; an error occurred: " + e.getMessage());
+        }
     }
 
 
