@@ -16,7 +16,7 @@ import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.BookingInformationDAO;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
-import org.apollo.template.persistence.JDBC.DAO.MeetingTypeDBDAO;
+import org.apollo.template.persistence.JDBC.DAO.MeetingTypeDAO;
 import org.apollo.template.persistence.JDBC.StoredProcedure.AddEmailIfNotExists;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetEmailIDByEmailAdress;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetMeetingTypeIDByMeetingType;
@@ -60,7 +60,7 @@ public class BookingInformationController implements Initializable, Subscriber {
     private void loadMeetingTypeCB(){
 
         // creating instance of dao.
-        DAO<MeetingType> dao = new MeetingTypeDBDAO();
+        DAO<MeetingType> dao = new MeetingTypeDAO();
 
         // clearing the content of choiceBox to avoid replica data.
         choiceBox_meetingType.getItems().clear();
