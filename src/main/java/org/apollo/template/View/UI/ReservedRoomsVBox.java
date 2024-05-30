@@ -65,7 +65,6 @@ public class ReservedRoomsVBox extends VBox {
                 LoggerMessage.debug(this,"Component added successfully");
             }
         }
-
     }
 
     public List<BookingComp> getBookingComps() {

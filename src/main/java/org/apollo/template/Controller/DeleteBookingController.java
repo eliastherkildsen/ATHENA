@@ -132,19 +132,21 @@ public class DeleteBookingController {
             String start = rs.getString("fld_startTime");
             String end = rs.getString("fld_endTime");
 
+            //Creating our information holder object with data from the DB/search
             BookingInformationSimple bookingInformationSimple = new BookingInformationSimple(start, end, username, roomName, meetingType, bookingId);
             bookingInformationSimpleList.add(bookingInformationSimple);
         }
 
+        //Creating our Component using the list of information we generated above.
         ReservedRoomsVBox reservedRoomsVBox = new ReservedRoomsVBox(bookingInformationSimpleList);
 
+        //Getting our add action on our components
         for (BookingComp bookingComp : reservedRoomsVBox.getBookingComps()) {
             attatchOnAction(bookingComp);
             bookingCompList.add(bookingComp);
         }
 
-
-
+        //Adding our Vbox of bookings to the container we want them displayed in.
         vbox_booking.getChildren().add(reservedRoomsVBox);
     }
 
