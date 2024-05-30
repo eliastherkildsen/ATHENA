@@ -39,6 +39,8 @@ public class ReservedRoomsVBox extends VBox {
 
             for (ReservedRoomDate i : ReservedRoomDate) {
                 LoggerMessage.trace(this, i.getRoomName() + " | " + i.getUserName() + " | Adding to vbox");
+
+                //Ensures that the String Start time and end appears as HH:MM - HH:MM
                 StringBuilder startEndTime = new StringBuilder();
                 startEndTime.append(i.getStartTime().substring(0, 5));
                 startEndTime.append(" - ");
@@ -54,6 +56,5 @@ public class ReservedRoomsVBox extends VBox {
         }
 
     }
-
 
 }

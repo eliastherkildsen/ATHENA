@@ -212,7 +212,7 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this,"In readAll; Error occurred during closing of PreparedStatement : " + e.getMessage());
+                    LoggerMessage.error(this,"In readAll; Error occurred during closing of PreparedStatement : \n" + e.getMessage());
                 }
             }
             if (rs != null) {
