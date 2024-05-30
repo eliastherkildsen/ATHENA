@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.apollo.template.Model.Email;
+import org.apollo.template.Model.ErrorReport;
 import org.apollo.template.Model.InventoryItems;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Alert.Alert;
@@ -18,15 +19,17 @@ import org.apollo.template.persistence.JDBC.DAO.InventoryItemDAO;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAODB;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ErrorReportController implements Initializable {
 
     @FXML
-    private Button button_add, button_remove, button_save, button_back;
+    private Button button_save, button_back;
 
     @FXML
-    private TextField textField_name, textField_email;
+    private TextField textField_email;
 
     @FXML
     private ChoiceBox<InventoryItems> inventoryItemsChoiceBox;
@@ -43,8 +46,6 @@ public class ErrorReportController implements Initializable {
     @FXML
     private TextArea textArea_description;
 
-    private String name;
-    private Email email;
     private final int MAX_CHARS = 500;
 
     @Override
@@ -77,55 +78,47 @@ public class ErrorReportController implements Initializable {
     @FXML
     protected void onButton_save(){
 
-        // check if a name has been entered.
-        if (textField_name.getText().length() <= 0){
-            new Alert(MainController.getInstance(), 5, AlertType.INFO, "Der er ikke indtastet et navn på andmelder!").start();
-            return;
-        }
 
         // check if email has been entered and is valid.
         if (!EmailValidator.validateEmail(textField_email.getText())){
-            new Alert(MainController.getInstance(), 5, AlertType.INFO, "Den indtastet email er ikke valid!").start();
+            new Alert(MainController.getInstance(), 5, AlertType.INFO,
+                    "Den indtastet email er ikke valid!").start();
+            return;
+        }
+
+        // checks if an item has been selected.
+        if (inventoryItemsChoiceBox.getSelectionModel().getSelectedItem() == null){
+            new Alert(MainController.getInstance(), 5, AlertType.INFO,
+                    "Du har ikke valgt et objekt.").start();
+            return;
+        }
+
+        // checks if an error description has been made.
+        if (textArea_description.getText().length() <= 0){
+            new Alert(MainController.getInstance(), 5, AlertType.INFO,
+                    "Du har ikke skrevet en beskrivelse af fejlen!").start();
             return;
         }
 
         // saving email
-        email = new Email(textField_email.getText());
-        // saving name.
-        name = textField_name.getText();
+        Email email = new Email(textField_email.getText());
+        // saving selected item
+        InventoryItems selectedInventoryItems = inventoryItemsChoiceBox.getSelectionModel().getSelectedItem();
+        // saving description
+        String description = textArea_description.getText();
+        //saving room
+        Room room = roomChoiceBox.getSelectionModel().getSelectedItem();
+
+        // creating error report obj. w builder pattern.
+        ErrorReport errorReport = new ErrorReport(room, email, selectedInventoryItems, description, false, LocalDate.now());
+        uploadErrorReport(errorReport);
 
     }
 
-    @FXML
-    protected void onButton_add(){
-
-        // checks if an item has been selected.
-        if (inventoryItemsChoiceBox.getSelectionModel().getSelectedItem() == null){
-            new Alert(MainController.getInstance(), 5, AlertType.INFO, "Du har ikke valgt et objekt.").start();
-            return;
-        }
-
-        // checks if the item has allready been added,
-        if (inventoryItemsListView.getItems().contains(inventoryItemsChoiceBox.getSelectionModel().getSelectedItem())){
-            new Alert(MainController.getInstance(), 5, AlertType.INFO, "Dette objekt er allerede tilføjet!.").start();
-            return;
-        }
-
-        // addes the item to listview.
-        inventoryItemsListView.getItems().add(inventoryItemsChoiceBox.getSelectionModel().getSelectedItem());
+    private void uploadErrorReport(ErrorReport errorReport) {
 
 
-    }
 
-    @FXML
-    protected void onButton_remove(){
-        // checks if an item has been selected.
-        if (inventoryItemsListView.getSelectionModel().getSelectedItem() == null){
-            new Alert(MainController.getInstance(), 5, AlertType.INFO, "Du har ikke valgt et objekt.").start();
-            return;
-        }
-
-        inventoryItemsListView.getItems().remove(inventoryItemsListView.getSelectionModel().getSelectedItem());
     }
 
 
