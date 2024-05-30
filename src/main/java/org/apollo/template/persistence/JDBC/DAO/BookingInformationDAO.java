@@ -40,12 +40,12 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             ps.setInt(5, bookingInformation.getNumberOfParticipants());
             ps.setString(6, bookingInformation.getUserName());
             ps.setInt(7, bookingInformation.getUserID());
-            ps.setInt(8, bookingInformation.getRoomId());
+            ps.setInt(8, bookingInformation.getRoomID());
             ps.setInt(9, bookingInformation.getMeetingTypeID());
             ps.setInt(10, bookingInformation.getDepartmentID());
-            ps.setInt(11, bookingInformation.getTeamId());
+            ps.setInt(11, bookingInformation.getTeamID());
             ps.executeUpdate();
-            LoggerMessage.info(this, "In add; added; " + bookingInformation.getBookingId());
+            LoggerMessage.info(this, "In add; added; " + bookingInformation.getBookingID());
 
 
         } catch (SQLException e) {
@@ -67,9 +67,9 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement("DELETE FROM tbl_booking WHERE fld_bookingID = ?");
-            ps.setInt(1, bookingInformation.getBookingId());
+            ps.setInt(1, bookingInformation.getBookingID());
             ps.executeUpdate();
-            LoggerMessage.info(this, "In delete; deleted; " + bookingInformation.getBookingId());
+            LoggerMessage.info(this, "In delete; deleted; " + bookingInformation.getBookingID());
 
         } catch (SQLException e) {
             LoggerMessage.error(this,"In delete; An error occurred " + e.getMessage());
@@ -109,13 +109,13 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
             ps.setInt(5, bookingInformation.getNumberOfParticipants());
             ps.setString(6, bookingInformation.getUserName());
             ps.setInt(7, bookingInformation.getUserID());
-            ps.setInt(8, bookingInformation.getRoomId());
+            ps.setInt(8, bookingInformation.getRoomID());
             ps.setInt(9, bookingInformation.getMeetingTypeID());
             ps.setInt(10, bookingInformation.getDepartmentID());
-            ps.setInt(11, bookingInformation.getTeamId());
-            ps.setInt(12, bookingInformation.getBookingId());
+            ps.setInt(11, bookingInformation.getTeamID());
+            ps.setInt(12, bookingInformation.getBookingID());
             ps.executeUpdate();
-            LoggerMessage.info(this,"In update; updated; " + bookingInformation.getBookingId());
+            LoggerMessage.info(this,"In update; updated; " + bookingInformation.getBookingID());
 
         } catch (SQLException e) {
             LoggerMessage.error(this,"In update; An error occurred " + e.getMessage());
@@ -157,7 +157,7 @@ public class BookingInformationDAO implements DAO<BookingInformation> {
                         rs.getDate("fld_date")
                 );
             }
-            LoggerMessage.debug(this,"In read; read; " + bookingInformation.getBookingId());
+            LoggerMessage.debug(this,"In read; read; " + bookingInformation.getBookingID());
         } catch (SQLException e) {
             LoggerMessage.error(this,"In read; An error occurred " + e.getMessage());
         } finally {

@@ -118,7 +118,7 @@ public class AvailableRoomsController implements Initializable {
             public void handle(ActionEvent actionEvent) {
 
                 // create booking information object
-                bookingInformation.setRoomId(availableRoom.getRoomID());
+                bookingInformation.setRoomID(availableRoom.getRoomID());
                 bookingInformation.setAdhocBool(true);
                 LoggerMessage.info(this, "bookingInformation created");
 

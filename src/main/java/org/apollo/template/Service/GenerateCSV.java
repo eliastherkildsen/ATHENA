@@ -48,7 +48,7 @@ public class GenerateCSV {
             bufferedWriter.newLine();
 
             for (BookingInformation bi : bookingList) {
-                LoggerMessage.debug(this, "Writing INFO :" + bi.getBookingId());
+                LoggerMessage.debug(this, "Writing INFO :" + bi.getBookingID());
                 bufferedWriter.append(bi.getDate().toString()); // Assuming getDate returns a date in the correct format
                 bufferedWriter.append(",");
                 bufferedWriter.append(bi.getRoom().getRoomName());

@@ -58,7 +58,7 @@ public class DeleteBookingController {
 
         // creating bookingInformation obj.
         BookingInformation bookingInformation = new BookingInformation();
-        bookingInformation.setBookingId(selectedBookingID);
+        bookingInformation.setBookingID(selectedBookingID);
 
         // creating dao.
         DAO<BookingInformation> dao = new BookingInformationDAO();

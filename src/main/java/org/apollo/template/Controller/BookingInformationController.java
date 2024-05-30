@@ -138,7 +138,7 @@ public class BookingInformationController implements Initializable, Subscriber {
             // Sets the department to adhoc
             bookingInformation.setDepartmentID(2);
             // Sets the team to anonymous
-            bookingInformation.setTeamId(2);
+            bookingInformation.setTeamID(2);
         }
 
         // Inserts the meetingTypeID

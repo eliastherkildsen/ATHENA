@@ -2,7 +2,6 @@ package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -25,7 +24,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
 public class ChooseTimeController implements Initializable, Subscriber {
 
@@ -183,7 +181,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
             PreparedStatement ps = conn.prepareStatement("EXECUTE getBookingsFromDate @BookingDate = ?, @RoomID = ?");
 
             ps.setDate(1, todaysDate);
-            ps.setInt(2, bookingInformation.getRoomId());
+            ps.setInt(2, bookingInformation.getRoomID());
             List<BookingTime> bookingTimes = new ArrayList<>();
 
             ResultSet rs = ps.executeQuery();
@@ -241,7 +239,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
         try{
             PreparedStatement ps = conn.prepareStatement("EXECUTE getRoomNameFromID @RoomID = ?");
 
-            ps.setInt(1, bookingInformation.getRoomId());
+            ps.setInt(1, bookingInformation.getRoomID());
 
             ResultSet rs = ps.executeQuery();
 

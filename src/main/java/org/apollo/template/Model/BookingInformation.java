@@ -4,11 +4,11 @@ import java.sql.Date;
 
 public class BookingInformation {
 
-    private int bookingId;
+    private int bookingID;
     private boolean catering;
     private int numberOfParticipants;
-    private int roomId;
-    private int teamId;
+    private int roomID;
+    private int teamID;
     private int userID;
     private int meetingTypeID;
     private int departmentID;
@@ -63,11 +63,11 @@ public class BookingInformation {
                               Room room,
                               Team team)
     {
-        this.bookingId = bookingId;
+        this.bookingID = bookingId;
         this.catering = catering;
         this.numberOfParticipants = numberOfParticipants;
-        this.roomId = roomId;
-        this.teamId = teamId;
+        this.roomID = roomId;
+        this.teamID = teamId;
         this.departmentID = departmentID;
         this.userName = userName;
         this.startTime = startTime;
@@ -115,11 +115,11 @@ public class BookingInformation {
                               Room room,
                               Team team)
     {
-        this.bookingId = bookingId;
+        this.bookingID = bookingId;
         setCateringBitToBoolean(catering);
         this.numberOfParticipants = numberOfParticipants;
-        this.roomId = roomId;
-        this.teamId = teamId;
+        this.roomID = roomId;
+        this.teamID = teamId;
         this.departmentID = departmentID;
         this.userName = userName;
         this.startTime = startTime;
@@ -146,11 +146,11 @@ public class BookingInformation {
                               String endTime,
                               Date date)
     {
-        this.bookingId = bookingId;
+        this.bookingID = bookingId;
         setCateringBitToBoolean(catering);
         this.numberOfParticipants = numberOfParticipants;
-        this.roomId = roomId;
-        this.teamId = teamId;
+        this.roomID = roomId;
+        this.teamID = teamId;
         this.departmentID = departmentID;
         this.userName = userName;
         this.startTime = startTime;
@@ -165,12 +165,12 @@ public class BookingInformation {
         this.meetingType = null;
     }
 
-    public int getBookingId() {
-        return bookingId;
+    public int getBookingID() {
+        return bookingID;
     }
 
-    public void setBookingId(int bookingId) {
-        this.bookingId = bookingId;
+    public void setBookingID(int bookingID) {
+        this.bookingID = bookingID;
     }
 
     public String getUserName() {
@@ -245,20 +245,20 @@ public class BookingInformation {
         this.email = email;
     }
 
-    public int getRoomId() {
-        return roomId;
+    public int getRoomID() {
+        return roomID;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
+    public void setRoomID(int roomID) {
+        this.roomID = roomID;
     }
 
-    public int getTeamId() {
-        return teamId;
+    public int getTeamID() {
+        return teamID;
     }
 
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
+    public void setTeamID(int teamID) {
+        this.teamID = teamID;
     }
 
     public int getDepartmentID() {
@@ -320,11 +320,11 @@ public class BookingInformation {
     @Override
     public String toString() {
         return "BookingInformation{" +
-                "bookingId=" + bookingId +
+                "bookingId=" + bookingID +
                 ", catering=" + catering +
                 ", numberOfParticipants=" + numberOfParticipants +
-                ", roomId=" + roomId +
-                ", teamId=" + teamId +
+                ", roomId=" + roomID +
+                ", teamId=" + teamID +
                 ", userID=" + userID +
                 ", meetingTypeID=" + meetingTypeID +
                 ", departmentID=" + departmentID +
