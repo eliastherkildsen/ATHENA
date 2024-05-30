@@ -1,7 +1,7 @@
 package org.apollo.template.Model;
 
 public class Room {
-    private int roomId;
+    private int roomID;
     private int roomMaxPersonCount;
     private int roomTypeID;
     private int floor;
@@ -10,19 +10,20 @@ public class Room {
 
     private RoomType roomType;
 
+
     public Room() {
     }
 
-    public Room(int roomId, int roomMaxPersonCount, int roomTypeID, int floor, String roomName) {
-        this.roomId = roomId;
+    public Room(int roomID, int roomMaxPersonCount, int roomTypeID, int floor, String roomName) {
+        this.roomID = roomID;
         this.roomMaxPersonCount = roomMaxPersonCount;
         this.roomTypeID = roomTypeID;
         this.floor = floor;
         this.roomName = roomName;
     }
 
-    public Room(int roomId, int roomMaxPersonCount, int roomTypeID, int floor, String roomName, RoomType roomType) {
-        this.roomId = roomId;
+    public Room(int roomID, int roomMaxPersonCount, int roomTypeID, int floor, String roomName, RoomType roomType) {
+        this.roomID = roomID;
         this.roomMaxPersonCount = roomMaxPersonCount;
         this.roomTypeID = roomTypeID;
         this.floor = floor;
@@ -30,12 +31,12 @@ public class Room {
         this.roomType = roomType;
     }
 
-    public int getRoomId() {
-        return roomId;
+    public int getRoomID() {
+        return roomID;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
+    public void setRoomID(int roomId) {
+        this.roomID = roomId;
     }
 
     public int getRoomMaxPersonCount() {
@@ -53,6 +54,10 @@ public class Room {
     public void setRoomTypeID(int roomTypeID) {
         this.roomTypeID = roomTypeID;
     }
+
+    public RoomType getRoomType() { return roomType; }
+
+    public void setRoomType(RoomType roomType) { this.roomType = roomType; }
 
     public int getFloor() {
         return floor;

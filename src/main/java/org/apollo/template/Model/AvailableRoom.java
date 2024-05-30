@@ -5,16 +5,15 @@ public class AvailableRoom extends Room{
     private int roomID;
     private String roomName;
     private int floor;
-    private String roomType;
     private int personKapacity;
+    private int roomTypeID;
+    private String roomType;
 
 
-    public AvailableRoom(int roomID, String roomName, int floor, String roomType, int personKapacity) {
-        this.roomID = roomID;
-        this.roomName = roomName;
-        this.floor = floor;
+
+    public AvailableRoom(int roomID, String roomName, int floor, String roomType, int personKapacity, int roomTypeID) {
+        super(roomID, personKapacity, roomTypeID, floor, roomName);
         this.roomType = roomType;
-        this.personKapacity = personKapacity;
     }
 
 
@@ -39,6 +38,12 @@ public class AvailableRoom extends Room{
     public void setFloor(int floor) {
         this.floor = floor;
     }
+
+    @Override
+    public int getRoomTypeID() { return roomTypeID; }
+
+    @Override
+    public void setRoomTypeID(int roomTypeID) { this.roomTypeID = roomTypeID; }
 
     public String getRoomType() {
         return roomType;

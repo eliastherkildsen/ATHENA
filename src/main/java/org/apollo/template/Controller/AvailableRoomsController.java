@@ -9,8 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import org.apollo.template.Model.AvailableRoom;
 import org.apollo.template.Model.BookingInformation;
+import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.AvailableComponent;
@@ -41,7 +41,7 @@ public class AvailableRoomsController implements Initializable {
         Date dateToday = Date.valueOf(LocalDate.now());
 
         // search for available rooms today's date and saves them as a List
-        List<AvailableRoom> roomsAvailableToday = GetAvailableRooms.getAvailableRooms(dateToday);
+        List<Room> roomsAvailableToday = GetAvailableRooms.getAvailableRooms(dateToday);
 
         // inserts available rooms into custom components and adds these components to the view
         insertComponents(roomsAvailableToday, dateToday);
@@ -53,7 +53,7 @@ public class AvailableRoomsController implements Initializable {
      * Each component is also associated with a booking button and its corresponding action.
      * @param availableRooms the list of available rooms today's date
      */
-    private void insertComponents(List<AvailableRoom> availableRooms, Date dateToday) {
+    private void insertComponents(List<Room> availableRooms, Date dateToday) {
 
         if (availableRooms.isEmpty()){
             LoggerMessage.info(this, "No available rooms");
@@ -64,7 +64,7 @@ public class AvailableRoomsController implements Initializable {
         else {
 
             try {
-                for (AvailableRoom availableRoom : availableRooms) {
+                for (Room availableRoom : availableRooms) {
 
                     // creates a custom component object using the available room object
                     AvailableComponent availableComponent = new AvailableComponent(availableRoom);
@@ -111,7 +111,7 @@ public class AvailableRoomsController implements Initializable {
      * @param button_book the button that will trigger the booking action
      * @param availableRoom the room object that is available for booking
      */
-    private void button_bookOnAction(Button button_book, AvailableRoom availableRoom) {
+    private void button_bookOnAction(Button button_book, Room availableRoom) {
 
         button_book.setOnAction(new EventHandler<ActionEvent>() {
             @Override
