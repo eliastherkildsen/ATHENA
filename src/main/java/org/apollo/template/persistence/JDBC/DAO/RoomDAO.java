@@ -50,7 +50,7 @@ public class RoomDAO implements DAO<Room> {
             ps = conn.prepareStatement("DELETE FROM tbl_room WHERE fld_roomName = ?");
             ps.setString(1, room.getRoomName());
             ps.executeQuery();
-            LoggerMessage.info(this, "In delete; deleted Room: " + room.getRoomName());
+            LoggerMessage.info(this, "In delete; deleted; " + room.getRoomName());
 
         } catch (SQLException e) {
             LoggerMessage.error(this,"In delete; An error occurred " + e.getMessage());
@@ -77,7 +77,7 @@ public class RoomDAO implements DAO<Room> {
             ps.setInt(4, room.getFloor());
             ps.setInt(5, room.getRoomId());
             ps.executeUpdate();
-            LoggerMessage.info(this,"In update; updated Room: " + room.getRoomName());
+            LoggerMessage.info(this,"In update; updated; " + room.getRoomName());
 
         } catch (SQLException e){
             LoggerMessage.error(this,"In update; An error occurred " + e.getMessage());
@@ -113,7 +113,7 @@ public class RoomDAO implements DAO<Room> {
                 room.setRoomTypeID(rs.getInt("fld_roomTypeID"));
                 room.setFloor(rs.getInt("fld_floor"));
             }
-            LoggerMessage.debug(this,"In read; read Room: " + room.getRoomName());
+            LoggerMessage.debug(this,"In read; read; " + room.getRoomName());
 
         } catch (SQLException e) {
             LoggerMessage.error(this,"In read; An error occurred " + e.getMessage());

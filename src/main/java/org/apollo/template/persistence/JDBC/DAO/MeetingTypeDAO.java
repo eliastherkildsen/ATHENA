@@ -61,17 +61,16 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
             ps.setString(1, meetingType.getMeetingType());  // replacing the placeholder
             ps.executeQuery();                                           // executing quarry
 
-        // error handling
-        } catch (SQLException e) {
-            LoggerMessage.error(this, "In delete, an error encountered " + e.getMessage());
-        }
+            LoggerMessage.info(this, "In delete; deleted; " + meetingType.getMeetingType());
 
-        finally {
+        } catch (SQLException e) {
+            LoggerMessage.error(this,"In delete; An error occurred " + e.getMessage());
+        } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "In delete, an error encountered while closing ps" + e.getMessage());
+                    LoggerMessage.error(this,"In delete; Error occurred during closing of PreparedStatement : " + e.getMessage());
                 }
             }
         }
@@ -87,17 +86,17 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
             ps = conn.prepareStatement("UPDATE tbl_meetingType SET fld_meetingTypeID = ? WHERE fld_meetingType = ?");
             ps.setInt(1, meetingType.getMeetingTypeID());       //replacing the placeholder.
             ps.setString(1, meetingType.getMeetingType());      //replacing the placeholder.
-            ps.executeQuery();                                               //executing quarry
+            ps.executeUpdate();                                               //executing quarry
+            LoggerMessage.info(this,"In update; updated; " + meetingType.getMeetingType());
 
-        } catch (SQLException e) {
-            LoggerMessage.error(this, "IN update; An error encountered " + e.getMessage());
-        }
-        finally {
+        } catch (SQLException e){
+            LoggerMessage.error(this,"In update; An error occurred " + e.getMessage());
+        } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "In update, an error encountered while closing ps" + e.getMessage());
+                    LoggerMessage.error(this,"In update; Error occurred during closing of PreparedStatement : " + e.getMessage());
                 }
             }
         }
@@ -109,6 +108,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         // establishing preparedStatement
         PreparedStatement ps = null;
         ResultSet rs = null;
+        MeetingType meetingType = null;
 
         try {
             ps = conn.prepareStatement("SELECT * FROM tbl_meetingType WHERE fld_meetingTypeID = ?");
@@ -117,39 +117,32 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
             // executing the quarry and storing it in a resultset.
             rs = ps.executeQuery();
 
-            int meetingID = rs.getInt("fld_meetingTypeID");
-            String meetingType = rs.getString("fld_meetingType");
+            if (rs.next()) {
+                meetingType.setMeetingTypeID(rs.getInt("fld_meetingTypeID"));
+                meetingType.setMeetingType(rs.getString("fld_meetingType"));
+            }
 
-            return new MeetingType(meetingType, meetingID);
+            LoggerMessage.debug(this,"In read; read; " + meetingType.getMeetingType());
 
         } catch (SQLException e) {
-            LoggerMessage.error(this, "IN read; An error encountered " + e.getMessage());
-        }
-
-        finally {
-            // closing the prepared statement.
+            LoggerMessage.error(this,"In read; An error occurred " + e.getMessage());
+        } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "In read, an error encountered while closing ps" + e.getMessage());
-
+                    LoggerMessage.error(this,"In read; Error occurred during closing of PreparedStatement : " + e.getMessage());
                 }
             }
-
-            // closing the resultset.
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "In read, an error encountered while closing rs" + e.getMessage());
-
+                    LoggerMessage.error(this,"In read; Error occurred during closing of ResultSet : " + e.getMessage());
                 }
             }
-
         }
-
-        return null; // defuald return if an error is encountered.
+        return meetingType;
 
     }
 
@@ -173,29 +166,23 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
                 list.add(new MeetingType(meetingType, meetingID));
 
             }
-
+            LoggerMessage.info(this, "In readAll; list; " + list.size());
 
         } catch (SQLException e) {
-            LoggerMessage.error(this, "IN readall; An error encountered " + e.getMessage());
+            LoggerMessage.error(this,"In readAll; An error occurred " + e.getMessage());
         } finally {
-
-            // closing the PreparedStatement statement.
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "In readAll, an error encountered while closing ps" + e.getMessage());
-
+                    LoggerMessage.error(this,"In readAll; Error occurred during closing of PreparedStatement : " + e.getMessage());
                 }
             }
-
-            // closing the resultset.
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException e) {
-                    LoggerMessage.error(this, "In readAll, an error encountered while closing rs" + e.getMessage());
-
+                    LoggerMessage.error(this,"In readAll; Error occurred during closing of ResultSet : " + e.getMessage());
                 }
             }
         }
