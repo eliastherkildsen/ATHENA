@@ -48,7 +48,7 @@ public class RoomDAO implements DAO<Room> {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement("DELETE FROM tbl_room WHERE fld_roomID = ?");
-            ps.setInt(1, room.getRoomId());
+            ps.setInt(1, room.getRoomID());
             ps.executeQuery();
             LoggerMessage.info(this, "In delete; deleted; " + room.getRoomName());
 
@@ -75,7 +75,7 @@ public class RoomDAO implements DAO<Room> {
             ps.setInt(2, room.getRoomMaxPersonCount());
             ps.setInt(3, room.getRoomTypeID());
             ps.setInt(4, room.getFloor());
-            ps.setInt(5, room.getRoomId());
+            ps.setInt(5, room.getRoomID());
             ps.executeUpdate();
             LoggerMessage.info(this,"In update; updated; " + room.getRoomName());
 
@@ -107,7 +107,7 @@ public class RoomDAO implements DAO<Room> {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                room.setRoomId(rs.getInt("fld_roomID"));
+                room.setRoomID(rs.getInt("fld_roomID"));
                 room.setRoomName(rs.getString("fld_roomName"));
                 room.setRoomMaxPersonCount(rs.getInt("fld_roomMaxPersonCount"));
                 room.setRoomTypeID(rs.getInt("fld_roomTypeID"));
@@ -148,7 +148,7 @@ public class RoomDAO implements DAO<Room> {
 
             while (rs.next()) {
                 Room room = new Room();
-                room.setRoomId(rs.getInt("fld_roomID"));
+                room.setRoomID(rs.getInt("fld_roomID"));
                 room.setRoomName(rs.getString("fld_roomName"));
                 room.setRoomMaxPersonCount(rs.getInt("fld_roomMaxPersonCount"));
                 room.setRoomTypeID(rs.getInt("fld_roomTypeID"));

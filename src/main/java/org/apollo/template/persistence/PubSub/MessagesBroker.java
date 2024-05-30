@@ -62,9 +62,9 @@ public class MessagesBroker {
      * @param topic MessagesBrokerTopic
      * @param messages String
      */
-    public void publish(MessagesBrokerTopic topic, BookingInformation messages){
+    public void publish(MessagesBrokerTopic topic, Object messages){
 
-        // looping thrugh all pairs in subscriberList
+        // looping through all pairs in subscriberList
         for (Pair<MessagesBrokerTopic, Subscriber> pair : subscriberList){
 
             if (topic == pair.getKey()){

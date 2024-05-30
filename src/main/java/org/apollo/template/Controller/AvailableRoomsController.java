@@ -4,10 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import org.apollo.template.Model.AvailableRoom;
+import javafx.scene.text.Font;
 import org.apollo.template.Model.BookingInformation;
+import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.AvailableComponent;
@@ -38,10 +41,10 @@ public class AvailableRoomsController implements Initializable {
         Date dateToday = Date.valueOf(LocalDate.now());
 
         // search for available rooms today's date and saves them as a List
-        List<AvailableRoom> roomsAvailableToday = GetAvailableRooms.getAvailableRooms(dateToday);
+        List<Room> roomsAvailableToday = GetAvailableRooms.getAvailableRooms(dateToday);
 
         // inserts available rooms into custom components and adds these components to the view
-        insertComponents(roomsAvailableToday);
+        insertComponents(roomsAvailableToday, dateToday);
     }
 
 
@@ -50,25 +53,55 @@ public class AvailableRoomsController implements Initializable {
      * Each component is also associated with a booking button and its corresponding action.
      * @param availableRooms the list of available rooms today's date
      */
-    private void insertComponents(List<AvailableRoom> availableRooms) {
+    private void insertComponents(List<Room> availableRooms, Date dateToday) {
 
         if (availableRooms.isEmpty()){
             LoggerMessage.info(this, "No available rooms");
+
+            allBooked(dateToday);
         }
+
         else {
-            for (AvailableRoom availableRoom : availableRooms) {
 
-                // creates a custom component object using the available room object
-                AvailableComponent availableComponent = new AvailableComponent(availableRoom);
+            try {
+                for (Room availableRoom : availableRooms) {
 
-                // adds the custom component to the view
-                vbox_Listview.getChildren().add(availableComponent);
+                    // creates a custom component object using the available room object
+                    AvailableComponent availableComponent = new AvailableComponent(availableRoom);
 
-                Button button_book = availableComponent.getButton();
-                button_bookOnAction(button_book, availableRoom);
+                    // adds the custom component to the view
+                    vbox_Listview.getChildren().add(availableComponent);
+
+                    Button button_book = availableComponent.getButton();
+                    button_bookOnAction(button_book, availableRoom);
+                }
+
+                LoggerMessage.info(this, "Available rooms added to view");
+
+            } catch (Exception e) {
+                LoggerMessage.error(this, "Failed to add available rooms to view\n" + e.getMessage());
             }
+        }
+    }
 
-            LoggerMessage.debug(this, "Available rooms added to view");
+
+    /**
+     * This method handles if no rooms available for booking today's date and prompts a message to user
+     * @param dateToday the today's date
+     */
+    private void allBooked(Date dateToday) {
+
+        try{
+            Label label_noAvailableRooms = new Label(String.format("Ingen ledige lokaler %s", dateToday));
+            label_noAvailableRooms.setFont(Font.font(40));
+
+            vbox_Listview.getChildren().add(label_noAvailableRooms);
+            vbox_Listview.setAlignment(Pos.CENTER);
+
+            LoggerMessage.info(this, "Text: \"tNo available rooms\" added to view");
+
+        }catch (Exception e){
+            LoggerMessage.error(this, "Failed to add text: \"tNo available rooms\" to view\n" + e.getMessage());
         }
     }
 
@@ -78,7 +111,7 @@ public class AvailableRoomsController implements Initializable {
      * @param button_book the button that will trigger the booking action
      * @param availableRoom the room object that is available for booking
      */
-    private void button_bookOnAction(Button button_book, AvailableRoom availableRoom) {
+    private void button_bookOnAction(Button button_book, Room availableRoom) {
 
         button_book.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -87,6 +120,8 @@ public class AvailableRoomsController implements Initializable {
                 // create booking information object
                 bookingInformation.setRoomId(availableRoom.getRoomID());
                 bookingInformation.setAdhocBool(true);
+                LoggerMessage.info(this, "bookingInformation created");
+
 
                 // sending the user to choose time view
                 MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);

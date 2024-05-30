@@ -194,7 +194,9 @@ BEGIN
         tbl_room.fld_roomName,
         tbl_room.fld_floor,
         tbl_room.fld_roomMaxPersonCount,
-        tbl_roomType.fld_roomTypeName
+        tbl_room.fld_roomTypeID,
+        tbl_roomType.fld_roomTypeName,
+        tbl_roomType.fld_roomTypeDescription
 
     FROM
         tbl_room
@@ -210,7 +212,9 @@ BEGIN
         tbl_room.fld_roomID,
         tbl_room.fld_roomName,
         tbl_room.fld_floor,
+        tbl_room.fld_roomTypeID,
         tbl_roomType.fld_roomTypeName,
+        tbl_roomType.fld_roomTypeDescription,
         tbl_room.fld_roomMaxPersonCount
 
     -- The available rooms are sorted by room name (ascending) and start time (ascending)
@@ -262,7 +266,7 @@ BEGIN
 
 END;
 
-
+-- Stored procedure for getting the meetingTypeid by passing the meetingType name
 CREATE PROCEDURE getMeetingTypeIDByMeetingType(@meetingType varchar(50))
 AS
 BEGIN
@@ -273,6 +277,24 @@ BEGIN
     WHERE
         fld_meetingType = @meetingType
 END;
+
+CREATE PROCEDURE FindbookingByEmail (@EmailAddress NVARCHAR(255))
+AS
+BEGIN
+
+    SELECT tbl_booking.fld_bookingID, tbl_userEmail.fld_userEmail, tbl_room.fld_roomName, fld_startTime, fld_endTime, fld_userName,
+           tbl_meetingType.fld_meetingType
+
+    FROM tbl_booking
+             INNER JOIN tbl_userEmail ON tbl_booking.fld_userID = tbl_userEmail.fld_userID
+             INNER JOIN tbl_room ON tbl_booking.fld_roomID = tbl_room.fld_roomID
+             INNER JOIN tbl_meetingType on tbl_booking.fld_bookingID = tbl_meetingType.fld_meetingTypeID
+
+    WHERE
+        tbl_userEmail.fld_userEmail = @EmailAddress;
+END;
+
+
 
 
 

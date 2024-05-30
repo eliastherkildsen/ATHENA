@@ -71,10 +71,11 @@ public class BookingInformationController implements Initializable, Subscriber {
 
 
     @Override
-    public void update(BookingInformation bookingInformation) {
-
-        this.bookingInformation = bookingInformation;
-
+    public void update(Object o) {
+        // validates that o is an instance of booking information
+        if (o instanceof BookingInformation) {
+            this.bookingInformation = (BookingInformation) o;
+        }
 
     }
 

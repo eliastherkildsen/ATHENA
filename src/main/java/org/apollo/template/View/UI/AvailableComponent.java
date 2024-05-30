@@ -10,12 +10,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import org.apollo.template.Model.AvailableRoom;
+import org.apollo.template.Model.Room;
 
 
 public class AvailableComponent extends HBox {
 
-    private AvailableRoom availableRoom;
+    private Room availableRoom;
     private Button button;
 
 
@@ -23,15 +23,15 @@ public class AvailableComponent extends HBox {
      * Builds the Available component
      * @param availableRoom the room object that is available for booking
      */
-    public AvailableComponent(AvailableRoom availableRoom){
+    public AvailableComponent(Room availableRoom){
 
         this.availableRoom = availableRoom;
 
         // creates labels using the buildLabel methods
         Label label_roomNo = buildLabel(String.format("Lok. %s", availableRoom.getRoomName()),18, FontWeight.BOLD);
-        Label label_floor = buildLabel(String.format("%s. Sal", availableRoom.getFloor()),18, FontWeight.NORMAL);
-        Label label_personKap = buildLabel(String.format("Person kapacitet: %d", availableRoom.getPersonKapacity()), 18, FontWeight.NORMAL);
-        Label label_roomType = buildLabel(String.format("Type: %s", availableRoom.getRoomType()), 16, FontWeight.NORMAL);
+        Label label_floor = buildLabel(String.format("%d. Sal", availableRoom.getFloor()),18, FontWeight.NORMAL);
+        Label label_personKap = buildLabel(String.format("Person kapacitet: %d", availableRoom.getRoomMaxPersonCount()), 18, FontWeight.NORMAL);
+        Label label_roomType = buildLabel(String.format("Type: %s", availableRoom.getRoomType().getRoomTypeName()), 18, FontWeight.NORMAL);
 
         // creates button with button text
         button = createButton("BOOK");
@@ -42,7 +42,6 @@ public class AvailableComponent extends HBox {
         this.setAlignment(Pos.CENTER);
         this.setStyle("-fx-background-color: #009FE3; -fx-background-radius: 40");
         this.getChildren().addAll(label_roomNo, addPane(),label_floor, addPane(), label_roomType, addPane(), label_personKap, addPane(),button);
-
     }
 
 
@@ -91,6 +90,5 @@ public class AvailableComponent extends HBox {
     public Button getButton() {
         return button;
     }
-
 }
 

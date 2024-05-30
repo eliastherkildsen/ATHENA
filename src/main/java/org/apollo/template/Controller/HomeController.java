@@ -1,7 +1,6 @@
 package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.Room;
@@ -10,18 +9,10 @@ import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.GenerateCSV;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
-import org.apollo.template.Service.Logger.LoggerMessage;
-import org.apollo.template.View.BorderPaneRegion;
-import org.apollo.template.View.UI.BookingComp;
-import org.apollo.template.View.UI.ReservedRoomsVBox;
-import org.apollo.template.View.ViewList;
 
-import java.awt.print.Book;
-import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class HomeController {
 

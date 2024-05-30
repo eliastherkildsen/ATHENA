@@ -16,7 +16,6 @@ public class SystemChoseController {
     @FXML
     private Button button_admin, button_infoScreen;
 
-
     @FXML
     protected void onButton_adminClick(){
         //TODO: Link the admin view and logic.

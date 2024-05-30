@@ -293,12 +293,16 @@ public class ChooseTimeController implements Initializable, Subscriber {
     }
 
     @Override
-    public void update(BookingInformation bookingInformation) {
-        this.bookingInformation = bookingInformation;
-        System.out.println("Updated");
+    public void update(Object o) {
 
-        setRoomNameLabel();
-        setOnActionForStartAndEnd();
-        generateGridButtons();
+        // validates that the object is of instance bookingInformation
+        if (o instanceof BookingInformation) {
+            this.bookingInformation = (BookingInformation) o;
+            System.out.println("Updated");
+
+            setRoomNameLabel();
+            setOnActionForStartAndEnd();
+            generateGridButtons();
+        }
     }
 }
