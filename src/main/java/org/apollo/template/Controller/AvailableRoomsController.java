@@ -4,8 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import org.apollo.template.Model.AvailableRoom;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Logger.LoggerMessage;
@@ -41,7 +44,7 @@ public class AvailableRoomsController implements Initializable {
         List<AvailableRoom> roomsAvailableToday = GetAvailableRooms.getAvailableRooms(dateToday);
 
         // inserts available rooms into custom components and adds these components to the view
-        insertComponents(roomsAvailableToday);
+        insertComponents(roomsAvailableToday, dateToday);
     }
 
 
@@ -50,10 +53,12 @@ public class AvailableRoomsController implements Initializable {
      * Each component is also associated with a booking button and its corresponding action.
      * @param availableRooms the list of available rooms today's date
      */
-    private void insertComponents(List<AvailableRoom> availableRooms) {
+    private void insertComponents(List<AvailableRoom> availableRooms, Date dateToday) {
 
         if (availableRooms.isEmpty()){
             LoggerMessage.info(this, "No available rooms");
+
+            allBooked(dateToday);
         }
 
         else {
@@ -76,6 +81,27 @@ public class AvailableRoomsController implements Initializable {
             } catch (Exception e) {
                 LoggerMessage.error(this, "Failed to add available rooms to view\n" + e.getMessage());
             }
+        }
+    }
+
+
+    /**
+     * This method handles if no rooms available for booking today's date and prompts a message to user
+     * @param dateToday the today's date
+     */
+    private void allBooked(Date dateToday) {
+
+        try{
+            Label label_noAvailableRooms = new Label(String.format("Ingen ledige lokaler %s", dateToday));
+            label_noAvailableRooms.setFont(Font.font(40));
+
+            vbox_Listview.getChildren().add(label_noAvailableRooms);
+            vbox_Listview.setAlignment(Pos.CENTER);
+
+            LoggerMessage.info(this, "Text: \"tNo available rooms\" added to view");
+
+        }catch (Exception e){
+            LoggerMessage.error(this, "Failed to add text: \"tNo available rooms\" to view\n" + e.getMessage());
         }
     }
 
