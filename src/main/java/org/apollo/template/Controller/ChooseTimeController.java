@@ -9,8 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.Booking;
-import org.apollo.template.Model.BookingInformation;
-import org.apollo.template.Model.BookingTime;
+import org.apollo.template.Model.TimeSlot;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.Logger.LoggerMessage;
@@ -209,7 +208,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
             ps.setDate(1, todaysDate);
             ps.setInt(2, booking.getRoom().getRoomID());
-            List<BookingTime> bookingTimes = new ArrayList<>();
+            List<TimeSlot> timeSlots = new ArrayList<>();
 
             ResultSet rs = ps.executeQuery();
 
@@ -217,14 +216,14 @@ public class ChooseTimeController implements Initializable, Subscriber {
                 String startTime = rs.getString("fld_startTime");
                 String endTime = rs.getString("fld_endTime");
 
-                BookingTime bookingTime = new BookingTime(startTime, endTime);
-                bookingTimes.add(bookingTime);
+                TimeSlot timeSlot = new TimeSlot(startTime, endTime);
+                timeSlots.add(timeSlot);
             }
 
-            for (BookingTime bookingTime : bookingTimes) {
+            for (TimeSlot timeSlot : timeSlots) {
 
-                LocalTime startTime = LocalTime.parse(bookingTime.getStartTime());
-                LocalTime endTime = LocalTime.parse(bookingTime.getEndTime());
+                LocalTime startTime = LocalTime.parse(timeSlot.getStartTime());
+                LocalTime endTime = LocalTime.parse(timeSlot.getEndTime());
 
                 if (!selectedTime.isBefore(startTime) && !selectedTime.isAfter(endTime.minusMinutes(institutionInterval))) {
                     return true;
