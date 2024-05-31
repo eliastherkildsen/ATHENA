@@ -58,7 +58,7 @@ public class GetAvailableRooms {
             return availableRooms;
 
         } catch (SQLException e) {
-            LoggerMessage.error("GetAvailableRooms", "Stored Procedure: getAvailableRooms didn't run as intended\n" + e.getMessage());
+            LoggerMessage.error("GetAvailableRooms", "Stored Procedure: getAvailableRooms didn't run as intended\n" + e.getMessage() + " " + e.getSQLState());
             throw new RuntimeException(e);
         }
     }
