@@ -3,6 +3,7 @@ package org.apollo.template.View.UI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
+import org.apollo.template.Model.Booking;
 import org.apollo.template.Model.BookingInformationSimple;
 import org.apollo.template.Service.Logger.LoggerMessage;
 
@@ -17,13 +18,13 @@ public class ReservedRoomsVBox extends VBox {
      * Constructor to create a VBox displaying reservation information.
      * @param BookingInformationSimple List of BookingInformationSimple objects containing booking information.
      */
-    public ReservedRoomsVBox(List<BookingInformationSimple> BookingInformationSimple) {
+    public ReservedRoomsVBox(List<Booking> bookingList) {
         // Set the background color of the VBox to transparent blue
         this.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
 
-        if (BookingInformationSimple == null){
+        if (bookingList == null){
 
-            LoggerMessage.warning(this,"BookingInformation Array Cannot be NULL");
+            LoggerMessage.warning(this,"Booking Array Cannot be NULL");
 
         } else {
 

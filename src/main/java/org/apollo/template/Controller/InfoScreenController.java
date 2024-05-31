@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import org.apollo.template.Database.JDBC;
-import org.apollo.template.Model.BookingInformationSimple;
+import org.apollo.template.Model.*;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.ReservedRoomsVBox;
@@ -39,7 +39,8 @@ public class InfoScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Preparing an arraylist with our reservations
-        List<BookingInformationSimple> booking = new ArrayList<>();
+        //TODO: List<BookingInformationSimple> booking = new ArrayList<>();
+        List<Booking> bookingList = new ArrayList<>();
 
         //Setting up the view with a Vbox
         VBox mainVbox = new VBox();
@@ -85,16 +86,21 @@ public class InfoScreenController implements Initializable {
             } else {
                 //Else lets do stuff with the result - Do while to ensure all results are included.
                 do {
-                    BookingInformationSimple reservation = new BookingInformationSimple(
-                            rs.getString("fld_startTime"),
-                            rs.getString("fld_endTime"),
-                            rs.getString("fld_userName"),
-                            rs.getString("fld_roomName"),
-                            rs.getString("fld_meetingType")
-                    );
-                    booking.add(reservation);
-                    //LoggerMessage.debug(this, "ResultSet : " + rs.getString("fld_userName"));
-                    LoggerMessage.debug(this, "Size of ArrayList : " + booking.size());
+                    Booking booking = new Booking();
+                    Room room = new Room();
+                    room.setRoomName("fld_roomName");
+
+                    MeetingType meetingType = new MeetingType(rs.getString("fld_meetingType"));
+
+
+                    booking.setStartTime(rs.getTime("fld_startTime"));
+                    booking.setEndTime(rs.getTime("fld_endTime"));
+                    booking.setUsername(rs.getString("fld_username"));
+                    booking.setRoom(room);
+                    booking.setMeetingType(meetingType);
+
+                    bookingList.add(booking);
+                    LoggerMessage.debug(this, "Size of ArrayList : " + bookingList.size());
                     LoggerMessage.info(this,"Arraylist Created.");
                 } while (rs.next());
             }
@@ -118,7 +124,7 @@ public class InfoScreenController implements Initializable {
             sPane.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
 
             //Populate the ScrollPane with my Bookings.
-            ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(booking);
+            ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(bookingList);
             sPane.setContent(vboxRooms);
 
             //Add Scrollpane to the scene
