@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.apollo.template.Model.Booking;
+import org.apollo.template.Service.Utility.TimeUtils;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.PubSub.MessagesBroker;
@@ -42,7 +43,7 @@ public class BookingCompleteController implements Subscriber, Initializable {
 
             // setting labels.
 
-            label_meetingTime.setText(getStringTimeFormated(booking));
+            label_meetingTime.setText(TimeUtils.getStringTimeFormatted(booking));
 
             label_status.setText("SUCCES!");
 
@@ -55,21 +56,6 @@ public class BookingCompleteController implements Subscriber, Initializable {
 
         }
     }
-
-    private static @NotNull String getStringTimeFormated(Booking i) {
-        Time starttime = i.getStartTime();
-        Time endtime = i.getEndTime();
-
-        //Ensures that the String Start time and end appears as HH:MM - HH:MM
-        StringBuilder startEndTime = new StringBuilder();
-        startEndTime.append(starttime.toString().substring(0, 5));
-        startEndTime.append(" - ");
-        startEndTime.append(endtime.toString().substring(0, 5));
-        String time = startEndTime.toString();
-        return time;
-    }
-
-
 
     /**
      * Method for sending the user back to info screen view.
