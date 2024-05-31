@@ -5,15 +5,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import org.apollo.template.Model.Booking;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.Email;
 import org.apollo.template.Model.MeetingType;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.EmailValidator;
+import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.Service.TextFieldInputValidation;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
+import org.apollo.template.persistence.JDBC.DAO.BookingDAO;
 import org.apollo.template.persistence.JDBC.DAO.BookingInformationDAO;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 import org.apollo.template.persistence.JDBC.DAO.MeetingTypeDAO;
@@ -37,7 +40,7 @@ public class BookingInformationController implements Initializable, Subscriber {
 
     @FXML
     private ChoiceBox<MeetingType> choiceBox_meetingType;
-    private BookingInformation bookingInformation;
+    private Booking booking;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,9 +75,9 @@ public class BookingInformationController implements Initializable, Subscriber {
 
     @Override
     public void update(Object o) {
-        // validates that o is an instance of booking information
-        if (o instanceof BookingInformation) {
-            this.bookingInformation = (BookingInformation) o;
+        // validates that o is an instance of booking
+        if (o instanceof Booking) {
+            this.booking = (Booking) o;
         }
 
     }
@@ -124,39 +127,38 @@ public class BookingInformationController implements Initializable, Subscriber {
         int numberOfParticipants = Integer.valueOf(textfield_numberOfParticipants.getText());
 
         // create bookingInformation obj.
-        bookingInformation.setUserName(textField_name.getText());
-        bookingInformation.setEmail(email);
-        bookingInformation.setNumberOfParticipants(numberOfParticipants);
-        bookingInformation.setMeetingType(choiceBox_meetingType.getSelectionModel().getSelectedItem());
+        booking.setUsername(textField_name.getText());
+        booking.setEmail(email);
+        booking.setNumberOfParticipants(numberOfParticipants);
+        booking.setMeetingType(choiceBox_meetingType.getSelectionModel().getSelectedItem());
 
-        System.out.println(bookingInformation.getStartTime());
-        System.out.println(bookingInformation.getEndTime());
-        System.out.println("UPDATING");
-        // TODO: Make logic for none-adhoc bookings
+
         // Check if adhoc
-        if (bookingInformation.getAdhocBool()) {
-            // Sets the department to adhoc
-            bookingInformation.setDepartmentID(2);
-            // Sets the team to anonymous
-            bookingInformation.setTeamId(2);
-        }
+        //if (booking.getAdhocBool()) {
+        //    // Sets the department to adhoc
+        //    booking.setDepartmentID(2);
+        //    // Sets the team to anonymous
+        //    booking.setTeamId(2);
+        //}
 
         // Inserts the meetingTypeID
-        bookingInformation.setMeetingTypeID(GetMeetingTypeIDByMeetingType.
-                getMeetingTypeIDByMeetingType(bookingInformation.getMeetingType()));
+        MeetingType meetingType = choiceBox_meetingType.getSelectionModel().getSelectedItem();
+
+        booking.setMeetingType(meetingType);
 
         // Inserts the userID
-        bookingInformation.setUserID(GetEmailIDByEmailAdress.getEmailIDByEmailName(email));
+        booking.getEmail().setEmailID(GetEmailIDByEmailAdress.getEmailIDByEmailName(email));
 
-        DAO<BookingInformation> bookingInformationDAO = new BookingInformationDAO();
-        bookingInformationDAO.add(bookingInformation);
-        System.out.println("Booking inserted");
+        DAO<Booking> bookingDAO = new BookingDAO();
+        bookingDAO.add(booking);
+
+        LoggerMessage.debug(this, "Insertet new booking: " + booking.toString());
 
         // sending the user to booking complite view.
         MainController.getInstance().setView(ViewList.BOOKINGCOMPLITE, BorderPaneRegion.CENTER);
 
         // publish bookingInformation obj.
-        MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
+        MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
 
 
     }

@@ -10,12 +10,17 @@ public class Room {
 
     private RoomType roomType;
 
-
     public Room() {
     }
 
-    public Room(int roomID, int roomMaxPersonCount, int roomTypeID, int floor, String roomName) {
-        this.roomID = roomID;
+    public Room(int roomId) {
+        this.roomID = roomId;
+    }
+
+
+
+    public Room(int roomId, int roomMaxPersonCount, int roomTypeID, int floor, String roomName) {
+        this.roomID = roomId;
         this.roomMaxPersonCount = roomMaxPersonCount;
         this.roomTypeID = roomTypeID;
         this.floor = floor;
@@ -54,10 +59,6 @@ public class Room {
     public void setRoomTypeID(int roomTypeID) {
         this.roomTypeID = roomTypeID;
     }
-
-    public RoomType getRoomType() { return roomType; }
-
-    public void setRoomType(RoomType roomType) { this.roomType = roomType; }
 
     public int getFloor() {
         return floor;

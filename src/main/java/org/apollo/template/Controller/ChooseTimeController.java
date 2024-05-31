@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import org.apollo.template.Database.JDBC;
+import org.apollo.template.Model.Booking;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.BookingTime;
 import org.apollo.template.Service.Alert.Alert;
@@ -43,7 +44,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
     private List<Button> buttonList = new ArrayList<>();
 
-    private BookingInformation bookingInformation;
+    private Booking booking;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -101,7 +102,6 @@ public class ChooseTimeController implements Initializable, Subscriber {
             });
 
             gridPane_ButtonGrid.add(button, cnt%4, cnt/4);
-
 
             cnt++;
 
@@ -208,7 +208,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
             PreparedStatement ps = conn.prepareStatement("EXECUTE getBookingsFromDate @BookingDate = ?, @RoomID = ?");
 
             ps.setDate(1, todaysDate);
-            ps.setInt(2, bookingInformation.getRoomId());
+            ps.setInt(2, booking.getRoom().getRoomID());
             List<BookingTime> bookingTimes = new ArrayList<>();
 
             ResultSet rs = ps.executeQuery();
@@ -266,7 +266,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
         try{
             PreparedStatement ps = conn.prepareStatement("EXECUTE getRoomNameFromID @RoomID = ?");
 
-            ps.setInt(1, bookingInformation.getRoomId());
+            ps.setInt(1, booking.getRoom().getRoomID());
 
             ResultSet rs = ps.executeQuery();
 
@@ -288,9 +288,6 @@ public class ChooseTimeController implements Initializable, Subscriber {
         String endTime = button_End.getText();
         String startTime = button_Start.getText();
 
-        System.out.println("------- Time chooser------");
-        System.out.println(endTime);
-        System.out.println(startTime);
         // Checks if there is any disabled times in the period selected.
         if (hasDisabledTimes(startTime, endTime)){
             new Alert(MainController.getInstance(), 5, AlertType.INFO, "The selected period includes times that are already booked.")
@@ -298,21 +295,26 @@ public class ChooseTimeController implements Initializable, Subscriber {
             return;
         }
 
+        // adding seconds to the time obj to avoid casting errors.
+        startTime += ":00";
+        endTime += ":00";
+
         // creating bookingInformation obj.
         // TODO needs to check if time has been selected.
-        bookingInformation.setStartTime(startTime);
-        bookingInformation.setEndTime(endTime);
-        LocalDate currentDate = LocalDate.now();
-        bookingInformation.setDate(Date.valueOf(currentDate));
+        booking.setStartTime(Time.valueOf(startTime));
+        booking.setEndTime(Time.valueOf(endTime));
 
-        System.out.println(bookingInformation.getStartTime() + " : " + bookingInformation.getEndTime());
+        LocalDate currentDate = LocalDate.now();
+        booking.setDate(Date.valueOf(currentDate).toLocalDate());
+
+        System.out.println(booking.getStartTime() + " : " + booking.getEndTime());
 
 
         // changing view
         MainController.getInstance().setView(ViewList.BOOKINGINFO, BorderPaneRegion.CENTER);
 
         // publishing changes
-        MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
+        MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
 
 
     }
@@ -321,9 +323,8 @@ public class ChooseTimeController implements Initializable, Subscriber {
     public void update(Object o) {
 
         // validates that the object is of instance bookingInformation
-        if (o instanceof BookingInformation) {
-            this.bookingInformation = (BookingInformation) o;
-            System.out.println("Updated");
+        if (o instanceof Booking) {
+            this.booking = (Booking) o;
 
             setRoomNameLabel();
             setOnActionForStartAndEnd();

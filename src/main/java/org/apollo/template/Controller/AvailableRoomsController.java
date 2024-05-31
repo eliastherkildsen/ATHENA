@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.apollo.template.Model.Booking;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Logger.LoggerMessage;
@@ -31,7 +32,7 @@ public class AvailableRoomsController implements Initializable {
     @FXML
     private VBox vbox_Listview;
 
-    private BookingInformation bookingInformation = new BookingInformation();
+    private Booking booking = new Booking();
 
 
     @Override
@@ -118,8 +119,7 @@ public class AvailableRoomsController implements Initializable {
             public void handle(ActionEvent actionEvent) {
 
                 // create booking information object
-                bookingInformation.setRoomId(availableRoom.getRoomID());
-                bookingInformation.setAdhocBool(true);
+                booking.setRoom(availableRoom);
                 LoggerMessage.info(this, "bookingInformation created");
 
 
@@ -127,7 +127,7 @@ public class AvailableRoomsController implements Initializable {
                 MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);
 
                 // publish booking information object
-                MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, bookingInformation);
+                MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
             }
         });
 
