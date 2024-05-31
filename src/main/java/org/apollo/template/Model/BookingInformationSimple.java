@@ -13,6 +13,7 @@ public class BookingInformationSimple {
     private String userName;
     private String roomName;
     private String meetingType;
+    //Default -1 to help with validation
     private int bookingID = -1;
 
     public BookingInformationSimple(String startTime, String endTime, String userName, String roomName, String meetingType) {
