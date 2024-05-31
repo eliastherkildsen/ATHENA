@@ -28,10 +28,10 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
 
         try {
             ps = conn.prepareStatement("INSERT INTO tbl_meetingType (fld_meetingType) VALUES ?");
-            ps.setString(1, meetingType.getMeetingType()); // replacing the placeholder
+            ps.setString(1, meetingType.getMeetingTypeName()); // replacing the placeholder
             ps.executeQuery();                                          // executing query
 
-            LoggerMessage.info(this, "Inserted, " + meetingType.getMeetingType() + " Into tbl_meetingType");
+            LoggerMessage.info(this, "Inserted, " + meetingType.getMeetingTypeName() + " Into tbl_meetingType");
 
         // error handling
         } catch (SQLException e) {
@@ -58,10 +58,10 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
 
         try {
             ps = conn.prepareStatement("DELETE FROM tbl_meetingType WHERE fld_meetingType = ?");
-            ps.setString(1, meetingType.getMeetingType());  // replacing the placeholder
+            ps.setString(1, meetingType.getMeetingTypeName());  // replacing the placeholder
             ps.executeQuery();                                           // executing quarry
 
-            LoggerMessage.info(this, "In delete; deleted; " + meetingType.getMeetingType());
+            LoggerMessage.info(this, "In delete; deleted; " + meetingType.getMeetingTypeName());
 
         } catch (SQLException e) {
             LoggerMessage.error(this,"In delete; An error occurred " + e.getMessage());
@@ -85,9 +85,9 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         try {
             ps = conn.prepareStatement("UPDATE tbl_meetingType SET fld_meetingTypeID = ? WHERE fld_meetingType = ?");
             ps.setInt(1, meetingType.getMeetingTypeID());       //replacing the placeholder.
-            ps.setString(1, meetingType.getMeetingType());      //replacing the placeholder.
+            ps.setString(1, meetingType.getMeetingTypeName());      //replacing the placeholder.
             ps.executeUpdate();                                               //executing quarry
-            LoggerMessage.info(this,"In update; updated; " + meetingType.getMeetingType());
+            LoggerMessage.info(this,"In update; updated; " + meetingType.getMeetingTypeName());
 
         } catch (SQLException e){
             LoggerMessage.error(this,"In update; An error occurred " + e.getMessage());
@@ -119,10 +119,10 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
 
             if (rs.next()) {
                 meetingType.setMeetingTypeID(rs.getInt("fld_meetingTypeID"));
-                meetingType.setMeetingType(rs.getString("fld_meetingType"));
+                meetingType.setMeetingTypeName(rs.getString("fld_meetingType"));
             }
 
-            LoggerMessage.debug(this,"In read; read; " + meetingType.getMeetingType());
+            LoggerMessage.debug(this,"In read; read; " + meetingType.getMeetingTypeName());
 
         } catch (SQLException e) {
             LoggerMessage.error(this,"In read; An error occurred " + e.getMessage());

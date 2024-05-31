@@ -6,15 +6,15 @@ package org.apollo.template.Model;
  */
 public class MeetingType {
 
-    private String meetingType;
+    private String meetingTypeName;
     private int meetingTypeID;
 
-    public MeetingType(String meetingType) {
-        this.meetingType = meetingType;
+    public MeetingType(String meetingTypeName) {
+        this.meetingTypeName = meetingTypeName;
     }
 
-    public MeetingType(String meetingType, int meetingTypeID) {
-        this.meetingType = meetingType;
+    public MeetingType(String meetingTypeName, int meetingTypeID) {
+        this.meetingTypeName = meetingTypeName;
         this.meetingTypeID = meetingTypeID;
     }
 
@@ -22,20 +22,20 @@ public class MeetingType {
         return meetingTypeID;
     }
 
-    public String getMeetingType() {
-        return meetingType;
+    public String getMeetingTypeName() {
+        return meetingTypeName;
     }
 
     public void setMeetingTypeID(int meetingTypeID) {
         this.meetingTypeID = meetingTypeID;
     }
 
-    public void setMeetingType(String meetingType) {
-        this.meetingType = meetingType;
+    public void setMeetingTypeName(String meetingTypeName) {
+        this.meetingTypeName = meetingTypeName;
     }
 
     @Override
     public String toString() {
-        return meetingType;
+        return meetingTypeName;
     }
 }
