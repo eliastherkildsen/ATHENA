@@ -8,8 +8,8 @@
    <children>
       <VBox alignment="CENTER" layoutX="127.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ListView fx:id="listView_RoomList" prefHeight="200.0" prefWidth="600.0" />
-            <HBox alignment="CENTER" prefHeight="135.0" prefWidth="600.0">
+            <ListView fx:id="listView_RoomList" prefHeight="265.0" prefWidth="600.0" />
+            <HBox alignment="CENTER" prefHeight="89.0" prefWidth="600.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onButton_CreateRoom" text="Opret" />
                   <Button mnemonicParsing="false" text="Rediger">

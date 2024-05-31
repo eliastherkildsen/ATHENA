@@ -1,7 +1,6 @@
 package org.apollo.template.persistence.JDBC.DAO;
 
 import org.apollo.template.Database.JDBC;
-import org.apollo.template.Model.Room;
 import org.apollo.template.Model.RoomType;
 import org.apollo.template.Service.Logger.LoggerMessage;
 

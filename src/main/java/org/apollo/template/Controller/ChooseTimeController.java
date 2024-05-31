@@ -2,10 +2,11 @@ package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.BookingTime;
@@ -25,16 +26,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
 public class ChooseTimeController implements Initializable, Subscriber {
 
     @FXML
-    private GridPane gridPane_ButtonGrid;
-    @FXML
     private Button button_Start, button_End;
     @FXML
     private Label label_RoomName;
+    @FXML
+    private VBox vbox_FirstVBox;
 
     private int cnt, noOfButtons = 32, institutionInterval = 15;
 
@@ -62,8 +62,26 @@ public class ChooseTimeController implements Initializable, Subscriber {
     /**
      * Method for generating all the buttons for the grid pane
      */
-    private void generateGridButtons(){
+    private void generateScrollableGridWithButtons(){
         List<String> times = generateTimes(noOfButtons);
+
+        GridPane gridPane_ButtonGrid = new GridPane();
+
+        int numRows = (int) Math.ceil(noOfButtons/4.0);
+
+        for (int i = 0; i < numRows; i++) {
+            RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setMinHeight(70);  // Minimum height
+            rowConstraints.setVgrow(Priority.ALWAYS); // Allow the row to grow
+            gridPane_ButtonGrid.getRowConstraints().add(rowConstraints);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.setHalignment(HPos.CENTER);
+            columnConstraints.setHgrow(Priority.ALWAYS);
+            gridPane_ButtonGrid.getColumnConstraints().add(columnConstraints);
+        }
 
         while (cnt < noOfButtons){
 
@@ -83,9 +101,15 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
             gridPane_ButtonGrid.add(button, cnt%4, cnt/4);
 
+
             cnt++;
 
         }
+
+        ScrollPane scrollPane = new ScrollPane(gridPane_ButtonGrid);
+        scrollPane.getStyleClass().add("custom-scroll-pane");
+        scrollPane.setFitToWidth(true);
+        vbox_FirstVBox.getChildren().add(scrollPane);
     }
 
     /**
@@ -302,7 +326,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
             setRoomNameLabel();
             setOnActionForStartAndEnd();
-            generateGridButtons();
+            generateScrollableGridWithButtons();
         }
     }
 }
