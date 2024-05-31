@@ -11,8 +11,9 @@ public class AdminMenuController {
         MainController.getInstance().setView(ViewList.ERRORREPORT, BorderPaneRegion.CENTER);
     }
 
-
-
-
+    @FXML
+    protected void onButton_ShowErrorReport(){
+        MainController.getInstance().setView(ViewList.VIEWERRORREPORT, BorderPaneRegion.CENTER);
+    }
 
 }

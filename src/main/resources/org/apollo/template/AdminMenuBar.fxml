@@ -15,14 +15,6 @@
             <Button layoutX="10.0" layoutY="27.0" mnemonicParsing="false" text="Booking" />
             <VBox alignment="TOP_CENTER" spacing="30.0">
                <children>
-                  <Label text="Fejlmelding" />
-                  <Button mnemonicParsing="false" onAction="#onButton_errorReport" text="Opret Fejlmeld" />
-                  <Button layoutX="113.0" layoutY="27.0" mnemonicParsing="false" text="Rediger Fejlmeld" />
-                  <Button layoutX="108.0" layoutY="52.0" mnemonicParsing="false" text="Vis Fejlmeld" />
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" spacing="30.0">
-               <children>
                   <Label text="Kontrolpanel" />
                   <Button mnemonicParsing="false" text="Indstillinger" />
                   <Button mnemonicParsing="false" text="Lokaler" />
@@ -34,6 +26,16 @@
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
+            </VBox>
+            <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="272.0" spacing="30.0">
+               <children>
+                  <Label text="Fejlmelding" />
+                  <Button mnemonicParsing="false" onAction="#onButton_errorReport" text="Opret Fejlmelding" />
+                  <Button fx:id="button_ShowErrorReport" mnemonicParsing="false" onAction="#onButton_ShowErrorReport" text="Vis Fejlmelding" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </VBox>
          </children>
       </VBox>

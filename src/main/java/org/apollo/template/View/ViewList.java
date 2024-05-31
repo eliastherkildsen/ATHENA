@@ -36,6 +36,7 @@ public enum ViewList {
     BOOKINGCOMPLITE("BookingViewComplite.fxml"),
     ADMINMENU("AdminMenuBar.fxml"),
     ERRORREPORT("ErrorReportView.fxml"),
+    VIEWERRORREPORT("ViewErrorReportView.fxml"),
 
     /**
      * Info view.

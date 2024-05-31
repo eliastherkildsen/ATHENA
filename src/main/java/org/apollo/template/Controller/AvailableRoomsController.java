@@ -30,7 +30,6 @@ public class AvailableRoomsController implements Initializable {
 
     private BookingInformation bookingInformation = new BookingInformation();
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

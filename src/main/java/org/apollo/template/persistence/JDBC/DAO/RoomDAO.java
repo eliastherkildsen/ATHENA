@@ -98,7 +98,7 @@ public class RoomDAO implements DAO<Room> {
     public Room read(int id) {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Room room = null;
+        Room room = new Room();
 
         try {
             ps = conn.prepareStatement("SELECT * FROM tbl_room WHERE fld_roomID = ?");
