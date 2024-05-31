@@ -1,6 +1,7 @@
 package org.apollo.template.Model;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Booking {
@@ -8,16 +9,28 @@ public class Booking {
     private int bookingID = -1;
     private Time startTime;
     private Time endTime;
-    private Date date;
+    private LocalDate date;
     private String username;
     private Room room;
     private MeetingType meetingType;
+    private int NumberOfParticipants;
+    private Email email;
 
     // this is an empty constructor, due to this class being a builder pattern.
     public Booking() {}
 
     public Booking setBookingID(int bookingID) {
         this.bookingID = bookingID;
+        return this;
+    }
+
+    public Booking setEmail(Email email) {
+        this.email = email;
+        return this;
+    }
+
+    public Booking setNumberOfParticipants(int NumberOfParticipants) {
+        this.NumberOfParticipants = NumberOfParticipants;
         return this;
     }
 
@@ -46,7 +59,7 @@ public class Booking {
         return this;
     }
 
-    public Booking setDate(Date date) {
+    public Booking setDate(LocalDate date) {
         this.date = date;
         return this;
     }
@@ -75,8 +88,16 @@ public class Booking {
         return meetingType;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
+    }
+
+    public int getNumberOfParticipants() {
+        return NumberOfParticipants;
+    }
+
+    public Email getEmail() {
+        return email;
     }
 
     @Override
