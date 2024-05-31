@@ -66,5 +66,6 @@ public class TopbarController implements Initializable {
     @FXML
     private void onButtonHomeAction(){
         MainController.getInstance().setView(ViewList.INFOSCREEN, BorderPaneRegion.CENTER);
+        MainController.getInstance().removeView(BorderPaneRegion.LEFT);
     }
 }
