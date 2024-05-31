@@ -36,7 +36,6 @@ public class InfoScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Preparing an arraylist with our reservations
-        //TODO: List<BookingInformationSimple> booking = new ArrayList<>();
         List<Booking> bookingList = new ArrayList<>();
 
         //Setting up the view with a Vbox

@@ -16,7 +16,7 @@ public class ReservedRoomsVBox extends VBox {
     List<BookingComp> bookingComps = new ArrayList<>();
     /**
      * Constructor to create a VBox displaying reservation information.
-     * @param bookingList List of BookingInformationSimple objects containing booking information.
+     * @param bookingList List of Booking objects containing booking information.
      */
     public ReservedRoomsVBox(List<Booking> bookingList) {
         // Set the background color of the VBox to transparent blue
