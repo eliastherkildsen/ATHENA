@@ -1,11 +1,11 @@
 package org.apollo.template.Model;
 
-public class BookingTime {
+public class TimeSlot {
 
     private String startTime;
     private String endTime;
 
-    public BookingTime(String startTime, String endTime){
+    public TimeSlot(String startTime, String endTime){
         this.startTime = startTime;
         this.endTime = endTime;
     }
