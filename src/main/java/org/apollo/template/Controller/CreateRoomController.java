@@ -8,6 +8,7 @@ import org.apollo.template.Model.Room;
 import org.apollo.template.Model.RoomType;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
+import org.apollo.template.Service.TextFieldInputValidation;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
@@ -28,6 +29,8 @@ public class CreateRoomController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Method for making sure that only Integers can be entered in the text fields
+        TextFieldInputValidation.attatchIntegerValidation(textField_MaxCapacity, textField_Floor);
         loadRoomTypesCB();
 
         System.out.println("initialized");
@@ -47,6 +50,7 @@ public class CreateRoomController implements Initializable {
     @FXML
     protected void onButton_Create(){
 
+        // Check if all the text fields are filled
         if(textField_RoomName.getText().isEmpty() || textField_MaxCapacity.getText().isEmpty() || textField_Floor.getText().isEmpty()){
             new Alert(MainController.getInstance(), 5, AlertType.INFO, "Please fill all fields, before trying to create.")
                     .start();
