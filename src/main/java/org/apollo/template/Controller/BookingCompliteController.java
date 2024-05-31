@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import org.apollo.template.Model.Booking;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
@@ -22,7 +23,7 @@ public class BookingCompliteController implements Subscriber, Initializable {
     @FXML
     private Button button_back;
 
-    private BookingInformation bookingInformation;
+    private Booking booking;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,21 +36,21 @@ public class BookingCompliteController implements Subscriber, Initializable {
     @Override
     public void update(Object o) {
         // validating that the object o is instanceof Bookinginformation
-        if (o instanceof BookingInformation) {
-            this.bookingInformation = (BookingInformation) o;
+        if (o instanceof Booking) {
+            this.booking = (Booking) o;
 
             // setting labels.
             //lable_meetingDate.setText(bookingInformation.getDate().toString());
 
-            lable_meetingTime.setText(bookingInformation.getStartTime() + " - " + bookingInformation.getEndTime());
+            lable_meetingTime.setText(booking.getStartTime() + " - " + booking.getEndTime());
 
             lable_status.setText("SUCESS");
 
             lable_statuseMessage.setText("Du har nu booket et lokale");
 
-            lable_meetingType.setText(bookingInformation.getMeetingType().toString());
+            lable_meetingType.setText(booking.getMeetingType().getMeetingTypeName());
 
-            lable_meetingDate.setText(bookingInformation.getDate().toString());
+            lable_meetingDate.setText(booking.getDate().toString());
 
         }
     }
