@@ -6,8 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import org.apollo.template.Model.BookingInformation;
-import org.apollo.template.Model.BookingInformationSimple;
+import org.apollo.template.Model.*;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.EmailValidator;
@@ -22,6 +21,7 @@ import org.apollo.template.persistence.JDBC.DAO.DAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,23 +122,35 @@ public class DeleteBookingController {
      * @throws SQLException
      */
     private void loadBookedRooms(ResultSet rs) throws SQLException {
-        List<BookingInformationSimple> bookingInformationSimpleList = new ArrayList<>();
+        List<Booking> bookingList = new ArrayList<>();
         while (rs.next()){
-
             int bookingId = Integer.parseInt(rs.getString("fld_bookingID"));
-            String roomName = rs.getString("fld_roomName");
+
+            Room room = new Room();
+            room.setRoomName(rs.getString("fld_roomName"));
+
+            MeetingType meetingType = new MeetingType(rs.getString("fld_meetingType"));
+
             String username = rs.getString("fld_userName");
-            String meetingType = rs.getString("fld_meetingType");
             String start = rs.getString("fld_startTime");
             String end = rs.getString("fld_endTime");
 
+            Time startTime = rs.getTime("fld_startTime");
+            Time endTime = rs.getTime("fld_endTime");
+
             //Creating our information holder object with data from the DB/search
-            BookingInformationSimple bookingInformationSimple = new BookingInformationSimple(start, end, username, roomName, meetingType, bookingId);
-            bookingInformationSimpleList.add(bookingInformationSimple);
+            Booking booking = new Booking();
+            booking.setRoom(room);
+            booking.setUsername(username);
+            booking.setMeetingType(meetingType);
+            booking.setStartTime(startTime);
+            booking.setEndTime(endTime);
+
+            bookingList.add(booking);
         }
 
         //Creating our Component using the list of information we generated above.
-        ReservedRoomsVBox reservedRoomsVBox = new ReservedRoomsVBox(bookingInformationSimpleList);
+        ReservedRoomsVBox reservedRoomsVBox = new ReservedRoomsVBox(bookingList);
 
         //Getting our add action on our components
         for (BookingComp bookingComp : reservedRoomsVBox.getBookingComps()) {

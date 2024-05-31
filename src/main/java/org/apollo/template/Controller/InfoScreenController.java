@@ -19,10 +19,7 @@ import org.apollo.template.View.UI.ReservedRoomsVBox;
 import org.apollo.template.View.ViewList;
 
 import java.net.URL;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,13 +86,15 @@ public class InfoScreenController implements Initializable {
                     Booking booking = new Booking();
                     Room room = new Room();
                     room.setRoomName("fld_roomName");
-
+                    Time startTime = rs.getTime("fld_startTime");
+                    Time endTime = rs.getTime("fld_endTime");
+                    String username = rs.getString("fld_username");
                     MeetingType meetingType = new MeetingType(rs.getString("fld_meetingType"));
 
 
-                    booking.setStartTime(rs.getTime("fld_startTime"));
-                    booking.setEndTime(rs.getTime("fld_endTime"));
-                    booking.setUsername(rs.getString("fld_username"));
+                    booking.setStartTime(startTime);
+                    booking.setEndTime(endTime);
+                    booking.setUsername(username);
                     booking.setRoom(room);
                     booking.setMeetingType(meetingType);
 
