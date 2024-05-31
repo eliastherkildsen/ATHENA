@@ -10,29 +10,35 @@
    <children>
       <VBox alignment="TOP_CENTER" layoutY="-96.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="300.0" spacing="30.0" stylesheets="@css/AdminMenu.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label stylesheets="@css/AdminMenu.css" text="Brugerpanel" />
+            <Label stylesheets="@css/AdminMenu.css" text="Brugerpanel">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Label>
             <Button mnemonicParsing="false" text="Statistik" />
             <Button layoutX="10.0" layoutY="27.0" mnemonicParsing="false" text="Booking" />
             <VBox alignment="TOP_CENTER" spacing="30.0">
                <children>
                   <Label text="Fejlmelding" />
-                  <Button mnemonicParsing="false" onAction="#onButton_errorReport" text="Opret Fejlmeld" />
-                  <Button layoutX="113.0" layoutY="27.0" mnemonicParsing="false" text="Rediger Fejlmeld" />
-                  <Button layoutX="108.0" layoutY="52.0" mnemonicParsing="false" text="Vis Fejlmeld" />
+                  <Button mnemonicParsing="false" onAction="#onButton_errorReport" text="Opret Fejlmelding" />
+                  <Button layoutX="113.0" layoutY="27.0" mnemonicParsing="false" text="Rediger Fejlmelding" />
+                  <Button layoutX="108.0" layoutY="52.0" mnemonicParsing="false" text="Vis Fejlmeldinger" />
                </children>
+               <VBox.margin>
+                  <Insets top="8.0" />
+               </VBox.margin>
             </VBox>
-            <VBox alignment="TOP_CENTER" spacing="30.0">
+            <VBox alignment="TOP_CENTER" prefHeight="330.0" prefWidth="300.0" spacing="30.0">
                <children>
                   <Label text="Kontrolpanel" />
                   <Button mnemonicParsing="false" text="Indstillinger" />
                   <Button mnemonicParsing="false" text="Lokaler" />
-                  <Button mnemonicParsing="false" text="afdelinger" />
+                  <Button mnemonicParsing="false" text="Afdelinger" />
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets top="15.0" />
                </VBox.margin>
             </VBox>
          </children>

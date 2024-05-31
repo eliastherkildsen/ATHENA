@@ -3,7 +3,8 @@ package org.apollo.template.Model;
 
 public class BookingInformationSimple {
     /**
-     * tbl_booking.fld_startTime,
+     *         tbl_booking.fld_bookingId,
+     *         tbl_booking.fld_startTime,
      *         tbl_booking.fld_endTime,
      *         tbl_booking.fld_userName,
      *         tbl_room.fld_roomName
@@ -13,6 +14,7 @@ public class BookingInformationSimple {
     private String userName;
     private String roomName;
     private String meetingType;
+    //Default -1 to help with validation
     private int bookingID = -1;
 
     public BookingInformationSimple(String startTime, String endTime, String userName, String roomName, String meetingType) {
@@ -51,6 +53,7 @@ public class BookingInformationSimple {
     public String getMeetingType() {
         return meetingType;
     }
+
     public int getBookingID() {
         return bookingID;
     }

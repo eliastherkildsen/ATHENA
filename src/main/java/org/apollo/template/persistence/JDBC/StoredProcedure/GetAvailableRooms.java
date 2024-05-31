@@ -1,7 +1,8 @@
 package org.apollo.template.persistence.JDBC.StoredProcedure;
 
 import org.apollo.template.Database.JDBC;
-import org.apollo.template.Model.AvailableRoom;
+import org.apollo.template.Model.Room;
+import org.apollo.template.Model.RoomType;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,9 +23,9 @@ public class GetAvailableRooms {
      * @param dateToday The today's date for which available rooms are being searched.
      * @return A List of AvailableRoom objects containing available rooms for today's date
      */
-    public static List<AvailableRoom> getAvailableRooms(Date dateToday){
+    public static List<Room> getAvailableRooms(Date dateToday){
 
-        List<AvailableRoom> availableRooms = new ArrayList<>();
+        List<Room> availableRooms = new ArrayList<>();
 
         try {
             PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXECUTE getAvailableRooms @BookingDate = ?");
@@ -33,20 +34,31 @@ public class GetAvailableRooms {
 
             while (rs.next()) {
 
-                AvailableRoom availableRoom = new AvailableRoom(rs.getInt("fld_roomID"),
-                                                                rs.getString("fld_roomName"),
-                                                                rs.getString("fld_floor"),
-                                                                rs.getString("fld_roomTypeName"),
-                                                                rs.getInt("fld_roomMaxPersonCount"));
+                // gets room attributes from stored procedure
+                int roomID = rs.getInt("fld_roomID");
+                String roomName = rs.getString("fld_roomName");
+                int floor = rs.getInt("fld_floor");
+                int personKapacity = rs.getInt("fld_roomMaxPersonCount");
+                int roomTypeID = rs.getInt("fld_roomTypeID");
+
+
+                // creates roomType object
+                RoomType roomType = new RoomType(rs.getInt("fld_roomTypeID"),
+                                                 rs.getString("fld_roomTypeName"),
+                                                 rs.getString("fld_roomTypeDescription"));
+
+
+                // creates room object
+                Room availableRoom = new Room (roomID, personKapacity, roomTypeID, floor, roomName, roomType);
 
                 availableRooms.add(availableRoom);
             }
-            //TODO: right message?
-            LoggerMessage.debug("GetAvailableRooms", "Stored Procedure succeeded");
+
+            LoggerMessage.info("GetAvailableRooms", "Stored Procedure succeeded");
             return availableRooms;
 
         } catch (SQLException e) {
-            LoggerMessage.error("GetAvailableRooms", "Stored Procedure: getAvailableRooms didn't run as intended " + e.getMessage());
+            LoggerMessage.error("GetAvailableRooms", "Stored Procedure: getAvailableRooms didn't run as intended\n" + e.getMessage());
             throw new RuntimeException(e);
         }
     }

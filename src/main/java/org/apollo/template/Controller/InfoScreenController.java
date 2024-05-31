@@ -82,6 +82,7 @@ public class InfoScreenController implements Initializable {
                 LoggerMessage.info(this, "No results found for " + dateToday);
             } else {
                 //Else lets do stuff with the result - Do while to ensure all results are included.
+                //Do-while to ensure we include the first result from our resultset.
                 do {
                     Booking booking = new Booking();
                     Room room = new Room();
