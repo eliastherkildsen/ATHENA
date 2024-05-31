@@ -119,7 +119,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
 
             if (rs.next()) {
                 meetingType.setMeetingTypeID(rs.getInt("fld_meetingTypeID"));
-                meetingType.setMeetingTypeName(rs.getString("fld_meetingType"));
+                meetingType.setMeetingType(rs.getString("fld_meetingType"));
             }
 
             LoggerMessage.debug(this,"In read; read; " + meetingType.getMeetingTypeName());

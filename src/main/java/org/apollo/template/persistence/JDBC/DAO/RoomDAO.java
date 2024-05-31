@@ -75,7 +75,7 @@ public class RoomDAO implements DAO<Room> {
             ps.setInt(2, room.getRoomMaxPersonCount());
             ps.setInt(3, room.getRoomTypeID());
             ps.setInt(4, room.getFloor());
-            ps.setInt(5, room.getRoomID());
+            ps.setInt(5, room.getRoomId());
             ps.executeUpdate();
             LoggerMessage.info(this,"In update; updated; " + room.getRoomName());
 

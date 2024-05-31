@@ -36,7 +36,7 @@ public class ErrorReportDAODB implements DAO<ErrorReport> {
             ps.setInt(3, errorReport.getInventoryItems().getId());
             ps.setInt(4, errorReport.getEmail().getEmailID());
             ps.setString(5, errorReport.getErrorReportDescription());
-            ps.setInt(6, errorReport.getRoom().getRoomID());
+            ps.setInt(6, errorReport.getRoom().getRoomId());
             ps.executeUpdate();
 
             // closing the prepared statement.
@@ -77,7 +77,7 @@ public class ErrorReportDAODB implements DAO<ErrorReport> {
             ps.setInt(3, errorReport.getInventoryItems().getId());
             ps.setInt(4, errorReport.getEmail().getEmailID());
             ps.setString(5, errorReport.getErrorReportDescription());
-            ps.setInt(6, errorReport.getRoom().getRoomID());
+            ps.setInt(6, errorReport.getRoom().getRoomId());
             ps.executeQuery();
             // closing the prepared statement.
             ps.close();

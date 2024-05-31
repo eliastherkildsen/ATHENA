@@ -26,7 +26,7 @@ public class MeetingType {
         return meetingTypeID;
     }
 
-    public String getMeetingType() {
+    public String getMeetingTypeName() {
         return meetingType;
     }
 
