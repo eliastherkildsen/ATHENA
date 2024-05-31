@@ -13,7 +13,7 @@
                   <VBox prefHeight="200.0" prefWidth="160.0">
                      <children>
                         <Label text="Room Name" />
-                        <TextField />
+                        <TextField fx:id="textField_RoomName" />
                      </children>
                      <HBox.margin>
                         <Insets right="15.0" />
@@ -22,7 +22,7 @@
                   <VBox prefHeight="200.0" prefWidth="160.0">
                      <children>
                         <Label text="Room Type" />
-                        <ChoiceBox prefHeight="26.0" prefWidth="168.0" />
+                        <ChoiceBox fx:id="choiceBox_RoomType" prefHeight="26.0" prefWidth="168.0" />
                      </children>
                      <HBox.margin>
                         <Insets left="15.0" />
@@ -35,7 +35,7 @@
                   <VBox prefHeight="200.0" prefWidth="160.0">
                      <children>
                         <Label text="Max Capacity" />
-                        <TextField />
+                        <TextField fx:id="textField_MaxCapacity" />
                      </children>
                      <HBox.margin>
                         <Insets right="15.0" />
@@ -44,7 +44,7 @@
                   <VBox prefHeight="78.0" prefWidth="160.0">
                      <children>
                         <Label text="Floor" />
-                        <TextField />
+                        <TextField fx:id="textField_Floor" />
                      </children>
                      <HBox.margin>
                         <Insets left="15.0" />
@@ -53,8 +53,8 @@
                </children></HBox>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Button mnemonicParsing="false" text="Create" />
-                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button mnemonicParsing="false" onAction="#onButton_Create" text="Create" />
+                  <Button mnemonicParsing="false" onAction="#onButton_Cancel" text="Cancel" />
                </children>
             </HBox>
          </children></VBox>

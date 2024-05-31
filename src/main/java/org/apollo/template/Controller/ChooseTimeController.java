@@ -10,6 +10,7 @@ import javafx.scene.layout.*;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.BookingTime;
+import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
@@ -292,7 +293,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
         System.out.println(startTime);
         // Checks if there is any disabled times in the period selected.
         if (hasDisabledTimes(startTime, endTime)){
-            new org.apollo.template.Service.Alert.Alert(MainController.getInstance(), 5, AlertType.INFO, "The selected period includes times that are already booked.")
+            new Alert(MainController.getInstance(), 5, AlertType.INFO, "The selected period includes times that are already booked.")
                     .start();
             return;
         }

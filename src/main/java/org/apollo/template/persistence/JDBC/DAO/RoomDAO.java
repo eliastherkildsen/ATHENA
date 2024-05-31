@@ -19,12 +19,12 @@ public class RoomDAO implements DAO<Room> {
     public void add(Room room) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("INSERT INTO tbl_room (fld_roomName, fld_roomMaxPersonCount, fld_roomTypeID, fld_floor) VALUES ?, ?, ?, ?");
+            ps = conn.prepareStatement("INSERT INTO tbl_room (fld_roomName, fld_roomMaxPersonCount, fld_roomTypeID, fld_floor) VALUES (?, ?, ?, ?)");
             ps.setString(1, room.getRoomName());
             ps.setInt(2, room.getRoomMaxPersonCount());
             ps.setInt(3, room.getRoomTypeID());
             ps.setInt(4, room.getFloor());
-            ps.executeQuery();
+            ps.executeUpdate();
             LoggerMessage.info(this, "In add; added; " + room.getRoomName());
 
         } catch (SQLException e) {

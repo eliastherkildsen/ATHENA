@@ -325,3 +325,13 @@ BEGIN
 
 END;
 
+
+    CREATE PROCEDURE getAllRoomTypeNames
+    AS
+    BEGIN
+        SELECT
+            fld_roomTypeName
+        FROM
+            tbl_roomType
+    END
+
