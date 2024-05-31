@@ -36,7 +36,7 @@ public class Room {
         this.roomType = roomType;
     }
 
-    public int getRoomId() {
+    public int getRoomID() {
         return roomID;
     }
 

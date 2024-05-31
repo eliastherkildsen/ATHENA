@@ -36,7 +36,7 @@ public class BookingDAO implements DAO<Booking> {
             ps.setInt(5, booking.getNumberOfParticipants());
             ps.setString(6, booking.getUsername());
             ps.setInt(7, booking.getEmail().getEmailID());
-            ps.setInt(8, booking.getRoom().getRoomId());
+            ps.setInt(8, booking.getRoom().getRoomID());
             ps.setInt(9, booking.getMeetingType().getMeetingTypeID());
             ps.setInt(10, 1); // due to this being an ad-hog or standard department type is ad-hog / id 1
             ps.setInt(11, 1); // due to this being an ad-hog or standard team type is ad-hog / id 1
@@ -103,7 +103,7 @@ public class BookingDAO implements DAO<Booking> {
             ps.setInt(5, booking.getNumberOfParticipants());
             ps.setString(6, booking.getUsername());
             ps.setInt(7, booking.getEmail().getEmailID());
-            ps.setInt(8, booking.getRoom().getRoomId());
+            ps.setInt(8, booking.getRoom().getRoomID());
             ps.setInt(9, booking.getMeetingType().getMeetingTypeID());
             ps.setInt(10, 1); // due to this being an ad-hog or standard department type is ad-hog / id 1
             ps.setInt(11, 1); // due to this being an ad-hog or standard team type is ad-hog / id 1
