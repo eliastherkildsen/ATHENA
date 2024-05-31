@@ -31,7 +31,7 @@ public class AvailableComponent extends HBox {
         Label label_roomNo = buildLabel(String.format("Lok. %s", availableRoom.getRoomName()),18, FontWeight.BOLD);
         Label label_floor = buildLabel(String.format("%d. Sal", availableRoom.getFloor()),18, FontWeight.NORMAL);
         Label label_personKap = buildLabel(String.format("Person kapacitet: %d", availableRoom.getRoomMaxPersonCount()), 18, FontWeight.NORMAL);
-        Label label_roomType = buildLabel(String.format("Type: %s", availableRoom.getRoomName()), 18, FontWeight.NORMAL);
+        Label label_roomType = buildLabel(String.format("Type: %s", availableRoom.getRoomType().getRoomTypeName()), 18, FontWeight.NORMAL);
 
         // creates button with button text
         button = createButton("BOOK");
