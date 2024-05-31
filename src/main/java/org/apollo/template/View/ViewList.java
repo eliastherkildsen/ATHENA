@@ -33,7 +33,7 @@ public enum ViewList {
      * System choose view.
      */
     SYSTEMCHOSE("SystemChoseView.fxml"),
-    BOOKINGCOMPLITE("BookingViewComplite.fxml"),
+    BOOKINGCOMPLITE("BookingViewComplete.fxml"),
     ADMINMENU("AdminMenuBar.fxml"),
     ERRORREPORT("ErrorReportView.fxml"),
 
