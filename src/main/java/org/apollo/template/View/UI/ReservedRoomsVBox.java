@@ -6,9 +6,7 @@ import javafx.scene.layout.VBox;
 import org.apollo.template.Model.Booking;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.Service.Utility.TimeUtils;
-import org.jetbrains.annotations.NotNull;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 

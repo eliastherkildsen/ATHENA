@@ -11,10 +11,8 @@ import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.PubSub.MessagesBroker;
 import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
 import org.apollo.template.persistence.PubSub.Subscriber;
-import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
-import java.sql.Time;
 import java.util.ResourceBundle;
 
 public class BookingCompleteController implements Subscriber, Initializable {
