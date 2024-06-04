@@ -37,3 +37,8 @@
     -fx-text-fill: #f9fbf9;
     -fx-font-size: 22;
 }
+
+#vBox_login {
+    -fx-background-color: #009FE399;
+    -fx-background-radius: 40;
+}
