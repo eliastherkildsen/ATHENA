@@ -3,27 +3,28 @@ package org.apollo.template.View.UI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
-import org.apollo.template.Model.BookingInformationSimple;
+import org.apollo.template.Model.Booking;
 import org.apollo.template.Service.Logger.LoggerMessage;
+import org.jetbrains.annotations.NotNull;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class ReservedRoomsVBox extends VBox {
 
     List<BookingComp> bookingComps = new ArrayList<>();
     /**
      * Constructor to create a VBox displaying reservation information.
-     * @param BookingInformationSimple List of BookingInformationSimple objects containing booking information.
+     * @param bookingList List of Booking objects containing booking information.
      */
-    public ReservedRoomsVBox(List<BookingInformationSimple> BookingInformationSimple) {
+    public ReservedRoomsVBox(List<Booking> bookingList) {
         // Set the background color of the VBox to transparent blue
         this.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
 
-        if (BookingInformationSimple == null){
+        if (bookingList == null){
 
-            LoggerMessage.warning(this,"BookingInformation Array Cannot be NULL");
+            LoggerMessage.warning(this,"Booking Array Cannot be NULL");
 
         } else {
 
@@ -33,23 +34,24 @@ public class ReservedRoomsVBox extends VBox {
 
             LoggerMessage.info(this, "Attempting to generate VBox with Bookings.");
 
-            for (BookingInformationSimple i : BookingInformationSimple) {
+            for (Booking i : bookingList) {
+                //Getting our Variables sorted.
+                String time = getStringTimeFormated(i);
+                String roomName = i.getRoom().getRoomName();
+                String userName = i.getUsername();
+                String meetingType = i.getMeetingType().getMeetingTypeName();
+                int bookingId = i.getBookingID();
+
                 BookingComp bookingComponent;
-                LoggerMessage.trace(this, i.getRoomName() + " | " + i.getUserName() + " | Adding to vbox");
+                LoggerMessage.trace(this, roomName + " | " + userName + " | Adding to vbox");
 
-                //Ensures that the String Start time and end appears as HH:MM - HH:MM
-                StringBuilder startEndTime = new StringBuilder();
-                startEndTime.append(i.getStartTime().substring(0, 5));
-                startEndTime.append(" - ");
-                startEndTime.append(i.getEndTime().substring(0, 5));
-                String time = startEndTime.toString();
 
-                if (i.getBookingID() == -1){
+                if (bookingId == -1){
                     LoggerMessage.debug(this,"Making BookingComp without ID");
-                    bookingComponent = new BookingComp(i.getRoomName(),i.getUserName(),i.getMeetingType(),time);
+                    bookingComponent = new BookingComp(roomName,userName,meetingType,time);
                 } else {
-                    LoggerMessage.debug(this,"Making BookingComp with ID: " + i.getBookingID());
-                    bookingComponent = new BookingComp(i.getRoomName(),i.getUserName(),i.getMeetingType(),time,i.getBookingID());
+                    LoggerMessage.debug(this,"Making BookingComp with ID: " + bookingId);
+                    bookingComponent = new BookingComp(roomName,userName,meetingType,time,bookingId);
                 }
 
                 // Set margin for each booking component
@@ -65,6 +67,19 @@ public class ReservedRoomsVBox extends VBox {
                 LoggerMessage.debug(this,"Component added successfully");
             }
         }
+    }
+
+    private static @NotNull String getStringTimeFormated(Booking i) {
+        Time starttime = i.getStartTime();
+        Time endtime = i.getEndTime();
+
+        //Ensures that the String Start time and end appears as HH:MM - HH:MM
+        StringBuilder startEndTime = new StringBuilder();
+        startEndTime.append(starttime.toString().substring(0, 5));
+        startEndTime.append(" - ");
+        startEndTime.append(endtime.toString().substring(0, 5));
+        String time = startEndTime.toString();
+        return time;
     }
 
     public List<BookingComp> getBookingComps() {

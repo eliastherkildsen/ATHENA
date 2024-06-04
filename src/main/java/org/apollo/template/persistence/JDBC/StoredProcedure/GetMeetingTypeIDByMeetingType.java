@@ -15,7 +15,7 @@ public class GetMeetingTypeIDByMeetingType {
 
         try {
             PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC getMeetingTypeIDByMeetingType @meetingType = ? ");
-            ps.setString(1, meetingType.getMeetingType());
+            ps.setString(1, meetingType.getMeetingTypeName());
             rs = ps.executeQuery();
             while (rs.next()){
                 return rs.getInt("fld_meetingTypeID");

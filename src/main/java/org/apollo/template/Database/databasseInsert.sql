@@ -194,7 +194,9 @@ BEGIN
         tbl_room.fld_roomName,
         tbl_room.fld_floor,
         tbl_room.fld_roomMaxPersonCount,
-        tbl_roomType.fld_roomTypeName
+        tbl_room.fld_roomTypeID,
+        tbl_roomType.fld_roomTypeName,
+        tbl_roomType.fld_roomTypeDescription
 
     FROM
         tbl_room
@@ -210,7 +212,9 @@ BEGIN
         tbl_room.fld_roomID,
         tbl_room.fld_roomName,
         tbl_room.fld_floor,
+        tbl_room.fld_roomTypeID,
         tbl_roomType.fld_roomTypeName,
+        tbl_roomType.fld_roomTypeDescription,
         tbl_room.fld_roomMaxPersonCount
 
     -- The available rooms are sorted by room name (ascending) and start time (ascending)
