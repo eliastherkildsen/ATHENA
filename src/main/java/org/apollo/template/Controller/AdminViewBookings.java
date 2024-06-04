@@ -11,32 +11,34 @@ import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.Service.Utility.BookingsByDate;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
+import org.apollo.template.persistence.JDBC.StoredProcedure.GetBookingsByDate;
 
 import java.net.URL;
-import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-
 import java.util.ResourceBundle;
 
-
-public class InfoScreenController implements Initializable {
+public class AdminViewBookings implements Initializable {
 
     @FXML
     private AnchorPane root;
 
+    Date dateToday;
+    VBox mainVbox;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        //Getting Todays date.
-        Date dateToday = Date.valueOf(LocalDate.now());
+        dateToday = Date.valueOf(LocalDate.now());
 
         //Setting up the view with a Vbox
-        VBox mainVbox = new VBox();
+        mainVbox = new VBox();
         mainVbox.setSpacing(20);
         mainVbox.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
         mainVbox.setAlignment(Pos.CENTER);
-
+        System.out.println("Hej 1");
         BookingsByDate.generateBookingsByDate(root, dateToday, mainVbox);
+
+
 
         //Adding our button at the bottom of the screen.
         bookRoomToday(mainVbox);
@@ -72,13 +74,15 @@ public class InfoScreenController implements Initializable {
 
         deleteBookingButton.setOnAction(event -> {
             // Code to execute when the button is clicked
-            MainController.getInstance().setView(ViewList.DELETEBOOKING, BorderPaneRegion.CENTER);
+            LocalDate date = dateToday.toLocalDate().plusDays(1);
+            dateToday = Date.valueOf(date);
+            mainVbox.getChildren().clear();
+            BookingsByDate.scrollPaneGenerator(GetBookingsByDate.getBookingsByDate(dateToday));
+            deleteBooking(mainVbox);
+            bookRoomToday(mainVbox);
         });
 
         pane.getChildren().add(deleteBookingButton);
     }
-
-    // endregion
-
 
 }
