@@ -21,7 +21,7 @@ public class ReservedRoomsVBox extends VBox {
         // Set the background color of the VBox to transparent blue
         this.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
 
-        if (bookingList == null){
+        if (bookingList == null || bookingList.isEmpty()){
 
             LoggerMessage.warning(this,"Booking Array Cannot be NULL");
 

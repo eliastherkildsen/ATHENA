@@ -16,6 +16,7 @@ import org.apollo.template.View.UI.BookingComp;
 import org.apollo.template.View.UI.BookingCompColors;
 import org.apollo.template.View.UI.ReservedRoomsVBox;
 import org.apollo.template.View.ViewList;
+import org.apollo.template.persistence.JDBC.DAO.BookingDAO;
 import org.apollo.template.persistence.JDBC.DAO.BookingInformationDAO;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 
@@ -57,12 +58,12 @@ public class DeleteBookingController {
         }
 
         // creating bookingInformation obj.
-        BookingInformation bookingInformation = new BookingInformation();
-        bookingInformation.setBookingId(selectedBookingID);
+        Booking booking = new Booking();
+        booking.setBookingID(selectedBookingID);
 
         // creating dao.
-        DAO<BookingInformation> dao = new BookingInformationDAO();
-        dao.delete(bookingInformation);
+        DAO<Booking> dao = new BookingDAO();
+        dao.delete(booking);
         new Alert(MainController.getInstance(), 5, AlertType.SUCCESS, "Du har nu slettet bookingen").start();
 
     }
