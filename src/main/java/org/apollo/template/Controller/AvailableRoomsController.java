@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import org.apollo.template.Model.Booking;
-import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
