@@ -36,4 +36,5 @@
 .label {
     -fx-text-fill: #f9fbf9;
     -fx-font-size: 22;
+    -fx-font-weight: bold;
 }
