@@ -19,6 +19,10 @@ public class TimeStrategyLogic {
 
 
     public StatObj generateStatObj(int noOfDaysToShow, StatisticsArea statisticsArea){
+
+
+
+
         return null;
     }
 
