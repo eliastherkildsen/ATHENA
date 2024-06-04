@@ -5,9 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import org.apollo.template.Model.Booking;
 import org.apollo.template.Service.Logger.LoggerMessage;
-import org.jetbrains.annotations.NotNull;
+import org.apollo.template.Service.Utility.TimeUtils;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class ReservedRoomsVBox extends VBox {
 
             for (Booking i : bookingList) {
                 //Getting our Variables sorted.
-                String time = getStringTimeFormated(i);
+                String time = TimeUtils.getStringTimeFormatted(i);
                 String roomName = i.getRoom().getRoomName();
                 String userName = i.getUsername();
                 String meetingType = i.getMeetingType().getMeetingTypeName();
@@ -67,19 +66,6 @@ public class ReservedRoomsVBox extends VBox {
                 LoggerMessage.debug(this,"Component added successfully");
             }
         }
-    }
-
-    private static @NotNull String getStringTimeFormated(Booking i) {
-        Time starttime = i.getStartTime();
-        Time endtime = i.getEndTime();
-
-        //Ensures that the String Start time and end appears as HH:MM - HH:MM
-        StringBuilder startEndTime = new StringBuilder();
-        startEndTime.append(starttime.toString().substring(0, 5));
-        startEndTime.append(" - ");
-        startEndTime.append(endtime.toString().substring(0, 5));
-        String time = startEndTime.toString();
-        return time;
     }
 
     public List<BookingComp> getBookingComps() {

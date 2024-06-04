@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.apollo.template.Model.Booking;
-import org.apollo.template.Model.BookingInformation;
+import org.apollo.template.Service.Utility.TimeUtils;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.PubSub.MessagesBroker;
@@ -15,10 +15,10 @@ import org.apollo.template.persistence.PubSub.Subscriber;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BookingCompliteController implements Subscriber, Initializable {
+public class BookingCompleteController implements Subscriber, Initializable {
 
     @FXML
-    private Label lable_status, lable_statuseMessage, lable_meetingType, lable_meetingTime, lable_meetingDate;
+    private Label label_status, label_statusMessage, label_meetingType, label_meetingTime, label_meetingDate, label_bookerName;
 
     @FXML
     private Button button_back;
@@ -40,22 +40,20 @@ public class BookingCompliteController implements Subscriber, Initializable {
             this.booking = (Booking) o;
 
             // setting labels.
-            //lable_meetingDate.setText(bookingInformation.getDate().toString());
 
-            lable_meetingTime.setText(booking.getStartTime() + " - " + booking.getEndTime());
+            label_meetingTime.setText(TimeUtils.getStringTimeFormatted(booking));
 
-            lable_status.setText("SUCESS");
+            label_status.setText("SUCCES!");
 
-            lable_statuseMessage.setText("Du har nu booket et lokale");
+            label_bookerName.setText(booking.getUsername());
 
-            lable_meetingType.setText(booking.getMeetingType().getMeetingTypeName());
+            label_statusMessage.setText("Lokal er nu booket for dit møde:");
 
-            lable_meetingDate.setText(booking.getDate().toString());
+            label_meetingType.setText(booking.getMeetingType().getMeetingTypeName());
+            label_meetingDate.setText(booking.getDate().toString());
 
         }
     }
-
-
 
     /**
      * Method for sending the user back to info screen view.

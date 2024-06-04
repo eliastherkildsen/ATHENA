@@ -85,7 +85,7 @@ public class InfoScreenController implements Initializable {
                 do {
                     Booking booking = new Booking();
                     Room room = new Room();
-                    room.setRoomName("fld_roomName");
+                    room.setRoomName(rs.getString("fld_roomName"));
                     Time startTime = rs.getTime("fld_startTime");
                     Time endTime = rs.getTime("fld_endTime");
                     String username = rs.getString("fld_username");

@@ -28,7 +28,7 @@
                <children>
                   <Label text="Kontrolpanel" />
                   <Button mnemonicParsing="false" text="Indstillinger" />
-                  <Button mnemonicParsing="false" text="Lokaler" />
+                  <Button mnemonicParsing="false" onAction="#onButton_Room" text="Lokaler" />
                   <Button mnemonicParsing="false" text="Afdelinger" />
                </children>
                <opaqueInsets>

@@ -297,3 +297,41 @@ END;
 
 
 
+
+CREATE PROCEDURE getRoomNameFromID (@RoomID int)
+AS
+BEGIN
+    SELECT
+        tbl_room.fld_roomName
+    FROM
+        tbl_room
+    WHERE
+        fld_roomID = @RoomID
+END
+
+
+
+CREATE PROCEDURE getBookingsFromDate (@BookingDate Date, @RoomID INTEGER)
+AS
+BEGIN
+
+    SELECT
+        tbl_booking.fld_startTime,
+        tbl_booking.fld_endTime
+    FROM
+        tbl_booking
+    WHERE
+        fld_date = @BookingDate AND fld_roomID = @RoomID
+
+END;
+
+
+    CREATE PROCEDURE getAllRoomTypeNames
+    AS
+    BEGIN
+        SELECT
+            fld_roomTypeName
+        FROM
+            tbl_roomType
+    END
+

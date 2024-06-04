@@ -2,13 +2,15 @@ package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.Booking;
-import org.apollo.template.Model.BookingInformation;
-import org.apollo.template.Model.BookingTime;
+import org.apollo.template.Model.TimeSlot;
+import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
@@ -29,11 +31,11 @@ import java.util.ResourceBundle;
 public class ChooseTimeController implements Initializable, Subscriber {
 
     @FXML
-    private GridPane gridPane_ButtonGrid;
-    @FXML
     private Button button_Start, button_End;
     @FXML
     private Label label_RoomName;
+    @FXML
+    private VBox vbox_FirstVBox;
 
     private int cnt, noOfButtons = 32, institutionInterval = 15;
 
@@ -61,8 +63,26 @@ public class ChooseTimeController implements Initializable, Subscriber {
     /**
      * Method for generating all the buttons for the grid pane
      */
-    private void generateGridButtons(){
+    private void generateScrollableGridWithButtons(){
         List<String> times = generateTimes(noOfButtons);
+
+        GridPane gridPane_ButtonGrid = new GridPane();
+
+        int numRows = (int) Math.ceil(noOfButtons/4.0);
+
+        for (int i = 0; i < numRows; i++) {
+            RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setMinHeight(70);  // Minimum height
+            rowConstraints.setVgrow(Priority.ALWAYS); // Allow the row to grow
+            gridPane_ButtonGrid.getRowConstraints().add(rowConstraints);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.setHalignment(HPos.CENTER);
+            columnConstraints.setHgrow(Priority.ALWAYS);
+            gridPane_ButtonGrid.getColumnConstraints().add(columnConstraints);
+        }
 
         while (cnt < noOfButtons){
 
@@ -85,6 +105,11 @@ public class ChooseTimeController implements Initializable, Subscriber {
             cnt++;
 
         }
+
+        ScrollPane scrollPane = new ScrollPane(gridPane_ButtonGrid);
+        scrollPane.getStyleClass().add("custom-scroll-pane");
+        scrollPane.setFitToWidth(true);
+        vbox_FirstVBox.getChildren().add(scrollPane);
     }
 
     /**
@@ -183,7 +208,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
             ps.setDate(1, todaysDate);
             ps.setInt(2, booking.getRoom().getRoomID());
-            List<BookingTime> bookingTimes = new ArrayList<>();
+            List<TimeSlot> timeSlots = new ArrayList<>();
 
             ResultSet rs = ps.executeQuery();
 
@@ -191,14 +216,14 @@ public class ChooseTimeController implements Initializable, Subscriber {
                 String startTime = rs.getString("fld_startTime");
                 String endTime = rs.getString("fld_endTime");
 
-                BookingTime bookingTime = new BookingTime(startTime, endTime);
-                bookingTimes.add(bookingTime);
+                TimeSlot timeSlot = new TimeSlot(startTime, endTime);
+                timeSlots.add(timeSlot);
             }
 
-            for (BookingTime bookingTime : bookingTimes) {
+            for (TimeSlot timeSlot : timeSlots) {
 
-                LocalTime startTime = LocalTime.parse(bookingTime.getStartTime());
-                LocalTime endTime = LocalTime.parse(bookingTime.getEndTime());
+                LocalTime startTime = LocalTime.parse(timeSlot.getStartTime());
+                LocalTime endTime = LocalTime.parse(timeSlot.getEndTime());
 
                 if (!selectedTime.isBefore(startTime) && !selectedTime.isAfter(endTime.minusMinutes(institutionInterval))) {
                     return true;
@@ -264,7 +289,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
         // Checks if there is any disabled times in the period selected.
         if (hasDisabledTimes(startTime, endTime)){
-            new org.apollo.template.Service.Alert.Alert(MainController.getInstance(), 5, AlertType.INFO, "The selected period includes times that are already booked.")
+            new Alert(MainController.getInstance(), 5, AlertType.INFO, "The selected period includes times that are already booked.")
                     .start();
             return;
         }
@@ -302,7 +327,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
             setRoomNameLabel();
             setOnActionForStartAndEnd();
-            generateGridButtons();
+            generateScrollableGridWithButtons();
         }
     }
 }
