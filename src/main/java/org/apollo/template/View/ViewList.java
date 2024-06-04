@@ -73,6 +73,8 @@ public enum ViewList {
      */
     ALLROOMS("AllRoomsView.fxml"),
 
+    ADMINVIEWBOOKINGS("AdminViewBookings.fxml"),
+
     /**
      * Create Room
      */
@@ -81,7 +83,12 @@ public enum ViewList {
     /**
      *  Topbar view.
      */
-    TOPBAR("TopbarView.fxml");
+    TOPBAR("TopbarView.fxml"),
+
+    /**
+     * Admin login view
+     */
+    LOGIN("AdminLoginView.fxml");
 
     private final String FXML_FILE_NAME; // FXML file name of the view
 
