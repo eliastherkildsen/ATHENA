@@ -62,7 +62,12 @@ public enum ViewList {
     /**
      *  Topbar view.
      */
-    TOPBAR("TopbarView.fxml");
+    TOPBAR("TopbarView.fxml"),
+
+    /**
+     * Admin login view
+     */
+    LOGIN("AdminLoginView.fxml");
 
     private final String FXML_FILE_NAME; // FXML file name of the view
 
