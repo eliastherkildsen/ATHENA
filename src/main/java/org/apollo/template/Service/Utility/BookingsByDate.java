@@ -50,10 +50,8 @@ public class BookingsByDate {
             laberGenerator(mainVbox,"Dagens Møder og Bookinger:",40,Pos.CENTER_LEFT);
 
             ScrollPane sPane = scrollPaneGenerator(bookingList);
-            System.out.println("Hej 2,5");
             //Add Scrollpane to the scene
             mainVbox.getChildren().add(sPane);
-            System.out.println("Hej 3");
 
         } else {
             //Otherwise let's inform them nothing was found.
@@ -74,7 +72,6 @@ public class BookingsByDate {
         //Populate the ScrollPane with my Bookings.
         ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(bookingList);
         sPane.setContent(vboxRooms);
-        System.out.println("hej 2");
         return sPane;
     }
 
