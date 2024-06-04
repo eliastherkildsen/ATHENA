@@ -59,7 +59,7 @@ public class TopbarController implements Initializable {
     @FXML
     private void onButtonAdminLoginAction(){
         //TODO: direct to login screen instead of this!
-        MainController.getInstance().setView(ViewList.ADMINMENU, BorderPaneRegion.LEFT);
+        MainController.getInstance().setView(ViewList.LOGIN, BorderPaneRegion.CENTER);
     }
 
 

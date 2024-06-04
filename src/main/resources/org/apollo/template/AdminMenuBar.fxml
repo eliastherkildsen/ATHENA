@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxWidth="300.0" minWidth="300.0" prefHeight="767.0" prefWidth="300.0" styleClass="background" stylesheets="@css/AdminMenu.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.AdminMenuController">
+<AnchorPane maxWidth="300.0" minWidth="300.0" prefHeight="767.0" prefWidth="300.0" styleClass="background" stylesheets="@css/AdminMenu.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.AdminMenuController">
    <children>
       <VBox layoutY="-96.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="300.0" spacing="5.0" stylesheets="@css/AdminMenu.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -18,7 +18,7 @@
                </font></Label>
             <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" text="Booking" />
+                  <Button mnemonicParsing="false" onAction="#onButton_Booking" text="Booking" />
                   <Button mnemonicParsing="false" text="Statistik" />
                </children>
             </VBox>
