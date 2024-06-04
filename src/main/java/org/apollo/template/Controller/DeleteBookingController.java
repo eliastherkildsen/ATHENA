@@ -76,7 +76,6 @@ public class DeleteBookingController {
         // clearing the VBOX
         vbox_booking.getChildren().clear();
 
-
         String email = textField_email.getText();
 
         // validate email entered.
@@ -151,6 +150,7 @@ public class DeleteBookingController {
 
         //Creating our Component using the list of information we generated above.
         ReservedRoomsVBox reservedRoomsVBox = new ReservedRoomsVBox(bookingList);
+
 
         //Getting our add action on our components
         for (BookingComp bookingComp : reservedRoomsVBox.getBookingComps()) {

@@ -47,7 +47,6 @@ public class AvailableRoomsController implements Initializable {
         insertComponents(roomsAvailableToday, dateToday);
     }
 
-
     /**
      * Method for inserting available rooms into custom components and adding them to the view.
      * Each component is also associated with a booking button and its corresponding action.
@@ -83,7 +82,6 @@ public class AvailableRoomsController implements Initializable {
             }
         }
     }
-
 
     /**
      * This method handles if no rooms available for booking today's date and prompts a message to user

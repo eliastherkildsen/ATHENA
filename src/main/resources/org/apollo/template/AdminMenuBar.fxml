@@ -18,8 +18,9 @@
                </font></Label>
             <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" text="Booking" />
-                  <Button mnemonicParsing="false" text="Statistik" />
+                  <Button layoutX="108.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButton_GenerateBooking" prefWidth="200.0" text="Opret Booking" />
+                  <Button mnemonicParsing="false" prefWidth="200.0" text="Bookinger" />
+                  <Button mnemonicParsing="false" prefWidth="200.0" text="Statistik" />
                </children>
             </VBox>
             <Label text="Fejlmelding">
@@ -29,9 +30,9 @@
             </Label>
             <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onButton_errorReport" text="Opret Fejlmelding" />
-                  <Button layoutX="113.0" layoutY="27.0" mnemonicParsing="false" text="Rediger Fejlmelding" />
-                  <Button layoutX="108.0" layoutY="52.0" mnemonicParsing="false" text="Vis Fejlmeldinger" />
+                  <Button mnemonicParsing="false" onAction="#onButton_errorReport" prefWidth="200.0" text="Opret Fejlmelding" />
+                  <Button layoutX="113.0" layoutY="27.0" mnemonicParsing="false" prefWidth="200.0" text="Rediger Fejlmelding" />
+                  <Button layoutX="108.0" layoutY="52.0" mnemonicParsing="false" prefWidth="200.0" text="Vis Fejlmeldinger" />
                </children>
                <VBox.margin>
                   <Insets top="8.0" />
@@ -44,9 +45,9 @@
             </Label>
             <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" text="Indstillinger" />
-                  <Button mnemonicParsing="false" onAction="#onButton_Room" text="Lokaler" />
-                  <Button mnemonicParsing="false" text="Afdelinger" />
+                  <Button mnemonicParsing="false" prefWidth="200.0" text="Indstillinger" />
+                  <Button mnemonicParsing="false" onAction="#onButton_Room" prefWidth="200.0" text="Lokaler" />
+                  <Button mnemonicParsing="false" prefWidth="200.0" text="Afdelinger" />
                </children>
                <opaqueInsets>
                   <Insets />
