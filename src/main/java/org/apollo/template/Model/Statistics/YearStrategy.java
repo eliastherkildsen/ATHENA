@@ -1,4 +1,9 @@
 package org.apollo.template.Model.Statistics;
 
-public class YearStrategy {
+public class YearStrategy implements TimeStrategy {
+
+    @Override
+    public StatObj generateObj(StatisticsArea statisticsArea) {
+        return null;
+    }
 }
