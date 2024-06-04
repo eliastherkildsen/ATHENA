@@ -22,7 +22,7 @@ public class AdminLoginController {
      */
     @FXML
     private void onButtonLoginAction(){
-        MainController.getInstance().setView(ViewList.ERRORREPORT, BorderPaneRegion.CENTER);
+        MainController.getInstance().setView(ViewList.VIEWERRORREPORT, BorderPaneRegion.CENTER);
     }
 
 

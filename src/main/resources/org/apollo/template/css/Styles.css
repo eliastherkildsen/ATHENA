@@ -1,0 +1,17 @@
+.button {
+    -fx-background-color: #FBBB2C;
+    -fx-background-radius: 20;
+    -fx-font-size: 17px;
+    -fx-text-fill: #f9fbf9;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 1);
+}
+
+.button:hover {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.label {
+    -fx-text-fill: #f9fbf9;
+    -fx-font-weight: bold;
+}
