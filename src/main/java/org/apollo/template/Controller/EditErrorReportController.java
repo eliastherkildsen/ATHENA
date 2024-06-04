@@ -7,13 +7,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import org.apollo.template.Model.Email;
 import org.apollo.template.Model.ErrorReport;
 import org.apollo.template.Model.InventoryItems;
 import org.apollo.template.Model.Room;
+import org.apollo.template.Service.Alert.Alert;
+import org.apollo.template.Service.Alert.AlertType;
+import org.apollo.template.Service.EmailValidator;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
+import org.apollo.template.persistence.JDBC.DAO.ErrorReportDAODB;
 import org.apollo.template.persistence.JDBC.DAO.InventoryItemDAO;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 import org.apollo.template.persistence.PubSub.MessagesBroker;
@@ -104,6 +109,47 @@ public class EditErrorReportController implements Initializable, Subscriber {
 
     @FXML
     protected void onButton_save(){
+        // check if email has been entered and is valid.
+        if (!EmailValidator.validateEmail(textField_email.getText())){
+            new Alert(MainController.getInstance(), 5, AlertType.INFO,
+                    "Den indtastet email er ikke valid!").start();
+            return;
+        }
+
+        // checks if an item has been selected.
+        if (inventoryItemsChoiceBox.getSelectionModel().getSelectedItem() == null){
+            new Alert(MainController.getInstance(), 5, AlertType.INFO,
+                    "Du har ikke valgt et objekt.").start();
+            return;
+        }
+
+        // checks if an error description has been made.
+        if (textArea_description.getText().length() <= 0){
+            new Alert(MainController.getInstance(), 5, AlertType.INFO,
+                    "Du har ikke skrevet en beskrivelse af fejlen!").start();
+            return;
+        }
+
+
+        // saving selected item
+        InventoryItems selectedInventoryItems = inventoryItemsChoiceBox.getSelectionModel().getSelectedItem();
+
+        // saving description
+        String description = textArea_description.getText();
+
+        //saving room
+        Room room = roomChoiceBox.getSelectionModel().getSelectedItem();
+
+        errorReport.setErrorReportDescription(description);
+        errorReport.setRoom(room);
+        errorReport.setInventoryItems(selectedInventoryItems);
+
+        DAO<ErrorReport> errorReportDAO = new ErrorReportDAODB();
+        errorReportDAO.update(errorReport);
+
+        // informing user that error report has been updated.
+        new Alert(MainController.getInstance(), 5, AlertType.INFO, "Fejlmeldingen er nu " +
+                "blevet updateret.").start();
 
     }
 
