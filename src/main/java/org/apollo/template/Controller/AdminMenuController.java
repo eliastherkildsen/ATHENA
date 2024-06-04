@@ -12,7 +12,7 @@ public class AdminMenuController {
     }
 
     @FXML
-    protected void onButton_ShowErrorReport(){
+    protected void onButton_viewErrorReport(){
         MainController.getInstance().setView(ViewList.VIEWERRORREPORT, BorderPaneRegion.CENTER);
     }
 

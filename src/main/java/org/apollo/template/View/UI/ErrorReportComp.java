@@ -1,5 +1,7 @@
 package org.apollo.template.View.UI;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -36,10 +38,10 @@ public class ErrorReportComp extends HBox {
 
     private void loadErrorReport() {
 
-        System.out.println("roomid: " + ERROR_REPORT.getRoom().getRoomId());
+        System.out.println("roomid: " + ERROR_REPORT.getRoom().getRoomID());
 
         DAO<Room> roomDAO = new RoomDAO();
-        Room room = roomDAO.read(ERROR_REPORT.getRoom().getRoomId());
+        Room room = roomDAO.read(ERROR_REPORT.getRoom().getRoomID());
 
         System.out.println("room name: " + ERROR_REPORT.getRoom().getRoomName());
 
@@ -71,5 +73,9 @@ public class ErrorReportComp extends HBox {
     private void styleHbox(HBox hbox){
         hbox.setSpacing(20);
         hbox.setStyle("-fx-background-color: " + color.getColor() + ";");
+        hbox.setStyle("-fx-background-radius: 40");
+        hbox.setMinHeight(60);
+        hbox.setPadding(new Insets(0, 20, 0, 0));
+        hbox.setAlignment(Pos.CENTER);
     }
 }
