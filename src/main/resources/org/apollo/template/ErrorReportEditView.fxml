@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.EditErrorReportController">
+   <children>
+      <VBox alignment="TOP_CENTER" opacity="0.8" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #009FE3; -fx-background-radius: 30;">
+         <children>
+            <Label text="Rediger fejlmelding" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Label text="Fejlmelder e-mail:" textFill="WHITE" />
+                        <TextField fx:id="textField_email" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="35.0" prefHeight="100.0" prefWidth="600.0" spacing="30.0">
+                     <children>
+                        <Label text="Lokale" textFill="WHITE" />
+                        <ChoiceBox fx:id="roomChoiceBox" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <Label text="Objekt" textFill="WHITE" />
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ChoiceBox fx:id="inventoryItemsChoiceBox" prefWidth="150.0" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox alignment="TOP_RIGHT" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+               <children>
+                  <TextArea fx:id="textArea_description" prefHeight="200.0" prefWidth="200.0" promptText="Fejl beskrivelse" VBox.vgrow="ALWAYS" />
+                  <HBox alignment="TOP_RIGHT">
+                     <children>
+                        <Label fx:id="lable_totalChar" text="total char" textFill="WHITE" />
+                        <Label fx:id="lable_maxChar" text="/500 tegn" textFill="WHITE" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Button fx:id="button_save" mnemonicParsing="false" onAction="#onButton_save" text="Gem" />
+                  <Button fx:id="button_back" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButton_back" text="Tilbage" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

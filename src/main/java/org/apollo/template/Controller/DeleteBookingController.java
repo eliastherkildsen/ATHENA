@@ -60,6 +60,7 @@ public class DeleteBookingController {
         BookingInformation bookingInformation = new BookingInformation();
         bookingInformation.setBookingId(selectedBookingID);
 
+
         // creating dao.
         DAO<BookingInformation> dao = new BookingInformationDAO();
         dao.delete(bookingInformation);
@@ -78,6 +79,7 @@ public class DeleteBookingController {
 
 
         String email = textField_email.getText();
+        System.out.println(email);
 
         // validate email entered.
         if (!validateEnteredEmail(email)) return;
@@ -122,6 +124,7 @@ public class DeleteBookingController {
      * @throws SQLException
      */
     private void loadBookedRooms(ResultSet rs) throws SQLException {
+
         List<Booking> bookingList = new ArrayList<>();
         while (rs.next()){
             int bookingId = Integer.parseInt(rs.getString("fld_bookingID"));

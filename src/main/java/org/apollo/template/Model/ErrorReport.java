@@ -10,6 +10,18 @@ public class ErrorReport {
     private String errorReportDescription;
     private boolean archived;
     private LocalDate reportDate;
+    private int errorReportID;
+
+
+    public ErrorReport(int id, Room room, Email email, InventoryItems inventoryItems, String errorReportDescription, boolean archived, LocalDate reportDate) {
+        this.errorReportID = id;
+        this.room = room;
+        this.email = email;
+        this.inventoryItems = inventoryItems;
+        this.errorReportDescription = errorReportDescription;
+        this.archived = archived;
+        this.reportDate = reportDate;
+    }
 
     public ErrorReport(Room room, Email email, InventoryItems inventoryItems, String errorReportDescription, boolean archived, LocalDate reportDate) {
         this.room = room;
@@ -66,5 +78,21 @@ public class ErrorReport {
 
     public void setReportDate(LocalDate reportDate) {
         this.reportDate = reportDate;
+    }
+
+    @Override
+    public String toString() {
+        return "ErrorReport{" +
+                "room=" + room +
+                ", email=" + email +
+                ", inventoryItems=" + inventoryItems +
+                ", errorReportDescription='" + errorReportDescription + '\'' +
+                ", archived=" + archived +
+                ", reportDate=" + reportDate +
+                '}';
+    }
+
+    public int getErrorReportID() {
+        return errorReportID;
     }
 }
