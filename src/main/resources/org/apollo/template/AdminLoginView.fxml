@@ -23,8 +23,8 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <PasswordField maxWidth="200.0" prefHeight="26.0" prefWidth="430.0" />
-                  <Button mnemonicParsing="false" text="Login">
+                  <PasswordField fx:id="passwordField_password" maxWidth="200.0" prefHeight="26.0" prefWidth="430.0" />
+                  <Button mnemonicParsing="false" onAction="#onButtonLoginAction" text="Login">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
