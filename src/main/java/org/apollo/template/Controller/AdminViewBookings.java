@@ -65,8 +65,8 @@ public class AdminViewBookings implements Initializable {
             mainVbox.getChildren().clear();
             mainVbox.getChildren().add(BookingsByDate.scrollPaneGenerator(GetBookingsByDate.getBookingsByDate(dateToday)));
             setUpForwardsBackWardsHBox(mainVbox);
-            deleteBooking(mainVbox);
             bookRoomToday(mainVbox);
+            deleteBooking(mainVbox);
         });
         pane.getChildren().add(button_Forward);
     }
@@ -89,8 +89,8 @@ public class AdminViewBookings implements Initializable {
             mainVbox.getChildren().clear();
             mainVbox.getChildren().add(BookingsByDate.scrollPaneGenerator(GetBookingsByDate.getBookingsByDate(dateToday)));
             setUpForwardsBackWardsHBox(mainVbox);
-            deleteBooking(mainVbox);
             bookRoomToday(mainVbox);
+            deleteBooking(mainVbox);
         });
         pane.getChildren().add(button_Backward);
     }
@@ -125,8 +125,8 @@ public class AdminViewBookings implements Initializable {
             dateToday = Date.valueOf(date);
             mainVbox.getChildren().clear();
             mainVbox.getChildren().add(BookingsByDate.scrollPaneGenerator(GetBookingsByDate.getBookingsByDate(dateToday)));
-            deleteBooking(mainVbox);
             bookRoomToday(mainVbox);
+            deleteBooking(mainVbox);
         });
 
         pane.getChildren().add(deleteBookingButton);
