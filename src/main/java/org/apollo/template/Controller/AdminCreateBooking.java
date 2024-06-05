@@ -183,6 +183,7 @@ public class AdminCreateBooking implements Initializable {
 
     @FXML
     private void onButton_buttonSearch() {
+        // Validation, if we are getting NULLs or Are doing something irrelevant lets return without doing anything else.
         if (datePickerStart.getValue() == null || datePickerEnd.getValue() == null || numberOfPeople.getValue() == null || comboBoxFromTimeHour.getValue() == null || comboBoxFromTimeMinutes.getValue() == null || comboBoxToTimeHour.getValue() == null || comboBoxToTimeMinutes.getValue() == null) {
             new Alert(MainController.getInstance() ,5, AlertType.ERROR, "Validation Error \nPlease fill in all fields before searching.").start();
             LoggerMessage.warning(this,"onButton_buttonSearch : Values returned Null, return from method");
@@ -211,7 +212,7 @@ public class AdminCreateBooking implements Initializable {
         LoggerMessage.debug("AdminCreateBooking", "START TIME: " + startHour + ":" + startMinute);
         LoggerMessage.debug("AdminCreateBooking", "END TIME: " + endHour + ":" + endMinute);
 
-        // Add your business logic here
+        // Logic
     }
 
     /**
