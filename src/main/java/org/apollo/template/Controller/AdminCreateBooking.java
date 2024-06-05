@@ -30,6 +30,8 @@ public class AdminCreateBooking implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //BoilerPlate Vbox, HBox and Labels
         VBox mainVbox = new VBox();
         mainVbox.setSpacing(20);
         mainVbox.setStyle("-fx-background-color: rgba(0, 159, 227, 0.8);");
@@ -44,22 +46,37 @@ public class AdminCreateBooking implements Initializable {
         HBox dateAndMaxPeople = new HBox(title);
         dateAndMaxPeople.setAlignment(Pos.CENTER);
 
+        //DatePickerStart Setup
         Label labelFromDate = new Label("Fra:");
         DatePicker datePickerStart = new DatePicker();
         datePickerStart.showWeekNumbersProperty();
 
+        //DatePickerEnd Setup
         Label labelToDate = new Label("Til:");
         DatePicker datePickerEnd = new DatePicker();
+        //DatePickerEnd, we are setting its value to today and we are disabling it for interaction
+        datePickerEnd.setValue(LocalDate.now());
         datePickerEnd.setDisable(true);
 
+        //We want to ensure that our datePickerStart is only allowing dates from today and forward.
         datepickerSetCell(datePickerStart,LocalDate.now());
+
+        //A Listener to interact with our datePickerEnd
         datePickerStart.valueProperty().addListener(new ChangeListener<LocalDate>() {
 
             @Override
             public void changed(ObservableValue<? extends LocalDate> observableValue, LocalDate oldValue, LocalDate newValue) {
                 if (newValue != null){
+                    //We are no longer disabling the datePickerEnd as a start date has been picked.
                     datePickerEnd.setDisable(false);
-                    datePickerEnd.setValue(newValue);
+                    LoggerMessage.debug(this, "BEFORE START DATE: "+datePickerStart.getValue());
+                    LoggerMessage.debug(this, "BEFORE END DATE: "+datePickerEnd.getValue());
+
+                    //We are only changing the date of the datePickerEnd if a date is chosen that surpasses it
+                    if ((datePickerEnd.getValue() == null) || newValue.isAfter(datePickerEnd.getValue())){
+                        datePickerEnd.setValue(newValue);
+                        LoggerMessage.debug(this, "NOW END DATE: "+datePickerEnd.getValue());
+                    }
                     datepickerSetCell(datePickerEnd,newValue);
 
                 } else {
@@ -68,6 +85,7 @@ public class AdminCreateBooking implements Initializable {
             }
         });
 
+        //Setting out ComboBox
         Label labelMaxPeople = new Label("Antal Deltager:");
         ComboBox numberOfPeople = new ComboBox(getMaxPersonCountFromRooms());
 
