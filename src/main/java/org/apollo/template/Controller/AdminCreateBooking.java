@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -16,8 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import org.controlsfx.control.spreadsheet.Picker;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
@@ -26,11 +23,13 @@ import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminCreateBooking implements Initializable {
+    private int openHour = 8;
+    private int closingHour = 16;
+    private int minuteInterval = 15;
 
     @FXML
     private AnchorPane root;
@@ -54,7 +53,7 @@ public class AdminCreateBooking implements Initializable {
         hBoxDateAndMaxPeopleManipulation.setSpacing(10);
 
         HBox hBoxTimeManipulationAndConfirmation = new HBox();
-        hBoxTimeManipulationAndConfirmation.setAlignment(Pos.BOTTOM_CENTER);
+        hBoxTimeManipulationAndConfirmation.setAlignment(Pos.CENTER);
         hBoxTimeManipulationAndConfirmation.setSpacing(10);
 
         //DatePickerStart Setup
@@ -109,31 +108,34 @@ public class AdminCreateBooking implements Initializable {
         //FROM
         Label labelFrom = new Label("FRA: ");
         Label labelFromTimeHour = new Label("Timer");
-        ComboBox<Integer> comboBoxFromTimeHour = comboBoxInt(24);
+        ComboBox<Integer> comboBoxFromTimeHour = comboBoxHour(openHour,closingHour);
         VBox vBoxFromTimeHour = new VBox(labelFromTimeHour, comboBoxFromTimeHour);
 
         Label labelFromTimeMinute = new Label("Minuter");
-        ComboBox<Integer> comboBoxFromTimeMinutes = comboBoxTimeMinutesIntervalsInt(15);
+        ComboBox<Integer> comboBoxFromTimeMinutes = comboBoxTimeMinutesIntervalsInt(minuteInterval);
         VBox vBoxFromTimeMin = new VBox(labelFromTimeMinute, comboBoxFromTimeMinutes);
 
         //TO
         Label labelTo = new Label("TIL: ");
         Label labelToTimeHour = new Label("Timer");
-        ComboBox<Integer> comboBoxToTimeHour = comboBoxInt(24);
+        ComboBox<Integer> comboBoxToTimeHour = comboBoxHour(openHour,closingHour);
         VBox vBoxToTimeHour = new VBox(labelToTimeHour, comboBoxToTimeHour);
 
         Label labelFToTimeMinute = new Label("Minuter");
-        ComboBox<Integer> comboBoxToTimeMinutes = comboBoxTimeMinutesIntervalsInt(15);
+        ComboBox<Integer> comboBoxToTimeMinutes = comboBoxTimeMinutesIntervalsInt(minuteInterval);
         VBox vBoxToTimeMinutes = new VBox(labelFToTimeMinute, comboBoxToTimeMinutes);
 
         Pane paneSpacer = new Pane();
         paneSpacer.setMinWidth(10);
 
+        //SEARCH BUTTON
+        Button buttonSearch = new Button("SEARCH");
+
         //Adding elements to our FirstHBox
         hBoxDateAndMaxPeopleManipulation.getChildren().addAll(labelFromDate,datePickerStart,labelToDate, datePickerEnd, labelIncludeWeekends ,checkBoxIncludeWeekends,labelMaxPeople, numberOfPeople);
 
         //Adding elements to our SecondHBox
-        hBoxTimeManipulationAndConfirmation.getChildren().addAll( labelFrom, vBoxFromTimeHour, vBoxFromTimeMin,  paneSpacer,  labelTo, vBoxToTimeHour, vBoxToTimeMinutes);
+        hBoxTimeManipulationAndConfirmation.getChildren().addAll( labelFrom, vBoxFromTimeHour, vBoxFromTimeMin,  paneSpacer,  labelTo, vBoxToTimeHour, vBoxToTimeMinutes, buttonSearch);
 
         //Adding elements to our VBox
         mainVbox.getChildren().addAll(title, hBoxDateAndMaxPeopleManipulation, hBoxTimeManipulationAndConfirmation);
@@ -151,6 +153,15 @@ public class AdminCreateBooking implements Initializable {
         AnchorPane.setBottomAnchor(mainVbox, 0.0);
     }
 
+    private void onButton_buttonSearch() {
+        //START DATE
+        //END DATE
+        //WEEKEND?
+        //NUMBER OF DUDES
+        //START TIME HOUR + MIN
+        //END TIME HOUR + MIN
+    }
+
     /**
      * Helper Class that takes the param int + i.
      * Is made to fit an hour / int 60.
@@ -166,9 +177,9 @@ public class AdminCreateBooking implements Initializable {
         return comboBoxMinutes;
     }
 
-    private ComboBox<Integer> comboBoxInt(int number) {
+    private ComboBox<Integer> comboBoxHour(int startHour, int endHour) {
         ComboBox<Integer> comboBoxHours = new ComboBox<>();
-        for (int i = 0; i < number; i++) {
+        for (int i = startHour; i < endHour; i++) {
             comboBoxHours.getItems().add(i);
         }
         comboBoxHours.setValue(0);
