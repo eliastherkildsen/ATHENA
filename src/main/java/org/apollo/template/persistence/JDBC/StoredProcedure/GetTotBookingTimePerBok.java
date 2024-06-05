@@ -28,7 +28,7 @@ public class GetTotBookingTimePerBok {
                 int bookingID = rs.getInt("fld_bookingID");
                 int bookingTime = rs.getInt("total_booking_time");
 
-                Koordinates koordinates = new Koordinates(bookingID, bookingTime);
+                Koordinates koordinates = new Koordinates(String.valueOf(bookingID), bookingTime);
                 results.add(koordinates);
             }
 

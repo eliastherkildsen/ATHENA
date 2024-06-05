@@ -3,9 +3,14 @@ package org.apollo.template.Controller;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import org.apollo.template.Model.Room;
+import org.apollo.template.Model.Statistics.DayStrategy;
+import org.apollo.template.Model.Statistics.StatObj;
+import org.apollo.template.Model.Statistics.StatisticsArea;
+import org.apollo.template.Model.Statistics.TimeContext;
 import org.apollo.template.View.UI.CompColors;
 import org.apollo.template.View.UI.RoomComp;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
@@ -17,7 +22,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class StatisticsController implements Initializable {
-
+    @FXML
+    private BarChart barChart_statistics;
     @FXML
     private VBox vbox_room;
     private Room selectedRoom = null;
@@ -27,6 +33,16 @@ public class StatisticsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadRoomVbox();
+
+        TimeContext timeContext = new TimeContext();
+        timeContext.setStrategy(new DayStrategy());
+
+        StatObj statObj = timeContext.generateObj(StatisticsArea.BOOKINGS);
+
+        barChart_statistics.getXAxis().setLabel(statObj.getxNotation());
+        barChart_statistics.getYAxis().setLabel(statObj.getyNotation());
+        barChart_statistics.setTitle(statObj.getGraphTitle());
+        barChart_statistics.setData(statObj.getChartData());
     }
 
     private void loadRoomVbox() {

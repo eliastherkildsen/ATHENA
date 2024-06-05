@@ -2,19 +2,19 @@ package org.apollo.template.Model.Statistics;
 
 public class Koordinates {
 
-    private int objectID;
+    private String objectID;
     private int value;
 
-    public Koordinates(int objectID, int value) {
+    public Koordinates(String objectID, int value) {
         this.objectID = objectID;
         this.value = value;
     }
 
-    public int getObjectID() {
+    public String getObjectID() {
         return objectID;
     }
 
-    public void setObjectID(int objectID) {
+    public void setObjectID(String objectID) {
         this.objectID = objectID;
     }
 

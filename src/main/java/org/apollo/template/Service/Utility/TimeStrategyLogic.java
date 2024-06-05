@@ -1,11 +1,14 @@
 package org.apollo.template.Service.Utility;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
+import org.apollo.template.Model.Statistics.Koordinates;
 import org.apollo.template.Model.Statistics.StatObj;
 import org.apollo.template.Model.Statistics.StatisticsArea;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetTotBookingTimePerBok;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -69,7 +72,6 @@ public class TimeStrategyLogic {
 
         if (numberOfDays == 1) { xNotation = "Booking";}
         if (numberOfDays == 7 || numberOfDays == 31) { xNotation = "Dato";}
-        if (numberOfDays == 365) { xNotation = "Måned";}
 
         return xNotation;
     }
@@ -82,11 +84,11 @@ public class TimeStrategyLogic {
         if (statisticsArea == StatisticsArea.PERSONKAPACITY){
 
             if (numberOfDays == 1) { yNotation = "Antal deltagere";}
-            if (numberOfDays == 7 || numberOfDays == 31 || numberOfDays == 365) { yNotation = "Gennemsnitlige antal deltagere pr. booking";}
+            if (numberOfDays == 7 || numberOfDays == 31) { yNotation = "Gennemsnitlige antal deltagere pr. booking";}
 
         } else {
             if (numberOfDays == 1) { yNotation = "Bookingtid (minutter)";}
-            if (numberOfDays == 7 || numberOfDays == 31 || numberOfDays == 365) { yNotation = "Summeret bookingtid (minutter)";}
+            if (numberOfDays == 7 || numberOfDays == 31) { yNotation = "Summeret bookingtid (minutter)";}
         }
 
         return yNotation;
@@ -99,12 +101,11 @@ public class TimeStrategyLogic {
 
         if (statisticsArea == StatisticsArea.PERSONKAPACITY){
             if (numberOfDays == 1) { graphTitle = "Antal deltagere pr. booking"; }
-            if (numberOfDays == 7 || numberOfDays == 31 || numberOfDays == 365) { graphTitle = "Gennemsnitlige antal deltagere pr. booking"; }
+            if (numberOfDays == 7 || numberOfDays == 31) { graphTitle = "Gennemsnitlige antal deltagere pr. booking"; }
 
         } else {
             if (numberOfDays == 1) { graphTitle = "Bookingtid pr. booking"; }
             if (numberOfDays == 7 || numberOfDays == 31) { graphTitle = "Summeret bookingtid pr. dag"; }
-            if (numberOfDays == 365) {graphTitle = "Summeret bookingtid pr. måned"; }
         }
 
         return graphTitle;
@@ -132,7 +133,7 @@ public class TimeStrategyLogic {
         // liste x
         // liste y
 
-
+        return null;
     }
 
 
@@ -140,21 +141,45 @@ public class TimeStrategyLogic {
 
         ObservableList<XYChart.Series<String, Number>> chartData = null;
 
+        //TODO: hardCoded!
         if (numberOfDays == 1){
-            GetTotBookingTimePerBok
+            Date currentDate = new Date(2024-05-28);
+
+            List<Koordinates> koordinates = GetTotBookingTimePerBok.getTotalBookingTime(1, currentDate);
+
+            chartData = buildObsList(koordinates);
+
         }
 
         if (numberOfDays == 7 || numberOfDays == 31) {
-            GetTotBookingTimeDay
-        }
-
-        if (numberOfDays == 365) {
-            return null;
+            System.out.println();
         }
 
         return chartData;
     }
 
+    private ObservableList<XYChart.Series<String, Number>> buildObsList(List<Koordinates> koordinates) {
+
+        XYChart.Series<String, Number> seriesDay = createSerie(koordinates);
+
+        ObservableList<XYChart.Series<String, Number>> chartData = FXCollections.observableArrayList();
+        chartData.add(seriesDay);
+        return chartData;
+    }
+
+    private XYChart.Series<String, Number> createSerie(List<Koordinates> koordinates) {
+
+        XYChart.Series<String, Number> seriesDay = new XYChart.Series<>();
+        // TODO: variabel navn der bliver sendt med
+        seriesDay.setName("Booking tid i minutter");
+
+
+        for (Koordinates koordinate : koordinates) {
+            seriesDay.getData().add(new XYChart.Data<>(koordinate.getObjectID(), koordinate.getValue()));
+        }
+
+        return seriesDay;
+    }
 
 
 }

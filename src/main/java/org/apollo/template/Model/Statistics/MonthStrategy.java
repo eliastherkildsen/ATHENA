@@ -15,6 +15,6 @@ public class MonthStrategy implements TimeStrategy{
         LocalDate currentDate = LocalDate.now();
         LocalDate startDate = TimeStrategyLogic.getInstance().startDate(currentDate, FINAL_DAYS_MONTH);
 
-        return TimeStrategyLogic.getInstance().generateStatObj(startDate, currentDate, statisticsArea);
+        return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAYS_MONTH, startDate, currentDate, statisticsArea);
     }
 }
