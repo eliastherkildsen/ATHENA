@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import org.apollo.template.Model.Statistics.StatObj;
 import org.apollo.template.Model.Statistics.StatisticsArea;
+import org.apollo.template.persistence.JDBC.StoredProcedure.GetTotBookingTimePerBok;
+
 import java.time.LocalDate;
 import java.util.List;
 
