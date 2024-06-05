@@ -7,19 +7,26 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import org.controlsfx.control.spreadsheet.Picker;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -42,9 +49,13 @@ public class AdminCreateBooking implements Initializable {
         title.setTextFill(Paint.valueOf("WHITE"));
         title.setFont(Font.font(40));
 
+        HBox hBoxDateAndMaxPeopleManipulation = new HBox(title);
+        hBoxDateAndMaxPeopleManipulation.setAlignment(Pos.CENTER);
+        hBoxDateAndMaxPeopleManipulation.setSpacing(10);
 
-        HBox dateAndMaxPeople = new HBox(title);
-        dateAndMaxPeople.setAlignment(Pos.CENTER);
+        HBox hBoxTimeManipulationAndConfirmation = new HBox();
+        hBoxTimeManipulationAndConfirmation.setAlignment(Pos.BOTTOM_CENTER);
+        hBoxTimeManipulationAndConfirmation.setSpacing(10);
 
         //DatePickerStart Setup
         Label labelFromDate = new Label("Fra:");
@@ -54,7 +65,8 @@ public class AdminCreateBooking implements Initializable {
         //DatePickerEnd Setup
         Label labelToDate = new Label("Til:");
         DatePicker datePickerEnd = new DatePicker();
-        //DatePickerEnd, we are setting its value to today and we are disabling it for interaction
+
+        //DatePickerEnd, we are setting its value to today, and we are disabling it for interaction
         datePickerEnd.setValue(LocalDate.now());
         datePickerEnd.setDisable(true);
 
@@ -69,13 +81,13 @@ public class AdminCreateBooking implements Initializable {
                 if (newValue != null){
                     //We are no longer disabling the datePickerEnd as a start date has been picked.
                     datePickerEnd.setDisable(false);
-                    LoggerMessage.debug(this, "BEFORE START DATE: "+datePickerStart.getValue());
-                    LoggerMessage.debug(this, "BEFORE END DATE: "+datePickerEnd.getValue());
+                    LoggerMessage.debug("AdminCreateBooking", "BEFORE START DATE: "+datePickerStart.getValue());
+                    LoggerMessage.debug("AdminCreateBooking", "BEFORE END DATE: "+datePickerEnd.getValue());
 
                     //We are only changing the date of the datePickerEnd if a date is chosen that surpasses it
                     if ((datePickerEnd.getValue() == null) || newValue.isAfter(datePickerEnd.getValue())){
                         datePickerEnd.setValue(newValue);
-                        LoggerMessage.debug(this, "NOW END DATE: "+datePickerEnd.getValue());
+                        LoggerMessage.debug("AdminCreateBooking", "NOW END DATE: "+datePickerEnd.getValue());
                     }
                     datepickerSetCell(datePickerEnd,newValue);
 
@@ -84,14 +96,47 @@ public class AdminCreateBooking implements Initializable {
                 }
             }
         });
+        //Setting our CheckBox
+        Label labelIncludeWeekends = new Label("Inkluder Weekender:");
+        CheckBox checkBoxIncludeWeekends = new CheckBox();
 
-        //Setting out ComboBox
+        //Setting our ComboBox
         Label labelMaxPeople = new Label("Antal Deltager:");
-        ComboBox numberOfPeople = new ComboBox(getMaxPersonCountFromRooms());
+        ObservableList<Integer> maxPersonCounts = getMaxPersonCountFromRooms();
+        ComboBox<Integer> numberOfPeople = new ComboBox<>(maxPersonCounts);
 
+        //TimePicker ComboBoxes
+        //FROM
+        Label labelFrom = new Label("FRA: ");
+        Label labelFromTimeHour = new Label("Timer");
+        ComboBox<Integer> comboBoxFromTimeHour = comboBoxInt(24);
+        VBox vBoxFromTimeHour = new VBox(labelFromTimeHour, comboBoxFromTimeHour);
 
-        dateAndMaxPeople.getChildren().addAll(labelFromDate,datePickerStart,labelToDate, datePickerEnd,labelMaxPeople, numberOfPeople);
-        mainVbox.getChildren().addAll(title, dateAndMaxPeople);
+        Label labelFromTimeMinute = new Label("Minuter");
+        ComboBox<Integer> comboBoxFromTimeMinutes = comboBoxTimeMinutesIntervalsInt(15);
+        VBox vBoxFromTimeMin = new VBox(labelFromTimeMinute, comboBoxFromTimeMinutes);
+
+        //TO
+        Label labelTo = new Label("TIL: ");
+        Label labelToTimeHour = new Label("Timer");
+        ComboBox<Integer> comboBoxToTimeHour = comboBoxInt(24);
+        VBox vBoxToTimeHour = new VBox(labelToTimeHour, comboBoxToTimeHour);
+
+        Label labelFToTimeMinute = new Label("Minuter");
+        ComboBox<Integer> comboBoxToTimeMinutes = comboBoxTimeMinutesIntervalsInt(15);
+        VBox vBoxToTimeMinutes = new VBox(labelFToTimeMinute, comboBoxToTimeMinutes);
+
+        Pane paneSpacer = new Pane();
+        paneSpacer.setMinWidth(10);
+
+        //Adding elements to our FirstHBox
+        hBoxDateAndMaxPeopleManipulation.getChildren().addAll(labelFromDate,datePickerStart,labelToDate, datePickerEnd, labelIncludeWeekends ,checkBoxIncludeWeekends,labelMaxPeople, numberOfPeople);
+
+        //Adding elements to our SecondHBox
+        hBoxTimeManipulationAndConfirmation.getChildren().addAll( labelFrom, vBoxFromTimeHour, vBoxFromTimeMin,  paneSpacer,  labelTo, vBoxToTimeHour, vBoxToTimeMinutes);
+
+        //Adding elements to our VBox
+        mainVbox.getChildren().addAll(title, hBoxDateAndMaxPeopleManipulation, hBoxTimeManipulationAndConfirmation);
 
         //MinMax required on root to display all information correctly.
         root.setMinHeight(700);
@@ -100,11 +145,44 @@ public class AdminCreateBooking implements Initializable {
         root.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
 
         //Ensuring VBox is Center to AnchorPane
-        root.setTopAnchor(mainVbox, 0.0);
-        root.setRightAnchor(mainVbox, 0.0);
-        root.setLeftAnchor(mainVbox, 0.0);
-        root.setBottomAnchor(mainVbox, 0.0);
+        AnchorPane.setTopAnchor(mainVbox, 0.0);
+        AnchorPane.setRightAnchor(mainVbox, 0.0);
+        AnchorPane.setLeftAnchor(mainVbox, 0.0);
+        AnchorPane.setBottomAnchor(mainVbox, 0.0);
+    }
 
+    /**
+     * Helper Class that takes the param int + i.
+     * Is made to fit an hour / int 60.
+     * @param Number
+     * @return ComboBox
+     */
+    private ComboBox<Integer> comboBoxTimeMinutesIntervalsInt(int Number) {
+        ComboBox<Integer> comboBoxMinutes = new ComboBox<>();
+        for (int i = 0; i < 60; i += Number) {
+            comboBoxMinutes.getItems().add(i);
+        }
+        comboBoxMinutes.setValue(0);
+        return comboBoxMinutes;
+    }
+
+    private ComboBox<Integer> comboBoxInt(int number) {
+        ComboBox<Integer> comboBoxHours = new ComboBox<>();
+        for (int i = 0; i < number; i++) {
+            comboBoxHours.getItems().add(i);
+        }
+        comboBoxHours.setValue(0);
+        return comboBoxHours;
+    }
+
+    private static HBox GenerateHBox (ArrayList<Node> controls){
+        HBox hBox = new HBox();
+        for (Node control : controls) {
+            hBox.getChildren().add(control);
+        }
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(10);
+        return hBox;
     }
 
     private static void datepickerSetCell(DatePicker datePickerStart, LocalDate newDate) {
@@ -112,7 +190,7 @@ public class AdminCreateBooking implements Initializable {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                setDisable(empty || date.compareTo(newDate) < 0 );
+                setDisable(empty || date.isBefore(newDate));
             }
         });
     }
@@ -123,14 +201,12 @@ public class AdminCreateBooking implements Initializable {
         roomsList = roomDAO.readAll();
 
         int maxPersonCount = Integer.MIN_VALUE; // Initialize to the smallest possible integer value
-        Room maxRoom = null; // To keep track of the room with the maximum person count
 
         for (Room room : roomsList) {
             if (room.getRoomMaxPersonCount() > maxPersonCount) {
                 maxPersonCount = room.getRoomMaxPersonCount();
-                maxRoom = room;
                 LoggerMessage.debug(this,"MaxRoomCount: " +  maxPersonCount);
-                LoggerMessage.debug(this,"Room with Max Cap: " +  maxRoom.getRoomName());
+                LoggerMessage.debug(this,"Room with Max Cap: " +  room.getRoomName());
             }
         }
         ObservableList<Integer> optionsList = FXCollections.observableArrayList();
@@ -138,5 +214,21 @@ public class AdminCreateBooking implements Initializable {
             optionsList.add(i);
         }
         return optionsList;
+    }
+
+    private List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
+        List<LocalDate> datesList = new ArrayList<>();
+        LocalDate date = startDate;
+
+        while (!date.isAfter(endDate)){
+            datesList.add(date);
+            date = date.plusDays(1);
+        }
+        return datesList;
+    }
+
+    private List<LocalDate> removeDateWeekends(List<LocalDate> dates) {
+        dates.removeIf(date -> date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY);
+        return dates;
     }
 }
