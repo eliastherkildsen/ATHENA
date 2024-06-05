@@ -19,7 +19,7 @@
             <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onButton_Booking" text="Booking" />
-                  <Button mnemonicParsing="false" text="Statistik" />
+                  <Button mnemonicParsing="false" onAction="#onButton_Statistics" text="Statistik" />
                </children>
             </VBox>
             <Label text="Fejlmelding">

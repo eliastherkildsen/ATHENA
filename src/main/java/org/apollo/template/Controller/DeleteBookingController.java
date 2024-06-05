@@ -11,6 +11,8 @@ import org.apollo.template.Service.Utility.BookingSelectionListner;
 import org.apollo.template.Service.Utility.LoadBookedRooms;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.BookingComp;
+import org.apollo.template.View.UI.CompColors;
+import org.apollo.template.View.UI.ReservedRoomsVBox;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.BookingInformationDAO;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
