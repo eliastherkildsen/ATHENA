@@ -5,7 +5,7 @@ import org.apollo.template.Model.Booking;
 import org.apollo.template.Model.MeetingType;
 import org.apollo.template.Model.Room;
 import org.apollo.template.View.UI.BookingComp;
-import org.apollo.template.View.UI.BookingCompColors;
+import org.apollo.template.View.UI.CompColors;
 import org.apollo.template.View.UI.ReservedRoomsVBox;
 
 import java.sql.ResultSet;
@@ -64,7 +64,7 @@ public class LoadBookedRooms {
             // unselect all booking comps.
             unselectAllBookingComp(bookingCompList);
             // select the clicked booking comp.
-            bookingComp.setBookingCompColor(BookingCompColors.SELECTED);
+            bookingComp.setBookingCompColor(CompColors.SELECTED);
             // Notify the listener about the selection
             listner.onBookingSelected(bookingComp.getBookingID());
         });
@@ -72,7 +72,7 @@ public class LoadBookedRooms {
 
     private static void unselectAllBookingComp(List<BookingComp> bookingCompList) {
         for (BookingComp bookingComp : bookingCompList) {
-            bookingComp.setBookingCompColor(BookingCompColors.NORMAL);
+            bookingComp.setBookingCompColor(CompColors.NORMAL);
         }
     }
 }
