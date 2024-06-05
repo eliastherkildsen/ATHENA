@@ -15,7 +15,7 @@ public class WeekStrategy implements TimeStrategy{
         LocalDate currentDate = LocalDate.now();
         LocalDate startDate = TimeStrategyLogic.getInstance().startDate(currentDate, FINAL_DAYS_WEEK);
 
-        return TimeStrategyLogic.getInstance().generateStatObj(startDate, currentDate, statisticsArea);
+        return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAYS_WEEK, startDate, currentDate, statisticsArea);
 
     }
 }
