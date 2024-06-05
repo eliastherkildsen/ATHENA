@@ -125,12 +125,7 @@ public class AdminViewBookings implements Initializable {
 
         deleteBookingButton.setOnAction(event -> {
             // Code to execute when the button is clicked
-            LocalDate date = dateToday.toLocalDate().plusDays(1);
-            dateToday = Date.valueOf(date);
-            mainVbox.getChildren().clear();
-            mainVbox.getChildren().add(BookingsByDate.scrollPaneGenerator(GetBookingsByDate.getBookingsByDate(dateToday)));
-            bookRoomToday(mainVbox);
-            deleteBooking(mainVbox);
+            MainController.getInstance().setView(ViewList.ADMINDELETEBOOKING, BorderPaneRegion.CENTER);
         });
 
         pane.getChildren().add(deleteBookingButton);
