@@ -69,9 +69,6 @@ public class AdminCreateBooking implements Initializable {
     private ComboBox<Integer> comboBoxToTimeMinutes;
 
     @FXML
-    private ScrollPane scrollPaneResult;
-
-    @FXML
     private VBox vBoxResult;
 
     @Override
@@ -170,7 +167,7 @@ public class AdminCreateBooking implements Initializable {
         paneSpacer.setMinWidth(10);
 
         //ScrollPane
-        scrollPaneResult = new ScrollPane();
+        ScrollPane scrollPaneResult = new ScrollPane();
         scrollPaneResult.setFitToWidth(true);
         scrollPaneResult.getStyleClass().add("edge-to-edge"); //Remove 'edge' around scrollPane
         scrollPaneResult.getStyleClass().add("custom-scroll-pane");
