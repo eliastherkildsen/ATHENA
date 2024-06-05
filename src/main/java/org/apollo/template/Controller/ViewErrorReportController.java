@@ -87,6 +87,13 @@ public class ViewErrorReportController implements Initializable {
     @FXML
     protected void onButton_edit(){
 
+        // checks if an error report has been selected.
+        if (selectedErrorReportComp == null){
+            new Alert(MainController.getInstance(), 5, AlertType.INFO, "Du har ikke valgt en error report.")
+                    .start();
+            return;
+        }
+
         // change view to edit errorreport view.
         MainController.getInstance().setView(ViewList.ERRORREPORTEDIT, BorderPaneRegion.CENTER);
 
