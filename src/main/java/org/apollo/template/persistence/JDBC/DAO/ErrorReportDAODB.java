@@ -54,7 +54,8 @@ public class ErrorReportDAODB implements DAO<ErrorReport> {
     public void delete(ErrorReport errorReport) {
         try {
             PreparedStatement ps =  conn.prepareStatement("DELETE FROM tbl_errorReport WHERE fld_errorReportID = ?");
-            ps.executeQuery();
+            ps.setInt(1, errorReport.getErrorReportID());
+            ps.executeUpdate();
 
             // closing the prepared statement.
             ps.close();
@@ -72,13 +73,21 @@ public class ErrorReportDAODB implements DAO<ErrorReport> {
                     "fld_reportDate = ?, fld_inventoryID = ?, fld_userID = ?, fld_reportDescription = ?, fld_roomID = ?" +
                     " WHERE fld_errorReportID = ?");
 
-            ps.setBoolean(1, errorReport.isArchived());
+            // due to MSSQL not having booleans, we chose to use a bit instead. therefor it needs to be translated
+            // with 0 = false, 1 = true.
+            if (errorReport.isArchived()) {
+                ps.setInt(1, 1);
+            } else {
+                ps.setInt(1, 0);
+            }
+
             ps.setDate(2, Date.valueOf(errorReport.getReportDate()));
             ps.setInt(3, errorReport.getInventoryItems().getId());
             ps.setInt(4, errorReport.getEmail().getEmailID());
             ps.setString(5, errorReport.getErrorReportDescription());
             ps.setInt(6, errorReport.getRoom().getRoomID());
-            ps.executeQuery();
+            ps.setInt(7, errorReport.getErrorReportID());
+            ps.executeUpdate();
             // closing the prepared statement.
             ps.close();
             LoggerMessage.info(this, "in update; removed error report : " + errorReport);

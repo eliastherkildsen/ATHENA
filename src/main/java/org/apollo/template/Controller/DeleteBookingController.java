@@ -13,7 +13,7 @@ import org.apollo.template.Service.EmailValidator;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.BookingComp;
-import org.apollo.template.View.UI.BookingCompColors;
+import org.apollo.template.View.UI.CompColors;
 import org.apollo.template.View.UI.ReservedRoomsVBox;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.BookingInformationDAO;
@@ -60,6 +60,7 @@ public class DeleteBookingController {
         BookingInformation bookingInformation = new BookingInformation();
         bookingInformation.setBookingId(selectedBookingID);
 
+
         // creating dao.
         DAO<BookingInformation> dao = new BookingInformationDAO();
         dao.delete(bookingInformation);
@@ -78,6 +79,7 @@ public class DeleteBookingController {
 
 
         String email = textField_email.getText();
+        System.out.println(email);
 
         // validate email entered.
         if (!validateEnteredEmail(email)) return;
@@ -122,6 +124,7 @@ public class DeleteBookingController {
      * @throws SQLException
      */
     private void loadBookedRooms(ResultSet rs) throws SQLException {
+
         List<Booking> bookingList = new ArrayList<>();
         while (rs.next()){
             int bookingId = Integer.parseInt(rs.getString("fld_bookingID"));
@@ -174,7 +177,7 @@ public class DeleteBookingController {
                 // unselect all booking comps.
                 unselectAllBookingComp();
                 selectedBookingID = bookingComp.getBookingID();
-                bookingComp.setBookingCompColor(BookingCompColors.SELECTED);
+                bookingComp.setBookingCompColor(CompColors.SELECTED);
 
                 LoggerMessage.debug(this, "selectedBookingID: " + selectedBookingID);
             }
@@ -187,7 +190,7 @@ public class DeleteBookingController {
      */
     private void unselectAllBookingComp() {
         for (BookingComp bookingComp : bookingCompList) {
-            bookingComp.setBookingCompColor(BookingCompColors.NORMAL);
+            bookingComp.setBookingCompColor(CompColors.NORMAL);
         }
     }
 

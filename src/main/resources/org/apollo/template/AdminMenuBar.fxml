@@ -18,8 +18,8 @@
                </font></Label>
             <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" text="Booking" />
-                  <Button mnemonicParsing="false" text="Statistik" />
+                  <Button mnemonicParsing="false" onAction="#onButton_Booking" text="Booking" />
+                  <Button mnemonicParsing="false" onAction="#onButton_Statistics" text="Statistik" />
                </children>
             </VBox>
             <Label text="Fejlmelding">
@@ -30,8 +30,7 @@
             <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onButton_errorReport" text="Opret Fejlmelding" />
-                  <Button layoutX="113.0" layoutY="27.0" mnemonicParsing="false" text="Rediger Fejlmelding" />
-                  <Button layoutX="108.0" layoutY="52.0" mnemonicParsing="false" text="Vis Fejlmeldinger" />
+                  <Button layoutX="108.0" layoutY="52.0" mnemonicParsing="false" onAction="#onButton_viewErrorReport" text="Vis Fejlmeldinger" />
                </children>
                <VBox.margin>
                   <Insets top="8.0" />

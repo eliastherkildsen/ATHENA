@@ -335,3 +335,29 @@ END;
             tbl_roomType
     END
 
+        use db_Athena
+go
+
+CREATE PROCEDURE getErrorReports
+AS
+BEGIN
+    SELECT
+        -- Selecting data from error report entity
+        tbl_errorReport.fld_archived, tbl_errorReport.fld_errorReportID,
+        tbl_errorReport.fld_reportDate, tbl_errorReport.fld_reportDescription,
+
+        -- selecting data from email entity
+        tbl_userEmail.fld_userEmail, tbl_userEmail.fld_userID,
+
+        -- selecting data from room entity
+        tbl_room.fld_roomName, tbl_room.fld_roomID,
+
+        -- select data from
+        tbl_inventory.fld_inventoryName, tbl_inventory.fld_inventoryID
+
+
+    FROM tbl_errorReport
+             INNER JOIN tbl_userEmail on tbl_errorReport.fld_userID = tbl_userEmail.fld_userID
+             INNER JOIN tbl_room on tbl_errorReport.fld_roomID = tbl_room.fld_roomID
+             INNER JOIN tbl_inventory on tbl_errorReport.fld_inventoryID = tbl_inventory.fld_inventoryID
+END
