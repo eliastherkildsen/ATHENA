@@ -10,7 +10,7 @@ import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
-import org.apollo.template.View.UI.BookingCompColors;
+import org.apollo.template.View.UI.CompColors;
 import org.apollo.template.View.UI.ErrorReportComp;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
@@ -50,7 +50,7 @@ public class ViewErrorReportController implements Initializable {
         }
 
         // deleting the error report thrugh DAO
-        dao.delete(selectedErrorReportComp.getErrorReport());
+        dao.delete(selectedErrorReportComp.getERROR_REPORT());
         new Alert(MainController.getInstance(), 5, AlertType.SUCCESS, "Du har nu slette fejlmeldingen.")
                 .start();
 
@@ -71,7 +71,7 @@ public class ViewErrorReportController implements Initializable {
         }
 
         // fetching the selected error report.
-        ErrorReport selecctedErrorReport = selectedErrorReportComp.getErrorReport();
+        ErrorReport selecctedErrorReport = selectedErrorReportComp.getERROR_REPORT();
         // setting the error report to archived
         selecctedErrorReport.setArchived(true);
         dao.update(selecctedErrorReport);
@@ -91,7 +91,7 @@ public class ViewErrorReportController implements Initializable {
         MainController.getInstance().setView(ViewList.ERRORREPORTEDIT, BorderPaneRegion.CENTER);
 
         // publish ErrorReport.
-        MessagesBroker.getInstance().publish(MessagesBrokerTopic.ERROR_REPORT, selectedErrorReportComp.getErrorReport());
+        MessagesBroker.getInstance().publish(MessagesBrokerTopic.ERROR_REPORT, selectedErrorReportComp.getERROR_REPORT());
 
     }
 
@@ -116,7 +116,7 @@ public class ViewErrorReportController implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         unselectAllErrorReportComps();
-                        errorReportComp.setBookingCompColor(BookingCompColors.SELECTED);
+                        errorReportComp.setCompColors(CompColors.SELECTED);
                         selectedErrorReportComp = errorReportComp;
                     }
                 });
@@ -130,7 +130,7 @@ public class ViewErrorReportController implements Initializable {
 
     private void unselectAllErrorReportComps() {
         for (ErrorReportComp errorReportComp : errorReportCompList){
-            errorReportComp.setBookingCompColor(BookingCompColors.NORMAL);
+            errorReportComp.setCompColors(CompColors.NORMAL);
         }
     }
 

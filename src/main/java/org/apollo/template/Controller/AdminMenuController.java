@@ -23,6 +23,9 @@ public class AdminMenuController {
     @FXML
     protected void onButton_Booking() { MainController.getInstance().setView(ViewList.ADMINVIEWBOOKINGS, BorderPaneRegion.CENTER); }
 
+    @FXML
+    protected void onButton_Statistics() { MainController.getInstance().setView(ViewList.STATISTICS, BorderPaneRegion.CENTER); }
+
 
 
 

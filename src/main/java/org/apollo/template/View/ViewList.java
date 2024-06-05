@@ -84,6 +84,10 @@ public enum ViewList {
      *  Topbar view.
      */
     TOPBAR("TopbarView.fxml"),
+    /**
+     * Statistics view
+     */
+    STATISTICS("StatisticsView.fxml"),
 
     /**
      * Admin login view
