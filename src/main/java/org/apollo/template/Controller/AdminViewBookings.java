@@ -4,10 +4,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.Logger.LoggerMessage;
@@ -19,6 +22,7 @@ import org.apollo.template.persistence.JDBC.StoredProcedure.GetBookingsByDate;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -145,6 +149,12 @@ public class AdminViewBookings implements Initializable {
 
         // Adding backward button
         oneDayBackward(hBox_ForwardsBackwards);
+        // Add date label
+        Label label_Date = new Label();
+        label_Date.setText(dateToday.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM")));
+        label_Date.setTextFill(Paint.valueOf("WHITE"));
+        label_Date.setFont(Font.font(18));
+        hBox_ForwardsBackwards.getChildren().add(label_Date);
         // Adding forward button
         oneDayForward(hBox_ForwardsBackwards);
 
