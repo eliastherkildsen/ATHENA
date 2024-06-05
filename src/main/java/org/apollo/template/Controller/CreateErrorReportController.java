@@ -22,10 +22,9 @@ import org.apollo.template.persistence.JDBC.StoredProcedure.GetEmailIDByEmailAdr
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-public class ErrorReportController implements Initializable {
+public class CreateErrorReportController implements Initializable {
 
     @FXML
     private Button button_save, button_back;
