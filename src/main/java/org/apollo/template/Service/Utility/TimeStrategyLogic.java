@@ -1,9 +1,11 @@
 package org.apollo.template.Service.Utility;
 
+import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import org.apollo.template.Model.Statistics.StatObj;
 import org.apollo.template.Model.Statistics.StatisticsArea;
-
 import java.time.LocalDate;
+import java.util.IllegalFormatCodePointException;
 
 public class TimeStrategyLogic {
 
@@ -35,10 +37,56 @@ public class TimeStrategyLogic {
 
     public StatObj generateStatObj(LocalDate startDate, LocalDate currentDate, StatisticsArea statisticsArea){
 
+        String xNotation = null;
+        String yNotation = null;
+        String graphTitle = null;
+        ObservableList<XYChart.Series<String, Number>> chartData = null;
+
+        if (statisticsArea == StatisticsArea.PERSONKAPACITY){
+
+            xNotation = getXNotation(StatisticsArea.PERSONKAPACITY);
+            yNotation = getYNotation(StatisticsArea.PERSONKAPACITY);
+            graphTitle = getGraphTitle(StatisticsArea.PERSONKAPACITY);
+            chartData = getCharData(StatisticsArea.PERSONKAPACITY);
+
+        } else{
+            xNotation = getXNotation(StatisticsArea.BOOKINGS);
+            yNotation = getYNotation(StatisticsArea.BOOKINGS);
+            graphTitle = getGraphTitle(StatisticsArea.BOOKINGS);
+            chartData = getCharData(StatisticsArea.BOOKINGS);
+        }
+
+        return new StatObj(chartData, graphTitle, xNotation, yNotation);
+    }
 
 
 
-        return null;
+    private String getXNotation(StatisticsArea statisticsArea) {
+
+        String xNotation;
+
+        if (statisticsArea == StatisticsArea.PERSONKAPACITY){
+
+
+
+
+        }else {
+
+        }
+
+        return xNotation;
+    }
+
+
+    private String getYNotation(StatisticsArea statisticsArea) {
+    }
+
+
+    private String getGraphTitle(StatisticsArea statisticsArea) {
+    }
+
+
+    private ObservableList<XYChart.Series<String, Number>> getCharData(StatisticsArea statisticsArea) {
     }
 
 }
