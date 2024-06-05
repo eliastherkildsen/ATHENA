@@ -23,8 +23,10 @@ import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 
 import java.net.URL;
+import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -197,20 +199,41 @@ public class AdminCreateBooking implements Initializable {
         // Collecting the required information
         LocalDate startDate = datePickerStart.getValue();
         LocalDate endDate = datePickerEnd.getValue();
-        boolean includeWeekends = checkBoxIncludeWeekends.isSelected();
+        boolean excludeWeekends = checkBoxIncludeWeekends.isSelected();
         int maxPeople = numberOfPeople.getValue();
         int startHour = comboBoxFromTimeHour.getValue();
         int startMinute = comboBoxFromTimeMinutes.getValue();
         int endHour = comboBoxToTimeHour.getValue();
         int endMinute = comboBoxToTimeMinutes.getValue();
 
+        // Creating LocalTime objects
+        LocalTime startTime = LocalTime.of(startHour, startMinute);
+        LocalTime endTime = LocalTime.of(endHour, endMinute);
+
+        // java.sql.Time
+        java.sql.Time sqlStartTime = java.sql.Time.valueOf(startTime);
+        java.sql.Time sqlEndTime = java.sql.Time.valueOf(endTime);
+
+        //Making list of dates
+        List<LocalDate> dates = getDatesBetween(startDate, endDate);
+        LoggerMessage.debug(this, "Selected Dates: " + dates);
+        LoggerMessage.debug(this, "List dates length: " + dates.size());
+
+        //Weekends included or Not.
+        if (excludeWeekends){
+            removeDateWeekends(dates);
+            LoggerMessage.debug(this,"Selected Dates Removed Weekends: " + dates);
+            LoggerMessage.debug(this, "List dates length: " + dates.size());
+        }
+
+
         // Processing the collected information
         LoggerMessage.debug("AdminCreateBooking", "START DATE: " + startDate);
         LoggerMessage.debug("AdminCreateBooking", "END DATE: " + endDate);
-        LoggerMessage.debug("AdminCreateBooking", "INCLUDE WEEKENDS: " + includeWeekends);
+        LoggerMessage.debug("AdminCreateBooking", "REMOVE WEEKENDS: " + excludeWeekends);
         LoggerMessage.debug("AdminCreateBooking", "MAX PEOPLE: " + maxPeople);
-        LoggerMessage.debug("AdminCreateBooking", "START TIME: " + startHour + ":" + startMinute);
-        LoggerMessage.debug("AdminCreateBooking", "END TIME: " + endHour + ":" + endMinute);
+        LoggerMessage.debug("AdminCreateBooking", "START TIME: " + sqlStartTime);
+        LoggerMessage.debug("AdminCreateBooking", "END TIME: " + sqlEndTime);
 
         // Logic
     }
