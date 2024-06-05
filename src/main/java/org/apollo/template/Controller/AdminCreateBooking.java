@@ -16,6 +16,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import org.apollo.template.Model.Room;
+import org.apollo.template.Service.Alert.Alert;
+import org.apollo.template.Service.Alert.AlertType;
+import org.apollo.template.Service.Alert.Alertable;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 
@@ -33,6 +36,29 @@ public class AdminCreateBooking implements Initializable {
 
     @FXML
     private AnchorPane root;
+    @FXML
+    private DatePicker datePickerStart;
+
+    @FXML
+    private DatePicker datePickerEnd;
+
+    @FXML
+    private CheckBox checkBoxIncludeWeekends;
+
+    @FXML
+    private ComboBox<Integer> numberOfPeople;
+
+    @FXML
+    private ComboBox<Integer> comboBoxFromTimeHour;
+
+    @FXML
+    private ComboBox<Integer> comboBoxFromTimeMinutes;
+
+    @FXML
+    private ComboBox<Integer> comboBoxToTimeHour;
+
+    @FXML
+    private ComboBox<Integer> comboBoxToTimeMinutes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,84 +84,86 @@ public class AdminCreateBooking implements Initializable {
 
         //DatePickerStart Setup
         Label labelFromDate = new Label("Fra:");
-        DatePicker datePickerStart = new DatePicker();
+        datePickerStart = new DatePicker();
         datePickerStart.showWeekNumbersProperty();
 
         //DatePickerEnd Setup
         Label labelToDate = new Label("Til:");
-        DatePicker datePickerEnd = new DatePicker();
+        datePickerEnd = new DatePicker();
 
         //DatePickerEnd, we are setting its value to today, and we are disabling it for interaction
         datePickerEnd.setValue(LocalDate.now());
         datePickerEnd.setDisable(true);
 
         //We want to ensure that our datePickerStart is only allowing dates from today and forward.
-        datepickerSetCell(datePickerStart,LocalDate.now());
+        datepickerSetCell(datePickerStart, LocalDate.now());
 
         //A Listener to interact with our datePickerEnd
         datePickerStart.valueProperty().addListener(new ChangeListener<LocalDate>() {
 
             @Override
             public void changed(ObservableValue<? extends LocalDate> observableValue, LocalDate oldValue, LocalDate newValue) {
-                if (newValue != null){
+                if (newValue != null) {
                     //We are no longer disabling the datePickerEnd as a start date has been picked.
                     datePickerEnd.setDisable(false);
-                    LoggerMessage.debug("AdminCreateBooking", "BEFORE START DATE: "+datePickerStart.getValue());
-                    LoggerMessage.debug("AdminCreateBooking", "BEFORE END DATE: "+datePickerEnd.getValue());
+                    LoggerMessage.debug("AdminCreateBooking", "BEFORE START DATE: " + datePickerStart.getValue());
+                    LoggerMessage.debug("AdminCreateBooking", "BEFORE END DATE: " + datePickerEnd.getValue());
 
                     //We are only changing the date of the datePickerEnd if a date is chosen that surpasses it
-                    if ((datePickerEnd.getValue() == null) || newValue.isAfter(datePickerEnd.getValue())){
+                    if ((datePickerEnd.getValue() == null) || newValue.isAfter(datePickerEnd.getValue())) {
                         datePickerEnd.setValue(newValue);
-                        LoggerMessage.debug("AdminCreateBooking", "NOW END DATE: "+datePickerEnd.getValue());
+                        LoggerMessage.debug("AdminCreateBooking", "NOW END DATE: " + datePickerEnd.getValue());
                     }
-                    datepickerSetCell(datePickerEnd,newValue);
+                    datepickerSetCell(datePickerEnd, newValue);
 
                 } else {
                     datePickerEnd.setDisable(true);
                 }
             }
         });
+
         //Setting our CheckBox
         Label labelIncludeWeekends = new Label("Inkluder Weekender:");
-        CheckBox checkBoxIncludeWeekends = new CheckBox();
+        checkBoxIncludeWeekends = new CheckBox();
 
         //Setting our ComboBox
         Label labelMaxPeople = new Label("Antal Deltager:");
         ObservableList<Integer> maxPersonCounts = getMaxPersonCountFromRooms();
-        ComboBox<Integer> numberOfPeople = new ComboBox<>(maxPersonCounts);
+        numberOfPeople = new ComboBox<>(maxPersonCounts);
 
         //TimePicker ComboBoxes
         //FROM
         Label labelFrom = new Label("FRA: ");
         Label labelFromTimeHour = new Label("Timer");
-        ComboBox<Integer> comboBoxFromTimeHour = comboBoxHour(openHour,closingHour);
+        comboBoxFromTimeHour = comboBoxHour(openHour, closingHour);
         VBox vBoxFromTimeHour = new VBox(labelFromTimeHour, comboBoxFromTimeHour);
 
         Label labelFromTimeMinute = new Label("Minuter");
-        ComboBox<Integer> comboBoxFromTimeMinutes = comboBoxTimeMinutesIntervalsInt(minuteInterval);
+        comboBoxFromTimeMinutes = comboBoxTimeMinutesIntervalsInt(minuteInterval);
         VBox vBoxFromTimeMin = new VBox(labelFromTimeMinute, comboBoxFromTimeMinutes);
 
         //TO
         Label labelTo = new Label("TIL: ");
         Label labelToTimeHour = new Label("Timer");
-        ComboBox<Integer> comboBoxToTimeHour = comboBoxHour(openHour,closingHour);
+        comboBoxToTimeHour = comboBoxHour(openHour, closingHour);
         VBox vBoxToTimeHour = new VBox(labelToTimeHour, comboBoxToTimeHour);
 
-        Label labelFToTimeMinute = new Label("Minuter");
-        ComboBox<Integer> comboBoxToTimeMinutes = comboBoxTimeMinutesIntervalsInt(minuteInterval);
-        VBox vBoxToTimeMinutes = new VBox(labelFToTimeMinute, comboBoxToTimeMinutes);
+        Label labelToTimeMinute = new Label("Minuter");
+        comboBoxToTimeMinutes = comboBoxTimeMinutesIntervalsInt(minuteInterval);
+        VBox vBoxToTimeMinutes = new VBox(labelToTimeMinute, comboBoxToTimeMinutes);
 
         Pane paneSpacer = new Pane();
         paneSpacer.setMinWidth(10);
 
         //SEARCH BUTTON
         Button buttonSearch = new Button("SEARCH");
+        buttonSearch.setOnAction(event -> onButton_buttonSearch());
 
         //Adding elements to our FirstHBox
-        hBoxDateAndMaxPeopleManipulation.getChildren().addAll(labelFromDate,datePickerStart,labelToDate, datePickerEnd, labelIncludeWeekends ,checkBoxIncludeWeekends,labelMaxPeople, numberOfPeople);
+        hBoxDateAndMaxPeopleManipulation.getChildren().addAll(labelFromDate, datePickerStart, labelToDate, datePickerEnd, labelIncludeWeekends, checkBoxIncludeWeekends, labelMaxPeople, numberOfPeople);
 
         //Adding elements to our SecondHBox
-        hBoxTimeManipulationAndConfirmation.getChildren().addAll( labelFrom, vBoxFromTimeHour, vBoxFromTimeMin,  paneSpacer,  labelTo, vBoxToTimeHour, vBoxToTimeMinutes, buttonSearch);
+        hBoxTimeManipulationAndConfirmation.getChildren().addAll(labelFrom, vBoxFromTimeHour, vBoxFromTimeMin, paneSpacer, labelTo, vBoxToTimeHour, vBoxToTimeMinutes, buttonSearch);
 
         //Adding elements to our VBox
         mainVbox.getChildren().addAll(title, hBoxDateAndMaxPeopleManipulation, hBoxTimeManipulationAndConfirmation);
@@ -153,13 +181,37 @@ public class AdminCreateBooking implements Initializable {
         AnchorPane.setBottomAnchor(mainVbox, 0.0);
     }
 
+    @FXML
     private void onButton_buttonSearch() {
-        //START DATE
-        //END DATE
-        //WEEKEND?
-        //NUMBER OF DUDES
-        //START TIME HOUR + MIN
-        //END TIME HOUR + MIN
+        if (datePickerStart.getValue() == null || datePickerEnd.getValue() == null || numberOfPeople.getValue() == null || comboBoxFromTimeHour.getValue() == null || comboBoxFromTimeMinutes.getValue() == null || comboBoxToTimeHour.getValue() == null || comboBoxToTimeMinutes.getValue() == null) {
+            new Alert(MainController.getInstance() ,5, AlertType.ERROR, "Validation Error \nPlease fill in all fields before searching.").start();
+            LoggerMessage.warning(this,"onButton_buttonSearch : Values returned Null, return from method");
+            return;
+        } else if (comboBoxFromTimeHour.getValue() + comboBoxFromTimeMinutes.getValue() == comboBoxToTimeHour.getValue() + comboBoxToTimeMinutes.getValue()) {
+            new Alert(MainController.getInstance() ,5, AlertType.ERROR, "Booking Error \nYou cannot book a room for 0 minutes.").start();
+            LoggerMessage.warning(this,"onButton_buttonSearch : Values TIME to and FROM are equal");
+            return;
+        }
+
+        // Collecting the required information
+        LocalDate startDate = datePickerStart.getValue();
+        LocalDate endDate = datePickerEnd.getValue();
+        boolean includeWeekends = checkBoxIncludeWeekends.isSelected();
+        int maxPeople = numberOfPeople.getValue();
+        int startHour = comboBoxFromTimeHour.getValue();
+        int startMinute = comboBoxFromTimeMinutes.getValue();
+        int endHour = comboBoxToTimeHour.getValue();
+        int endMinute = comboBoxToTimeMinutes.getValue();
+
+        // Processing the collected information
+        LoggerMessage.debug("AdminCreateBooking", "START DATE: " + startDate);
+        LoggerMessage.debug("AdminCreateBooking", "END DATE: " + endDate);
+        LoggerMessage.debug("AdminCreateBooking", "INCLUDE WEEKENDS: " + includeWeekends);
+        LoggerMessage.debug("AdminCreateBooking", "MAX PEOPLE: " + maxPeople);
+        LoggerMessage.debug("AdminCreateBooking", "START TIME: " + startHour + ":" + startMinute);
+        LoggerMessage.debug("AdminCreateBooking", "END TIME: " + endHour + ":" + endMinute);
+
+        // Add your business logic here
     }
 
     /**
@@ -182,7 +234,7 @@ public class AdminCreateBooking implements Initializable {
         for (int i = startHour; i < endHour; i++) {
             comboBoxHours.getItems().add(i);
         }
-        comboBoxHours.setValue(0);
+        comboBoxHours.setValue(startHour);
         return comboBoxHours;
     }
 
