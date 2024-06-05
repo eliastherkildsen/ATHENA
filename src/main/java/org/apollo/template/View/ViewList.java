@@ -22,7 +22,11 @@ public enum ViewList {
      * Booing info view.
      */
     BOOKINGINFO("BookingInformationView.fxml"),
+    /**
+    Delete booking view
+     */
     DELETEBOOKING("DeleteBookingView.fxml"),
+
 
     /**
      * AvailableRooms view.
@@ -33,9 +37,26 @@ public enum ViewList {
      * System choose view.
      */
     SYSTEMCHOSE("SystemChoseView.fxml"),
+    /**
+     * booking complite view.
+     */
     BOOKINGCOMPLITE("BookingViewComplete.fxml"),
+    /**
+     * admin menu view
+     */
     ADMINMENU("AdminMenuBar.fxml"),
-    ERRORREPORT("ErrorReportView.fxml"),
+    /**
+     * Error report view
+     */
+    VIEWERRORREPORT("ViewErrorReportView.fxml"),
+    /**
+     * Error report edit view
+     */
+    ERRORREPORTEDIT("ErrorReportEditView.fxml"),
+    /**
+     * Error report create view
+     */
+    CREATEERRORREPORT("CreateErrorReportView.fxml"),
 
     /**
      * Info view.

@@ -36,5 +36,6 @@ public class RoomType {
     public void setRoomTypeDescription(String roomTypeDescription) {
         this.roomTypeDescription = roomTypeDescription;
     }
+
 }
 

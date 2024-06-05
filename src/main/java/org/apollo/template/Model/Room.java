@@ -17,6 +17,15 @@ public class Room {
         this.roomID = roomId;
     }
 
+    public Room(int roomId, String roomName) {
+        this.roomID = roomId;
+        this.roomName = roomName;
+    }
+
+    public Room(String roomName) {
+        this.roomName = roomName;
+    }
+
 
 
     public Room(int roomId, int roomMaxPersonCount, int roomTypeID, int floor, String roomName) {

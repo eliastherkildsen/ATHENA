@@ -6,9 +6,18 @@ public class InventoryItems {
     private String name;
     private String description;
 
+    public InventoryItems(String name) {
+        this.name = name;
+    }
+
     public InventoryItems(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public InventoryItems(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public InventoryItems(int id, String name, String description) {
