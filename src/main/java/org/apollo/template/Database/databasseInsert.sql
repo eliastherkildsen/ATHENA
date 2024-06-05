@@ -335,3 +335,36 @@ END;
             tbl_roomType
     END
 
+
+CREATE PROCEDURE GetAvailableRoomsForDateTimeRange
+    @givenDate DATE,
+    @startTime TIME,
+    @endTime TIME
+AS
+BEGIN
+    SELECT
+        tbl_room.fld_roomID,
+        tbl_room.fld_roomName,
+        tbl_room.fld_roomMaxPersonCount,
+        tbl_room.fld_roomTypeID,
+        tbl_room.fld_floor,
+        tbl_roomType.fld_roomTypeID AS roomType_ID,
+        tbl_roomType.fld_roomTypeDescription,
+        tbl_roomType.fld_roomTypeName
+    FROM
+        tbl_room
+            INNER JOIN
+        tbl_roomType ON tbl_room.fld_roomTypeID = tbl_roomType.fld_roomTypeID
+    WHERE
+        NOT EXISTS (
+            SELECT 1
+            FROM tbl_booking
+            WHERE tbl_room.fld_roomID = tbl_booking.fld_roomID
+              AND tbl_booking.fld_date = @givenDate
+              AND ((tbl_booking.fld_startTime < @endTime AND tbl_booking.fld_endTime > @startTime)
+                OR (tbl_booking.fld_startTime < @endTime AND tbl_booking.fld_endTime > @endTime)
+                OR (tbl_booking.fld_startTime < @startTime AND tbl_booking.fld_endTime > @startTime))
+        );
+END;
+GO
+

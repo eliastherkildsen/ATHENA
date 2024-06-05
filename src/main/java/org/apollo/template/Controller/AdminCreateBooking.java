@@ -15,15 +15,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import org.apollo.template.Database.JDBC;
+import org.apollo.template.Model.Booking;
+import org.apollo.template.Model.MeetingType;
 import org.apollo.template.Model.Room;
+import org.apollo.template.Model.RoomType;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.Alert.Alertable;
 import org.apollo.template.Service.Logger.LoggerMessage;
+import org.apollo.template.View.UI.AvailableComponent;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 
 import java.net.URL;
-import java.sql.Time;
+import java.sql.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -32,6 +37,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminCreateBooking implements Initializable {
+    Boolean bookingFound;
     private int openHour = 8;
     private int closingHour = 16;
     private int minuteInterval = 15;
@@ -61,6 +67,12 @@ public class AdminCreateBooking implements Initializable {
 
     @FXML
     private ComboBox<Integer> comboBoxToTimeMinutes;
+
+    @FXML
+    private ScrollPane scrollPaneResult;
+
+    @FXML
+    private VBox vBoxResult;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -157,8 +169,16 @@ public class AdminCreateBooking implements Initializable {
         Pane paneSpacer = new Pane();
         paneSpacer.setMinWidth(10);
 
+        //ScrollPane
+        scrollPaneResult = new ScrollPane();
+        scrollPaneResult.setFitToWidth(true);
+        scrollPaneResult.getStyleClass().add("edge-to-edge"); //Remove 'edge' around scrollPane
+        scrollPaneResult.getStyleClass().add("custom-scroll-pane");
+        vBoxResult = new VBox();
+        scrollPaneResult.setContent(vBoxResult);
+
         //SEARCH BUTTON
-        Button buttonSearch = new Button("SEARCH");
+        Button buttonSearch = new Button("SØG");
         buttonSearch.setOnAction(event -> onButton_buttonSearch());
 
         //Adding elements to our FirstHBox
@@ -168,7 +188,7 @@ public class AdminCreateBooking implements Initializable {
         hBoxTimeManipulationAndConfirmation.getChildren().addAll(labelFrom, vBoxFromTimeHour, vBoxFromTimeMin, paneSpacer, labelTo, vBoxToTimeHour, vBoxToTimeMinutes, buttonSearch);
 
         //Adding elements to our VBox
-        mainVbox.getChildren().addAll(title, hBoxDateAndMaxPeopleManipulation, hBoxTimeManipulationAndConfirmation);
+        mainVbox.getChildren().addAll(title, hBoxDateAndMaxPeopleManipulation, hBoxTimeManipulationAndConfirmation, scrollPaneResult);
 
         //MinMax required on root to display all information correctly.
         root.setMinHeight(700);
@@ -185,18 +205,22 @@ public class AdminCreateBooking implements Initializable {
 
     @FXML
     private void onButton_buttonSearch() {
-        // Validation, if we are getting NULLs or Are doing something irrelevant lets return without doing anything else.
         if (datePickerStart.getValue() == null || datePickerEnd.getValue() == null || numberOfPeople.getValue() == null || comboBoxFromTimeHour.getValue() == null || comboBoxFromTimeMinutes.getValue() == null || comboBoxToTimeHour.getValue() == null || comboBoxToTimeMinutes.getValue() == null) {
-            new Alert(MainController.getInstance() ,5, AlertType.ERROR, "Validation Error \nPlease fill in all fields before searching.").start();
-            LoggerMessage.warning(this,"onButton_buttonSearch : Values returned Null, return from method");
+            new Alert(MainController.getInstance(), 5, AlertType.ERROR, "Validerings Fejl \nUdfyld venligst alle felter før søgning.").start();
+            LoggerMessage.warning(this, "onButton_buttonSearch : Values returned Null, return from method");
             return;
-        } else if (comboBoxFromTimeHour.getValue() + comboBoxFromTimeMinutes.getValue() == comboBoxToTimeHour.getValue() + comboBoxToTimeMinutes.getValue()) {
-            new Alert(MainController.getInstance() ,5, AlertType.ERROR, "Booking Error \nYou cannot book a room for 0 minutes.").start();
-            LoggerMessage.warning(this,"onButton_buttonSearch : Values TIME to and FROM are equal");
+        } else if (comboBoxFromTimeHour.getValue() == comboBoxToTimeHour.getValue() && comboBoxFromTimeMinutes.getValue() == comboBoxToTimeMinutes.getValue()) {
+            new Alert(MainController.getInstance(), 5, AlertType.ERROR, "Booking Fejl \nDu kan ikke booke et rum i 0 minutter.").start();
+            LoggerMessage.warning(this, "onButton_buttonSearch : Values TIME to and FROM are equal");
+            return;
+        } else if (comboBoxFromTimeHour.getValue() > comboBoxToTimeHour.getValue() || (comboBoxFromTimeHour.getValue() == comboBoxToTimeHour.getValue() && comboBoxFromTimeMinutes.getValue() > comboBoxToTimeMinutes.getValue())) {
+            new Alert(MainController.getInstance(), 5, AlertType.ERROR, "Booking fejl \nTiden FRA kan ikke være efter TIL").start();
+            LoggerMessage.warning(this, "onButton_buttonSearch : Start time cannot be after end time");
             return;
         }
 
-        // Collecting the required information
+        List<Room> roomList = new ArrayList<>();
+
         LocalDate startDate = datePickerStart.getValue();
         LocalDate endDate = datePickerEnd.getValue();
         boolean excludeWeekends = checkBoxIncludeWeekends.isSelected();
@@ -206,36 +230,51 @@ public class AdminCreateBooking implements Initializable {
         int endHour = comboBoxToTimeHour.getValue();
         int endMinute = comboBoxToTimeMinutes.getValue();
 
-        // Creating LocalTime objects
         LocalTime startTime = LocalTime.of(startHour, startMinute);
         LocalTime endTime = LocalTime.of(endHour, endMinute);
 
-        // java.sql.Time
         java.sql.Time sqlStartTime = java.sql.Time.valueOf(startTime);
         java.sql.Time sqlEndTime = java.sql.Time.valueOf(endTime);
 
-        //Making list of dates
-        List<LocalDate> dates = getDatesBetween(startDate, endDate);
-        LoggerMessage.debug(this, "Selected Dates: " + dates);
-        LoggerMessage.debug(this, "List dates length: " + dates.size());
+        try {
+            PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC GetAvailableRoomsForDateTimeRange @startDate = ?, @startTime = ?, @endDate = ?, @endTime =?");
+            ps.setDate(1, Date.valueOf(startDate));
+            ps.setTime(2, sqlStartTime);
+            ps.setDate(3, Date.valueOf(endDate));
+            ps.setTime(4, sqlEndTime);
+            ResultSet rs = ps.executeQuery();
+            boolean bookingFound = false;
+            while (rs.next()) {
+                Room room = new Room();
+                room.setRoomID(rs.getInt("fld_roomID"));
+                room.setRoomName(rs.getString("fld_roomName"));
+                room.setRoomMaxPersonCount(rs.getInt("fld_roomMaxPersonCount"));
+                room.setRoomTypeID(rs.getInt("fld_roomTypeID"));
+                room.setFloor(rs.getInt("fld_floor"));
 
-        //Weekends included or Not.
-        if (excludeWeekends){
-            removeDateWeekends(dates);
-            LoggerMessage.debug(this,"Selected Dates Removed Weekends: " + dates);
-            LoggerMessage.debug(this, "List dates length: " + dates.size());
+                RoomType roomType = new RoomType();
+                roomType.setRoomTypeID(rs.getInt("fld_roomTypeID"));
+                roomType.setRoomTypeName(rs.getString("fld_roomTypeName"));
+                roomType.setRoomTypeDescription(rs.getString("fld_roomTypeDescription"));
+
+                room.setRoomType(roomType);
+
+                roomList.add(room);
+                bookingFound = true;
+                LoggerMessage.debug(this, "Size of roomList : " + roomList.size());
+            }
+            if (!bookingFound) {
+                new Alert(MainController.getInstance(), 10, AlertType.ERROR, "Booking fejl \nIngen ledig lokaler for den angivne periode.").start();
+            }
+        } catch (SQLException e) {
+            LoggerMessage.error(this, "Error in Stored PROCEDURE : " + e.getMessage());
+            LoggerMessage.warning(this, "Have you installed PROCEDURE GetAvailableRoomsForDateTimeRange?");
         }
 
-
-        // Processing the collected information
-        LoggerMessage.debug("AdminCreateBooking", "START DATE: " + startDate);
-        LoggerMessage.debug("AdminCreateBooking", "END DATE: " + endDate);
-        LoggerMessage.debug("AdminCreateBooking", "REMOVE WEEKENDS: " + excludeWeekends);
-        LoggerMessage.debug("AdminCreateBooking", "MAX PEOPLE: " + maxPeople);
-        LoggerMessage.debug("AdminCreateBooking", "START TIME: " + sqlStartTime);
-        LoggerMessage.debug("AdminCreateBooking", "END TIME: " + sqlEndTime);
-
-        // Logic
+        for (Room room : roomList) {
+            AvailableComponent test = new AvailableComponent(room);
+            vBoxResult.getChildren().add(test);
+        }
     }
 
     /**
