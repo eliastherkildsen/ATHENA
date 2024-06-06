@@ -4,6 +4,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -24,8 +26,14 @@ import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.Alert.Alertable;
 import org.apollo.template.Service.Logger.LoggerMessage;
+import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.AvailableComponent;
+import org.apollo.template.View.ViewList;
+import org.apollo.template.ViewLoader;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
+import org.apollo.template.persistence.PubSub.MessagesBroker;
+import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
+import org.jetbrains.annotations.Debug;
 
 import java.net.URL;
 import java.sql.*;
@@ -36,13 +44,14 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class AdminCreateBooking implements Initializable {
-    Boolean bookingFound;
+    List<Booking> bookingList = new ArrayList<>();
     private int openHour = 8;
     private int closingHour = 16;
     private int minuteInterval = 15;
 
     @FXML
     private AnchorPane root;
+
     @FXML
     private DatePicker datePickerStart;
 
@@ -225,7 +234,7 @@ public class AdminCreateBooking implements Initializable {
         // We need these variables for later.
         LocalDate startDate = datePickerStart.getValue();
         LocalDate endDate = datePickerEnd.getValue();
-        boolean excludeWeekends = checkBoxIncludeWeekends.isSelected();
+        boolean excludeWeekends = !checkBoxIncludeWeekends.isSelected();
         int maxPeople = numberOfPeople.getValue();
         int startHour = comboBoxFromTimeHour.getValue();
         int startMinute = comboBoxFromTimeMinutes.getValue();
@@ -240,6 +249,7 @@ public class AdminCreateBooking implements Initializable {
         java.sql.Time sqlEndTime = java.sql.Time.valueOf(endTime);
 
         List<LocalDate> datesList = getDatesBetween(startDate, endDate);
+        LoggerMessage.debug(this,"Exclude Weekends : " + excludeWeekends);
         if (excludeWeekends) {
             removeDateWeekends(datesList);
         }
@@ -301,8 +311,23 @@ public class AdminCreateBooking implements Initializable {
         }
 
         for (Room room : finalRoomList) {
-            AvailableComponent test = new AvailableComponent(room);
-            vBoxResult.getChildren().add(test);
+            AvailableComponent roomAvailableComp = new AvailableComponent(room);
+            Button button_book = roomAvailableComp.getButton();
+            button_bookOnAction(button_book, room);
+
+            vBoxResult.getChildren().add(roomAvailableComp);
+        }
+        for (LocalDate date : datesList) {
+            Booking booking = new Booking();
+
+            booking.setStartTime(sqlStartTime);
+            booking.setEndTime(sqlEndTime);
+            booking.setDate(date);
+            booking.setNumberOfParticipants(numberOfPeople.getValue());
+
+            LoggerMessage.debug(this, "Booking Object Created :" + booking);
+            bookingList.add(booking);
+            debugAdminCreateBookingPrint();
         }
     }
 
@@ -413,5 +438,32 @@ public class AdminCreateBooking implements Initializable {
     private List<LocalDate> removeDateWeekends(List<LocalDate> dates) {
         dates.removeIf(date -> date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY);
         return dates;
+    }
+
+    private void button_bookOnAction(Button button_book, Room availableRoom) {
+
+        button_book.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                LoggerMessage.debug(this, "Room Pressed : " + availableRoom.getRoomName());
+                // publish booking information object
+
+                for (Booking booking : bookingList) {
+                    booking.setRoom(availableRoom);
+                    LoggerMessage.trace(this, "Example Booking : " + booking);
+                }
+                LoggerMessage.trace(this, "Final Size being sent by POPUP : ");
+                debugAdminCreateBookingPrint();
+
+                MainController.getInstance().setView(ViewList.BOOKINGINFO, BorderPaneRegion.CENTER);
+                MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION_BATCH, bookingList);
+
+            }
+        });
+
+    }
+
+    private void debugAdminCreateBookingPrint (){
+        LoggerMessage.trace(this,"Booking List Size : " + bookingList.size());
     }
 }
