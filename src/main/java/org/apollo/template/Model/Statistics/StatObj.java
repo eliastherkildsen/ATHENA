@@ -5,6 +5,7 @@ import javafx.scene.chart.XYChart;
 
 public class StatObj {
 
+    // these are instance variables containing data for generating a barChart
     private ObservableList<XYChart.Series<String, Number>> chartData;
     private String graphTitle;
     private String xNotation;

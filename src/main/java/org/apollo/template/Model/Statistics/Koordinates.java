@@ -2,6 +2,7 @@ package org.apollo.template.Model.Statistics;
 
 public class Koordinates {
 
+    // these are instance variables storing coordinates' x and y values
     private String xValue;
     private int yValue;
 
@@ -10,6 +11,7 @@ public class Koordinates {
         this.yValue = yValue;
     }
 
+    // region getter og setter
     public String getxValue() {
         return xValue;
     }
@@ -25,4 +27,6 @@ public class Koordinates {
     public void setyValue(int yValue) {
         this.yValue = yValue;
     }
+
+    // endregion
 }
