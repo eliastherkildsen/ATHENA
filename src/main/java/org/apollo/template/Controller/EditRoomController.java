@@ -59,14 +59,14 @@ public class EditRoomController implements Initializable, Subscriber {
 
         String roomTypeName = (String) choiceBox_RoomType.getSelectionModel().getSelectedItem();
         RoomType roomType = GetRoomTypeIDFromName.getRoomTypeIDFromName(roomTypeName);
-
+        // Gets information from the textfields
         Room room = new Room();
         room.setRoomName(textField_RoomName.getText());
         room.setRoomTypeID(roomType.getRoomTypeID());
         room.setFloor(Integer.parseInt(textField_Floor.getText()));
         room.setRoomMaxPersonCount(Integer.parseInt(textField_MaxCapacity.getText()));
         room.setRoomID(GetRoomIDFromName.getRoomIDFromName(room));
-
+        // Updates the room with the new information
         DAO<Room> dao = new RoomDAO();
         dao.update(room);
 
@@ -98,7 +98,7 @@ public class EditRoomController implements Initializable, Subscriber {
 
         if (o instanceof Room){
             this.room = (Room)o;
-
+            // Gets information form the given object and inserts it into the textfields
             DAO<Room> roomDAO = new RoomDAO();
             room = roomDAO.read(room.getRoomID());
             textField_RoomName.setText(room.getRoomName());
