@@ -11,9 +11,7 @@ public class DayStrategy implements TimeStrategy{
     private int FINAL_DAYS = 1;
 
     @Override
-    public StatObj generateObj(StatisticsArea statisticsArea) {
-        //TODO: change to this!
-        //LocalDate currentDate = LocalDate.now();
+    public StatObj generateObj(StatisticsArea statisticsArea, int roomID) {
 
         Date currentDate = Date.valueOf(LocalDate.now());
 

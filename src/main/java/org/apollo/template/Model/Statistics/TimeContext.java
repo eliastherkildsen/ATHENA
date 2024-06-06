@@ -15,11 +15,11 @@ public class TimeContext {
      * @param statisticsArea
      * @return
      */
-    public StatObj generateObj(StatisticsArea statisticsArea){
+    public StatObj generateObj(StatisticsArea statisticsArea, int roomID){
         if (strategy == null){
             throw new IllegalStateException("Strategy is not set");
         }
-        return strategy.generateObj(statisticsArea);
+        return strategy.generateObj(statisticsArea, roomID);
     }
 
 }

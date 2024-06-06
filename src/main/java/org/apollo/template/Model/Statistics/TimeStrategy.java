@@ -2,6 +2,6 @@ package org.apollo.template.Model.Statistics;
 
 public interface TimeStrategy {
 
-    StatObj generateObj(StatisticsArea statisticsArea);
+    StatObj generateObj(StatisticsArea statisticsArea, int roomID);
 
 }

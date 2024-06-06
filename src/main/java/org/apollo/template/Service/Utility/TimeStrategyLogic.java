@@ -7,6 +7,7 @@ import org.apollo.template.Model.Statistics.Koordinates;
 import org.apollo.template.Model.Statistics.StatObj;
 import org.apollo.template.Model.Statistics.StatisticsArea;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetTotBookingTimePerBok;
+import org.apollo.template.persistence.JDBC.StoredProcedure.GetTotBookingTimePerDay;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -33,7 +34,7 @@ public class TimeStrategyLogic {
      * @return the start date, which is the current date minus the specified number of days
      */
     public LocalDate startDate(LocalDate currentDate, int numberOfDays){
-
+        System.out.println("number of days: " + numberOfDays);
         return currentDate.minusDays(numberOfDays);
     }
 
@@ -46,19 +47,10 @@ public class TimeStrategyLogic {
         String graphTitle = null;
         ObservableList<XYChart.Series<String, Number>> chartData = null;
 
-        if (statisticsArea == StatisticsArea.PERSONKAPACITY){
-
             xNotation = getXNotation(numberOfDays);
-            yNotation = getYNotation(StatisticsArea.PERSONKAPACITY, numberOfDays);
-            graphTitle = getGraphTitle(StatisticsArea.PERSONKAPACITY, numberOfDays);
-            chartData = getCharData(StatisticsArea.PERSONKAPACITY, numberOfDays, startDate, currentDate);
-
-        } else{
-            xNotation = getXNotation(numberOfDays);
-            yNotation = getYNotation(StatisticsArea.BOOKINGS, numberOfDays);
-            graphTitle = getGraphTitle(StatisticsArea.BOOKINGS, numberOfDays);
-            chartData = getCharData(StatisticsArea.BOOKINGS, numberOfDays, startDate, currentDate);
-        }
+            yNotation = getYNotation(numberOfDays);
+            graphTitle = getGraphTitle(numberOfDays);
+            chartData = getCharData(numberOfDays, startDate, currentDate);
 
         return new StatObj(chartData, graphTitle, xNotation, yNotation);
     }
@@ -76,82 +68,52 @@ public class TimeStrategyLogic {
     }
 
 
-    private String getYNotation(StatisticsArea statisticsArea, int numberOfDays) {
+    private String getYNotation(int numberOfDays) {
 
         String yNotation = null;
 
-        if (statisticsArea == StatisticsArea.PERSONKAPACITY){
-
-            if (numberOfDays == 1) { yNotation = "Antal deltagere";}
-            if (numberOfDays == 7 || numberOfDays == 31) { yNotation = "Gennemsnitlige antal deltagere pr. booking";}
-
-        } else {
             if (numberOfDays == 1) { yNotation = "Bookingtid (minutter)";}
             if (numberOfDays == 7 || numberOfDays == 31) { yNotation = "Summeret bookingtid (minutter)";}
-        }
 
         return yNotation;
     }
 
 
-    private String getGraphTitle(StatisticsArea statisticsArea, int numberOfDays) {
+    private String getGraphTitle(int numberOfDays) {
 
         String graphTitle = null;
 
-        if (statisticsArea == StatisticsArea.PERSONKAPACITY){
-            if (numberOfDays == 1) { graphTitle = "Antal deltagere pr. booking"; }
-            if (numberOfDays == 7 || numberOfDays == 31) { graphTitle = "Gennemsnitlige antal deltagere pr. booking"; }
-
-        } else {
             if (numberOfDays == 1) { graphTitle = "Bookingtid pr. booking"; }
             if (numberOfDays == 7 || numberOfDays == 31) { graphTitle = "Summeret bookingtid pr. dag"; }
-        }
 
         return graphTitle;
     }
 
 
-    private ObservableList<XYChart.Series<String, Number>> getCharData(StatisticsArea statisticsArea, int numberOfDays, Date startDate, Date currentDate) {
+    private ObservableList<XYChart.Series<String, Number>> getCharData(int numberOfDays, Date startDate, Date currentDate) {
 
         ObservableList<XYChart.Series<String, Number>> chartData = null;
 
-        if (statisticsArea == StatisticsArea.PERSONKAPACITY){
-            chartData = getPersonKapStatistics();
-        } else {
-            chartData = getBookingTimeStatistics(numberOfDays);
-        }
+            chartData = getBookingTimeStatistics(numberOfDays, startDate, currentDate);
 
         return chartData;
     }
 
 
-    private ObservableList<XYChart.Series<String, Number>> getPersonKapStatistics() {
-
-        // søgning - giver en liste
-
-        // liste x
-        // liste y
-
-        return null;
-    }
-
-
-    private ObservableList<XYChart.Series<String, Number>> getBookingTimeStatistics(int numberOfDays) {
+    private ObservableList<XYChart.Series<String, Number>> getBookingTimeStatistics(int numberOfDays, Date startDate, Date currentDate) {
 
         ObservableList<XYChart.Series<String, Number>> chartData = null;
 
         //TODO: hardCoded!
         if (numberOfDays == 1){
-            Date currentDate = Date.valueOf(LocalDate.now());
 
             List<Koordinates> koordinates = GetTotBookingTimePerBok.getTotalBookingTime(1, currentDate);
-
             chartData = buildObsList(koordinates);
-
         }
 
         if (numberOfDays == 7 || numberOfDays == 31) {
-            System.out.println();
+            List<Koordinates> koordinates = GetTotBookingTimePerDay.getTotalBookingDay(1, startDate, currentDate);
+            chartData = buildObsList(koordinates);
         }
 
         return chartData;
@@ -174,7 +136,9 @@ public class TimeStrategyLogic {
 
 
         for (Koordinates koordinate : koordinates) {
-            seriesDay.getData().add(new XYChart.Data<>(koordinate.getObjectID(), koordinate.getValue()));
+            seriesDay.getData().add(new XYChart.Data<>(koordinate.getxValue(), koordinate.getyValue()));
+            System.out.println("koordinate x: " + koordinate.getxValue());
+            System.out.println("koordinate y" + koordinate.getyValue());
         }
 
         return seriesDay;

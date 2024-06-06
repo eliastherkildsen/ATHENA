@@ -9,13 +9,14 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import org.apollo.template.Model.Room;
-import org.apollo.template.Model.Statistics.DayStrategy;
-import org.apollo.template.Model.Statistics.StatObj;
-import org.apollo.template.Model.Statistics.StatisticsArea;
-import org.apollo.template.Model.Statistics.TimeContext;
+import org.apollo.template.Model.Statistics.*;
+import org.apollo.template.Service.Alert.Alert;
+import org.apollo.template.Service.Alert.AlertType;
+import org.apollo.template.View.UI.AlertComp;
 import org.apollo.template.View.UI.CompColors;
 import org.apollo.template.View.UI.RoomComp;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
@@ -35,6 +36,9 @@ public class StatisticsController implements Initializable {
     private NumberAxis barChart_yAxis;
     @FXML
     private VBox vbox_room;
+    @FXML
+    private ChoiceBox choiceBox_statisticArea, choiceBox_statisticPeriod;
+    
     private Room selectedRoom = null;
     private List<RoomComp> roomComps = new ArrayList<>();
 
@@ -42,20 +46,64 @@ public class StatisticsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadRoomVbox();
-
-
-        TimeContext timeContext = new TimeContext();
-        timeContext.setStrategy(new DayStrategy());
-
-        StatObj statObj = timeContext.generateObj(StatisticsArea.BOOKINGS);
-
-
-        barChart_statistics.getXAxis().setLabel(statObj.getxNotation());
-        barChart_statistics.getYAxis().setLabel(statObj.getyNotation());
-        barChart_statistics.setTitle(statObj.getGraphTitle());
-        barChart_statistics.setData(statObj.getChartData());
+        loadAreaChoiceB();
+        loadPeriodChoiceB();
 
     }
+
+
+    private void loadAreaChoiceB() {
+
+        choiceBox_statisticArea.getItems().addAll("Booket tid");
+        choiceBox_statisticArea.setValue("Vælg område");
+    }
+
+
+    private void loadPeriodChoiceB() {
+
+        choiceBox_statisticPeriod.getItems().addAll("I dag", "Sidste 7 dage", "Sidste måned");
+        choiceBox_statisticPeriod.setValue("Vælg periode");
+    }
+
+
+    private StatisticsArea areaSelection(){
+
+        int indexChosen = choiceBox_statisticArea.getSelectionModel().getSelectedIndex();
+        StatisticsArea statisticsArea = null;
+
+        if (indexChosen == 0) {
+            statisticsArea = StatisticsArea.BOOKINGS;
+        }
+
+        return statisticsArea;
+    }
+
+
+    private int periodSelection(){
+        int indexChosen = choiceBox_statisticPeriod.getSelectionModel().getSelectedIndex();
+        int periodDays = 0;
+
+        switch (indexChosen){
+
+            // today
+            case 0:
+                periodDays = 1;
+                break;
+
+            // last 7 days
+            case 1:
+                periodDays = 7;
+                break;
+
+            // last month
+            case 2:
+                periodDays = 31;
+                break;
+        }
+
+        return periodDays;
+    }
+
 
 
 
@@ -88,6 +136,25 @@ public class StatisticsController implements Initializable {
                     roomComp.setCompColors(CompColors.SELECTED);
                     // settinge the selected room
                     selectedRoom = room;
+
+
+                    if (choiceBox_statisticArea.getSelectionModel().getSelectedItem() == null
+                        || choiceBox_statisticPeriod.getSelectionModel().getSelectedItem() == null){
+
+                        new Alert(MainController.getInstance(), 5, AlertType.INFO, "Husk at vælge statistikområde og statistikperiode").start();
+
+                    } else {
+                        // clear barChart
+                        barChart_statistics.getData().clear();
+
+                        int roomID = selectedRoom.getRoomID();
+                        String statisticArea = choiceBox_statisticArea.getSelectionModel().getSelectedItem().toString();
+                        String statisticPeriod = choiceBox_statisticPeriod.getSelectionModel().getSelectedItem().toString();
+
+
+                        createGraph(roomID, statisticArea,statisticPeriod);
+                    }
+
                 }
             });
 
@@ -97,6 +164,41 @@ public class StatisticsController implements Initializable {
         vbox_room.getChildren().addAll(roomComps);
 
     }
+
+    private void createGraph(int roomID, String statisticArea, String statisticPeriod) {
+
+        TimeContext timeContext = new TimeContext();
+
+        if (statisticArea == "Booket tid"){
+
+            switch (statisticPeriod){
+                case "I dag":
+                    timeContext.setStrategy(new DayStrategy());
+                    break;
+
+                case "Sidste 7 dage":
+                    timeContext.setStrategy(new WeekStrategy());
+                    break;
+
+                case "Sidste måned":
+                    timeContext.setStrategy(new MonthStrategy());
+                    break;
+            }
+        }
+
+        System.out.println("HER");
+
+        StatObj statObj = timeContext.generateObj(StatisticsArea.BOOKINGS, roomID);
+
+        barChart_statistics.getXAxis().setLabel(statObj.getxNotation());
+        barChart_statistics.getYAxis().setLabel(statObj.getyNotation());
+        barChart_statistics.setTitle(statObj.getGraphTitle());
+        barChart_statistics.setData(statObj.getChartData());
+
+    }
+
+
+
 
     /**
      * Method for setting all room components colors to NORMAL.

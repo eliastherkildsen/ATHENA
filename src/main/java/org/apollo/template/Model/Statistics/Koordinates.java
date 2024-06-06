@@ -2,27 +2,27 @@ package org.apollo.template.Model.Statistics;
 
 public class Koordinates {
 
-    private String objectID;
-    private int value;
+    private String xValue;
+    private int yValue;
 
-    public Koordinates(String objectID, int value) {
-        this.objectID = objectID;
-        this.value = value;
+    public Koordinates(String xValue, int yValue) {
+        this.xValue = xValue;
+        this.yValue = yValue;
     }
 
-    public String getObjectID() {
-        return objectID;
+    public String getxValue() {
+        return xValue;
     }
 
-    public void setObjectID(String objectID) {
-        this.objectID = objectID;
+    public void setxValue(String xValue) {
+        this.xValue = xValue;
     }
 
-    public int getValue() {
-        return value;
+    public int getyValue() {
+        return yValue;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setyValue(int yValue) {
+        this.yValue = yValue;
     }
 }

@@ -10,30 +10,70 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Transparent;" stylesheets="@css/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.StatisticsController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label prefHeight="32.0" prefWidth="46.0" text="Statistic" />
-            <HBox alignment="TOP_RIGHT" prefHeight="345.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+            <Label prefHeight="35.0" prefWidth="182.0" text="Booking statistik">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin></Label>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <BarChart fx:id="barChart_statistics" animated="false" categoryGap="5.0" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" verticalGridLinesVisible="false">
+                  <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="306.0">
+                     <children>
+                        <Label text="Vælg statistikområde">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ChoiceBox fx:id="choiceBox_statisticArea" prefHeight="26.0" prefWidth="128.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ChoiceBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="290.0">
+                     <children>
+                        <Label prefHeight="18.0" prefWidth="110.0" text="Vælg periode">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ChoiceBox fx:id="choiceBox_statisticPeriod" prefHeight="26.0" prefWidth="128.0">
+                           <HBox.margin>
+                              <Insets left="45.0" />
+                           </HBox.margin>
+                        </ChoiceBox>
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="345.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <BarChart fx:id="barChart_statistics" animated="false" categoryGap="5.0" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" titleSide="BOTTOM" verticalGridLinesVisible="false">
                     <xAxis>
-                      <CategoryAxis fx:id="barChart_xAxis" side="BOTTOM" />
+                      <CategoryAxis fx:id="barChart_xAxis" animated="false" endMargin="0.0" side="BOTTOM" startMargin="0.0" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis fx:id="barChart_yAxis" side="LEFT" />
+                      <NumberAxis fx:id="barChart_yAxis" animated="false" side="LEFT" />
                     </yAxis>
                   </BarChart>
                   <VBox prefHeight="348.0" prefWidth="194.0">
                      <children>
-                        <Label layoutX="10.0" layoutY="10.0" text="Stradigi" />
-                        <ChoiceBox prefWidth="150.0" />
-                        <Label text="Lokale" />
-                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" prefHeight="289.0" prefWidth="209.0" styleClass="custom-scroll-pane" stylesheets="@css/Menu.css" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+                        <Label text="Vælg lokale:" />
+                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="286.0" prefWidth="197.0" styleClass="custom-scroll-pane" stylesheets="@css/Menu.css" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox fx:id="vbox_room" prefHeight="274.0" prefWidth="247.0" spacing="15.0" style="-fx-background-color: #009FE3; -fx-background-radius: 20;" />
+                              <VBox fx:id="vbox_room" spacing="15.0" style="-fx-background-color: #009FE3; -fx-background-radius: 20;" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -45,6 +85,9 @@
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" />
                </padding>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </HBox>
          </children>
          <opaqueInsets>

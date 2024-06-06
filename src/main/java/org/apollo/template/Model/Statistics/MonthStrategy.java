@@ -12,7 +12,7 @@ public class MonthStrategy implements TimeStrategy{
     private int FINAL_DAYS_MONTH = 31;
 
     @Override
-    public StatObj generateObj(StatisticsArea statisticsArea) {
+    public StatObj generateObj(StatisticsArea statisticsArea, int roomID) {
 
 
         LocalDate currentDateLoc = LocalDate.now();
