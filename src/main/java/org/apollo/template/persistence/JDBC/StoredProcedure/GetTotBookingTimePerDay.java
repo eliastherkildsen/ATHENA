@@ -3,7 +3,6 @@ package org.apollo.template.persistence.JDBC.StoredProcedure;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.Statistics.Koordinates;
 import org.apollo.template.Service.Logger.LoggerMessage;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +12,13 @@ import java.util.List;
 
 public class GetTotBookingTimePerDay {
 
+    /**
+     * This method retrieves the total booking time per day for a given room and date using a stored procedure
+     * @param roomID the roomID for a selected room
+     * @param startDate the start date from which to retrieve total booking time per day
+     * @param currentDate today's date
+     * @return a List af Koordinates objects containing date and total booking time
+     */
     public static List<Koordinates> getTotalBookingDay(int roomID, Date startDate, Date currentDate){
 
         List<Koordinates> results = new ArrayList<>();
@@ -28,9 +34,6 @@ public class GetTotBookingTimePerDay {
 
                 Date date = rs.getDate("fld_date");
                 int bookingTime = rs.getInt("total_booking_time");
-
-                System.out.println("procedure: " + date);
-                System.out.println("procedure: " + bookingTime);
 
                 Koordinates koordinates = new Koordinates(String.valueOf(date), bookingTime);
                 results.add(koordinates);

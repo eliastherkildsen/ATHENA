@@ -1,7 +1,6 @@
 package org.apollo.template.Model.Statistics;
 
 import org.apollo.template.Service.Utility.TimeStrategyLogic;
-
 import java.sql.Date;
 import java.time.LocalDate;
 

@@ -13,6 +13,12 @@ import java.util.List;
 
 public class GetTotBookingTimePerBok {
 
+    /**
+     * This method retrieves the total booking time per booking for a given room and date using a stored procedure
+     * @param roomID the roomID for a selected room
+     * @param currentDate today's date
+     * @return a List af Koordinates objects containing bookings and total booking time
+     */
     public static List<Koordinates> getTotalBookingTime(int roomID, Date currentDate){
 
         List<Koordinates> results = new ArrayList<>();
@@ -23,13 +29,18 @@ public class GetTotBookingTimePerBok {
             ps.setDate(2, currentDate);
             ResultSet rs = ps.executeQuery();
 
+            // counter to name x-value
+            int count = 1;
+
             while (rs.next()) {
 
                 int bookingID = rs.getInt("fld_bookingID");
                 int bookingTime = rs.getInt("total_booking_time");
 
-                Koordinates koordinates = new Koordinates(String.valueOf(bookingID), bookingTime);
+                Koordinates koordinates = new Koordinates(String.format("%d. Booking", count), bookingTime);
                 results.add(koordinates);
+
+                count++;
             }
 
             LoggerMessage.info("GetTotBookingTimePerBok", "Stored Procedure succeeded");
