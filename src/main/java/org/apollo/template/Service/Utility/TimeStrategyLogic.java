@@ -7,7 +7,6 @@ import org.apollo.template.Model.Statistics.Koordinates;
 import org.apollo.template.Model.Statistics.StatObj;
 import org.apollo.template.Model.Statistics.StatisticsArea;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetTotBookingTimePerBok;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -40,7 +39,7 @@ public class TimeStrategyLogic {
 
 
 
-    public StatObj generateStatObj(int numberOfDays, LocalDate startDate, LocalDate currentDate, StatisticsArea statisticsArea){
+    public StatObj generateStatObj(int numberOfDays, Date startDate, Date currentDate, StatisticsArea statisticsArea){
 
         String xNotation = null;
         String yNotation = null;
@@ -112,7 +111,7 @@ public class TimeStrategyLogic {
     }
 
 
-    private ObservableList<XYChart.Series<String, Number>> getCharData(StatisticsArea statisticsArea, int numberOfDays, LocalDate startDate, LocalDate currentDate) {
+    private ObservableList<XYChart.Series<String, Number>> getCharData(StatisticsArea statisticsArea, int numberOfDays, Date startDate, Date currentDate) {
 
         ObservableList<XYChart.Series<String, Number>> chartData = null;
 
@@ -143,7 +142,7 @@ public class TimeStrategyLogic {
 
         //TODO: hardCoded!
         if (numberOfDays == 1){
-            Date currentDate = new Date(2024-05-28);
+            Date currentDate = Date.valueOf(LocalDate.now());
 
             List<Koordinates> koordinates = GetTotBookingTimePerBok.getTotalBookingTime(1, currentDate);
 

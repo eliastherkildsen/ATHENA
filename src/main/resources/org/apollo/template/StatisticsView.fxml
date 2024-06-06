@@ -18,12 +18,12 @@
             <Label prefHeight="32.0" prefWidth="46.0" text="Statistic" />
             <HBox alignment="TOP_RIGHT" prefHeight="345.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
                <children>
-                  <BarChart fx:id="barChart_statistics">
+                  <BarChart fx:id="barChart_statistics" animated="false" categoryGap="5.0" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" verticalGridLinesVisible="false">
                     <xAxis>
-                      <CategoryAxis side="BOTTOM" />
+                      <CategoryAxis fx:id="barChart_xAxis" side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis side="LEFT" />
+                      <NumberAxis fx:id="barChart_yAxis" side="LEFT" />
                     </yAxis>
                   </BarChart>
                   <VBox prefHeight="348.0" prefWidth="194.0">

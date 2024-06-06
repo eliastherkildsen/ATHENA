@@ -17,16 +17,26 @@ public class GetTotBookingTimePerBok {
 
         List<Koordinates> results = new ArrayList<>();
 
+        System.out.println("RoomID: " + roomID);
+        System.out.println("CurrentDate: " + currentDate);
+
         try {
             PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXECUTE getTotalBookingTimePerBooking @roomID = ? , @date = ?");
             ps.setInt(1, roomID);
             ps.setDate(2, currentDate);
             ResultSet rs = ps.executeQuery();
 
+            System.out.println("HER");
+
             while (rs.next()) {
+
+                System.out.println("også her?");
 
                 int bookingID = rs.getInt("fld_bookingID");
                 int bookingTime = rs.getInt("total_booking_time");
+
+                System.out.println("BookingID: " + bookingID);
+                System.out.println("BookingTime: " + bookingTime);
 
                 Koordinates koordinates = new Koordinates(String.valueOf(bookingID), bookingTime);
                 results.add(koordinates);
