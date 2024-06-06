@@ -15,6 +15,7 @@ import java.util.List;
 
 public class TimeStrategyLogic {
 
+    // Singleton
     private static TimeStrategyLogic INSTANCE;
 
     private TimeStrategyLogic(){}
@@ -29,25 +30,22 @@ public class TimeStrategyLogic {
 
     /**
      * This method returns today's date
-     * @return
+     * @return today's date
      */
     public LocalDate currentDate(){
         return LocalDate.now();
     }
 
 
-
     /**
-     * This method calculates the start date of a period given a current date and a number of days to go back.
-     * @param currentDate the current date from which to calculate the start date
+     * This method calculates the start date of a period given a current date and a number of days to go back
+     * @param currentDate today's date from which to calculate the start date
      * @param numberOfDays the number of days to subtract from the current date
      * @return the start date, which is the current date minus the specified number of days
      */
     public LocalDate startDate(LocalDate currentDate, int numberOfDays){
-        System.out.println("number of days: " + numberOfDays);
         return currentDate.minusDays(numberOfDays);
     }
-
 
 
     public StatObj generateStatObj(int numberOfDays, Date startDate, Date currentDate, StatisticsArea statisticsArea, int roomID){
@@ -114,9 +112,7 @@ public class TimeStrategyLogic {
 
         ObservableList<XYChart.Series<String, Number>> chartData = null;
 
-        //TODO: hardCoded!
         if (numberOfDays == 1){
-
             List<Koordinates> koordinates = GetTotBookingTimePerBok.getTotalBookingTime(roomID, currentDate);
             chartData = buildObsList(koordinates);
         }
@@ -129,6 +125,7 @@ public class TimeStrategyLogic {
         return chartData;
     }
 
+
     private ObservableList<XYChart.Series<String, Number>> buildObsList(List<Koordinates> koordinates) {
 
         XYChart.Series<String, Number> seriesDay = createSerie(koordinates);
@@ -138,17 +135,14 @@ public class TimeStrategyLogic {
         return chartData;
     }
 
+
     private XYChart.Series<String, Number> createSerie(List<Koordinates> koordinates) {
 
         XYChart.Series<String, Number> seriesDay = new XYChart.Series<>();
-        // TODO: variabel navn der bliver sendt med
         seriesDay.setName("Booking tid i minutter");
-
 
         for (Koordinates koordinate : koordinates) {
             seriesDay.getData().add(new XYChart.Data<>(koordinate.getxValue(), koordinate.getyValue()));
-            System.out.println("koordinate x: " + koordinate.getxValue());
-            System.out.println("koordinate y" + koordinate.getyValue());
         }
 
         return seriesDay;
