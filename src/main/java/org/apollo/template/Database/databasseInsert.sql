@@ -376,3 +376,11 @@ END
         WHERE
             tbl_booking.fld_date >= @date;
     END
+
+        CREATE PROCEDURE getNumberOfBookingsFromRoomID (@roomID INTEGER)
+        AS
+        BEGIN
+            SELECT COUNT(fld_bookingID)
+            FROM tbl_booking
+            WHERE fld_roomID = @roomID
+        END
