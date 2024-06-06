@@ -20,16 +20,16 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement("INSERT INTO tbl_inventory (fld_inventoryName, fld_inventoryDescription) VALUES ?, ?");
+            ps = conn.prepareStatement("INSERT INTO tbl_inventory (fld_inventoryName, fld_inventoryDescription) VALUES (?, ?)");
             ps.setString(1, inventoryItems.getName());
             ps.setString(2, inventoryItems.getDescription());
-            ps.executeQuery();
+            ps.executeUpdate();
             ps.close();
 
             LoggerMessage.info(this, "Inserted, " + inventoryItems.getName() + " Into tbl_inventoryItem");
 
         } catch (SQLException e) {
-            LoggerMessage.error(this, "IN ADD; an error occurred: " + e.getMessage());
+            LoggerMessage.error(this, "IN ADD; an error occurred: " + e.getMessage() + e.getSQLState() + e.getStackTrace().toString());
         }
 
 
@@ -40,9 +40,9 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement("DELETE FROM tbl_inventory WHERE fld_name = ?");
+            ps = conn.prepareStatement("DELETE FROM tbl_inventory WHERE fld_inventoryName = ?");
             ps.setString(1, inventoryItems.getName());
-            ps.executeQuery();
+            ps.executeUpdate();
             ps.close();
 
             LoggerMessage.info(this, "DELETED, " + inventoryItems.getName() + " FROM tbl_inventoryItem");
@@ -50,6 +50,7 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
 
         } catch (SQLException e) {
             LoggerMessage.error(this, "IN DELETE; an error occurred: " + e.getMessage());
+            throw  new RuntimeException();
         }
     }
 
@@ -62,7 +63,7 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
             ps.setString(1, inventoryItems.getName());
             ps.setString(2, inventoryItems.getDescription());
             ps.setInt(3, inventoryItems.getId());
-            ps.executeQuery();
+            ps.executeUpdate();
             ps.close();
 
             LoggerMessage.info(this, "UPDATE, " + inventoryItems.getName() + " FROM tbl_inventoryItem");

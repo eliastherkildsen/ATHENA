@@ -27,7 +27,7 @@ public class AdminMenuController {
     protected void onButton_Statistics() { MainController.getInstance().setView(ViewList.STATISTICS, BorderPaneRegion.CENTER); }
 
     @FXML
-    protected void onButton_item() { MainController.getInstance().setView(ViewList.STATISTICS, BorderPaneRegion.CENTER); }
+    protected void onButton_item() { MainController.getInstance().setView(ViewList.INVENTORYITEMS, BorderPaneRegion.CENTER); }
 
 
 
