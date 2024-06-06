@@ -336,10 +336,15 @@ END;
     END
 
 
+        USE db_Athena;
+GO
+
 CREATE PROCEDURE GetAvailableRoomsForDateTimeRange
-    @givenDate DATE,
+    @startDate DATE,
     @startTime TIME,
-    @endTime TIME
+    @endDate DATE,
+    @endTime TIME,
+    @maxPersonCount INT
 AS
 BEGIN
     SELECT
@@ -356,15 +361,18 @@ BEGIN
             INNER JOIN
         tbl_roomType ON tbl_room.fld_roomTypeID = tbl_roomType.fld_roomTypeID
     WHERE
+        tbl_room.fld_roomMaxPersonCount >= @maxPersonCount AND
         NOT EXISTS (
             SELECT 1
             FROM tbl_booking
             WHERE tbl_room.fld_roomID = tbl_booking.fld_roomID
-              AND tbl_booking.fld_date = @givenDate
+              AND tbl_booking.fld_date >= @startDate
+              AND tbl_booking.fld_date <= @endDate
               AND ((tbl_booking.fld_startTime < @endTime AND tbl_booking.fld_endTime > @startTime)
                 OR (tbl_booking.fld_startTime < @endTime AND tbl_booking.fld_endTime > @endTime)
                 OR (tbl_booking.fld_startTime < @startTime AND tbl_booking.fld_endTime > @startTime))
         );
 END;
 GO
+
 

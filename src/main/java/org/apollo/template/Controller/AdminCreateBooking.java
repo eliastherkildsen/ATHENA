@@ -29,12 +29,11 @@ import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 
 import java.net.URL;
 import java.sql.*;
+import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AdminCreateBooking implements Initializable {
     Boolean bookingFound;
@@ -172,6 +171,7 @@ public class AdminCreateBooking implements Initializable {
         scrollPaneResult.getStyleClass().add("edge-to-edge"); //Remove 'edge' around scrollPane
         scrollPaneResult.getStyleClass().add("custom-scroll-pane");
         vBoxResult = new VBox();
+        vBoxResult.setSpacing(5);
         scrollPaneResult.setContent(vBoxResult);
 
         //SEARCH BUTTON
@@ -216,8 +216,13 @@ public class AdminCreateBooking implements Initializable {
             return;
         }
 
-        List<Room> roomList = new ArrayList<>();
+        // Ensure that our results screen is empty before filling with new information.
+        vBoxResult.getChildren().clear();
 
+        // A place to store our rooms.
+        List<Room> finalRoomList = new ArrayList<>();
+
+        // We need these variables for later.
         LocalDate startDate = datePickerStart.getValue();
         LocalDate endDate = datePickerEnd.getValue();
         boolean excludeWeekends = checkBoxIncludeWeekends.isSelected();
@@ -227,48 +232,75 @@ public class AdminCreateBooking implements Initializable {
         int endHour = comboBoxToTimeHour.getValue();
         int endMinute = comboBoxToTimeMinutes.getValue();
 
+        // Converting our time to something the JDBC and SQL likes.
         LocalTime startTime = LocalTime.of(startHour, startMinute);
         LocalTime endTime = LocalTime.of(endHour, endMinute);
 
         java.sql.Time sqlStartTime = java.sql.Time.valueOf(startTime);
         java.sql.Time sqlEndTime = java.sql.Time.valueOf(endTime);
 
+        List<LocalDate> datesList = getDatesBetween(startDate, endDate);
+        if (excludeWeekends) {
+            removeDateWeekends(datesList);
+        }
+
+        Map<LocalDate, List<Room>> dateToRoomListMap = new HashMap<>();
+
+        // Trying our search for each date.
         try {
-            PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC GetAvailableRoomsForDateTimeRange @startDate = ?, @startTime = ?, @endDate = ?, @endTime =?");
-            ps.setDate(1, Date.valueOf(startDate));
-            ps.setTime(2, sqlStartTime);
-            ps.setDate(3, Date.valueOf(endDate));
-            ps.setTime(4, sqlEndTime);
-            ResultSet rs = ps.executeQuery();
-            boolean bookingFound = false;
-            while (rs.next()) {
-                Room room = new Room();
-                room.setRoomID(rs.getInt("fld_roomID"));
-                room.setRoomName(rs.getString("fld_roomName"));
-                room.setRoomMaxPersonCount(rs.getInt("fld_roomMaxPersonCount"));
-                room.setRoomTypeID(rs.getInt("fld_roomTypeID"));
-                room.setFloor(rs.getInt("fld_floor"));
+            for (LocalDate date : datesList) {
+                PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC GetAvailableRoomsForDateTimeRange @startDate = ?, @startTime = ?, @endDate = ?, @endTime =?, @maxPersonCount =?");
+                ps.setDate(1, Date.valueOf(date));
+                ps.setTime(2, sqlStartTime);
+                ps.setDate(3, Date.valueOf(date));
+                ps.setTime(4, sqlEndTime);
+                ps.setInt(5, maxPeople);
+                ResultSet rs = ps.executeQuery();
 
-                RoomType roomType = new RoomType();
-                roomType.setRoomTypeID(rs.getInt("fld_roomTypeID"));
-                roomType.setRoomTypeName(rs.getString("fld_roomTypeName"));
-                roomType.setRoomTypeDescription(rs.getString("fld_roomTypeDescription"));
+                List<Room> roomList = new ArrayList<>();
+                while (rs.next()) {
+                    Room room = new Room();
+                    room.setRoomID(rs.getInt("fld_roomID"));
+                    room.setRoomName(rs.getString("fld_roomName"));
+                    room.setRoomMaxPersonCount(rs.getInt("fld_roomMaxPersonCount"));
+                    room.setRoomTypeID(rs.getInt("fld_roomTypeID"));
+                    room.setFloor(rs.getInt("fld_floor"));
 
-                room.setRoomType(roomType);
+                    RoomType roomType = new RoomType();
+                    roomType.setRoomTypeID(rs.getInt("fld_roomTypeID"));
+                    roomType.setRoomTypeName(rs.getString("fld_roomTypeName"));
+                    roomType.setRoomTypeDescription(rs.getString("fld_roomTypeDescription"));
 
-                roomList.add(room);
-                bookingFound = true;
-                LoggerMessage.debug(this, "Size of roomList : " + roomList.size());
-            }
-            if (!bookingFound) {
-                new Alert(MainController.getInstance(), 10, AlertType.ERROR, "Booking fejl \nIngen ledig lokaler for den angivne periode.").start();
+                    room.setRoomType(roomType);
+
+                    roomList.add(room);
+                }
+
+                LoggerMessage.debug(this, "Date: " + date + ", Room List Size: " + roomList.size());
+                dateToRoomListMap.put(date, roomList);
             }
         } catch (SQLException e) {
             LoggerMessage.error(this, "Error in Stored PROCEDURE : " + e.getMessage());
             LoggerMessage.warning(this, "Have you installed PROCEDURE GetAvailableRoomsForDateTimeRange?");
+            return;
         }
 
-        for (Room room : roomList) {
+        // Find the common rooms across all dates
+        if (!dateToRoomListMap.isEmpty()) {
+            Collection<List<Room>> roomLists = dateToRoomListMap.values();
+            finalRoomList = new ArrayList<>(roomLists.iterator().next());
+            for (List<Room> roomList : roomLists) {
+                finalRoomList.retainAll(roomList);
+            }
+        }
+
+        LoggerMessage.debug(this, "Final Room List Size: " + finalRoomList.size());
+
+        if (finalRoomList.isEmpty()) {
+            new Alert(MainController.getInstance(), 10, AlertType.ERROR, "Booking fejl \nIngen ledig lokaler for den angivne periode.").start();
+        }
+
+        for (Room room : finalRoomList) {
             AvailableComponent test = new AvailableComponent(room);
             vBoxResult.getChildren().add(test);
         }
@@ -289,6 +321,13 @@ public class AdminCreateBooking implements Initializable {
         return comboBoxMinutes;
     }
 
+    /**
+     * ComboBox generator that takes two Int values and displays the range between them within the ComboBox.
+     * Intended to be used as a time picker.
+     * @param startHour int
+     * @param endHour int
+     * @return Combobox Integer
+     */
     private ComboBox<Integer> comboBoxHour(int startHour, int endHour) {
         ComboBox<Integer> comboBoxHours = new ComboBox<>();
         for (int i = startHour; i < endHour; i++) {
@@ -298,6 +337,7 @@ public class AdminCreateBooking implements Initializable {
         return comboBoxHours;
     }
 
+    //TODO NOT USED DELETE OR USE
     private static HBox GenerateHBox (ArrayList<Node> controls){
         HBox hBox = new HBox();
         for (Node control : controls) {
@@ -308,6 +348,11 @@ public class AdminCreateBooking implements Initializable {
         return hBox;
     }
 
+    /**
+     * DataPickerSetCell formats a datapicker so that dates before newDate gets disabled.
+     * @param datePickerStart datePicker
+     * @param newDate LocalDate
+     */
     private static void datepickerSetCell(DatePicker datePickerStart, LocalDate newDate) {
         datePickerStart.setDayCellFactory(param -> new DateCell() {
             @Override
@@ -318,6 +363,10 @@ public class AdminCreateBooking implements Initializable {
         });
     }
 
+    /**
+     * getMaxPersonCountFromRooms takes a list of rooms and returns a ObservableList with Intergers of the rooms MaxPersonCount
+     * @return ObservableList Integer
+     */
     private ObservableList<Integer> getMaxPersonCountFromRooms() {
         List<Room> roomsList = new ArrayList<>();
         RoomDAO roomDAO = new RoomDAO();
@@ -339,6 +388,12 @@ public class AdminCreateBooking implements Initializable {
         return optionsList;
     }
 
+    /**
+     * getDatesBetween takes two LocalDate objects and finds all dates in that range.
+     * @param startDate LocalDate
+     * @param endDate LocalDate
+     * @return List LocalDate
+     */
     private List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
         List<LocalDate> datesList = new ArrayList<>();
         LocalDate date = startDate;
@@ -350,6 +405,11 @@ public class AdminCreateBooking implements Initializable {
         return datesList;
     }
 
+    /**
+     * removeDateWeekends removes dates from a List LocalDate if it contains Saturday or Sunday
+     * @param dates List LocalDate
+     * @return List LocalDate
+     */
     private List<LocalDate> removeDateWeekends(List<LocalDate> dates) {
         dates.removeIf(date -> date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY);
         return dates;
