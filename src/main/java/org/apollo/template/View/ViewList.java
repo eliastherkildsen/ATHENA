@@ -102,6 +102,14 @@ public enum ViewList {
      * Edit inventory item view
      */
     EDITINVENTORYITEMS("EditInventoryItemView.fxml"),
+    /**
+     * Team view
+     */
+    TEAMVIEW("teamView.fxml"),
+    /**
+     * Create team view
+     */
+    CREATETEAMVIEW("CreateTeam.fxml"),
 
     /**
      * Admin login view
