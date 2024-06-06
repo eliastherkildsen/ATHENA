@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane opacity="0.8" prefHeight="400.0" prefWidth="600.0" style="-fx-background-radius: 30;" stylesheets="@css/Styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.InventoryItems.ItemsController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Emner" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <VBox fx:id="vbox_inventoryItems" opacity="0.8" prefHeight="419.0" prefWidth="600.0" spacing="20.0" />
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onButton_edit" text="Rediger" textFill="WHITE" />
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButton_delete" text="Slet" textFill="WHITE" />
+                  <Button layoutX="244.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButton_add" text="tilføj" textFill="WHITE" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

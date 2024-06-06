@@ -92,6 +92,18 @@ public enum ViewList {
      * Statistics view
      */
     STATISTICS("StatisticsView.fxml"),
+    /**
+     * Inventory items view
+     */
+    INVENTORYITEMS("InventoryItemsView.fxml"),
+    /**
+     * Create inventory items view
+     */
+    CREATEINVENTORYITEMS("CreateInventoryItemView.fxml"),
+    /**
+     * Edit inventory item view
+     */
+    EDITINVENTORYITEMS("EditInventoryItemView.fxml"),
 
     /**
      * Admin login view
