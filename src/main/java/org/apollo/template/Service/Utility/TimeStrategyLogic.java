@@ -28,6 +28,16 @@ public class TimeStrategyLogic {
 
 
     /**
+     * This method returns today's date
+     * @return
+     */
+    public LocalDate currentDate(){
+        return LocalDate.now();
+    }
+
+
+
+    /**
      * This method calculates the start date of a period given a current date and a number of days to go back.
      * @param currentDate the current date from which to calculate the start date
      * @param numberOfDays the number of days to subtract from the current date
@@ -40,7 +50,7 @@ public class TimeStrategyLogic {
 
 
 
-    public StatObj generateStatObj(int numberOfDays, Date startDate, Date currentDate, StatisticsArea statisticsArea){
+    public StatObj generateStatObj(int numberOfDays, Date startDate, Date currentDate, StatisticsArea statisticsArea, int roomID){
 
         String xNotation = null;
         String yNotation = null;
@@ -50,7 +60,7 @@ public class TimeStrategyLogic {
             xNotation = getXNotation(numberOfDays);
             yNotation = getYNotation(numberOfDays);
             graphTitle = getGraphTitle(numberOfDays);
-            chartData = getCharData(numberOfDays, startDate, currentDate);
+            chartData = getCharData(numberOfDays, startDate, currentDate, roomID);
 
         return new StatObj(chartData, graphTitle, xNotation, yNotation);
     }
@@ -90,29 +100,29 @@ public class TimeStrategyLogic {
     }
 
 
-    private ObservableList<XYChart.Series<String, Number>> getCharData(int numberOfDays, Date startDate, Date currentDate) {
+    private ObservableList<XYChart.Series<String, Number>> getCharData(int numberOfDays, Date startDate, Date currentDate, int roomID) {
 
         ObservableList<XYChart.Series<String, Number>> chartData = null;
 
-            chartData = getBookingTimeStatistics(numberOfDays, startDate, currentDate);
+            chartData = getBookingTimeStatistics(numberOfDays, startDate, currentDate, roomID);
 
         return chartData;
     }
 
 
-    private ObservableList<XYChart.Series<String, Number>> getBookingTimeStatistics(int numberOfDays, Date startDate, Date currentDate) {
+    private ObservableList<XYChart.Series<String, Number>> getBookingTimeStatistics(int numberOfDays, Date startDate, Date currentDate, int roomID) {
 
         ObservableList<XYChart.Series<String, Number>> chartData = null;
 
         //TODO: hardCoded!
         if (numberOfDays == 1){
 
-            List<Koordinates> koordinates = GetTotBookingTimePerBok.getTotalBookingTime(1, currentDate);
+            List<Koordinates> koordinates = GetTotBookingTimePerBok.getTotalBookingTime(roomID, currentDate);
             chartData = buildObsList(koordinates);
         }
 
         if (numberOfDays == 7 || numberOfDays == 31) {
-            List<Koordinates> koordinates = GetTotBookingTimePerDay.getTotalBookingDay(1, startDate, currentDate);
+            List<Koordinates> koordinates = GetTotBookingTimePerDay.getTotalBookingDay(roomID, startDate, currentDate);
             chartData = buildObsList(koordinates);
         }
 

@@ -25,6 +25,7 @@ import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class StatisticsController implements Initializable {
@@ -149,10 +150,10 @@ public class StatisticsController implements Initializable {
 
                         int roomID = selectedRoom.getRoomID();
                         String statisticArea = choiceBox_statisticArea.getSelectionModel().getSelectedItem().toString();
-                        String statisticPeriod = choiceBox_statisticPeriod.getSelectionModel().getSelectedItem().toString();
+                        String statisticStrategy = choiceBox_statisticPeriod.getSelectionModel().getSelectedItem().toString();
 
 
-                        createGraph(roomID, statisticArea,statisticPeriod);
+                        createGraph(roomID, statisticArea,statisticStrategy);
                     }
 
                 }
@@ -165,13 +166,13 @@ public class StatisticsController implements Initializable {
 
     }
 
-    private void createGraph(int roomID, String statisticArea, String statisticPeriod) {
+    private void createGraph(int roomID, String statisticArea, String statisticStrategy) {
 
         TimeContext timeContext = new TimeContext();
 
-        if (statisticArea == "Booket tid"){
+        if (statisticArea.equals("Booket tid")){
 
-            switch (statisticPeriod){
+            switch (statisticStrategy){
                 case "I dag":
                     timeContext.setStrategy(new DayStrategy());
                     break;
@@ -185,8 +186,6 @@ public class StatisticsController implements Initializable {
                     break;
             }
         }
-
-        System.out.println("HER");
 
         StatObj statObj = timeContext.generateObj(StatisticsArea.BOOKINGS, roomID);
 

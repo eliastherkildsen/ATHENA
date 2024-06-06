@@ -8,19 +8,27 @@ import java.time.LocalDate;
 
 public class WeekStrategy implements TimeStrategy{
 
-    // days in a week
+    // number of days used in the strategy by default (7 = days in a week)
     private int FINAL_DAYS_WEEK = 7;
 
+
+    /**
+     * This method generates a StatObj based on a specific strategy and its corresponding number of days and a roomID
+     * @param statisticsArea the strategy (time period) that should be used to generate the object.
+     * @param roomID the roomID for a selected room
+     * @return a StatObj that contains the variables needed to create a barChart
+     */
     @Override
     public StatObj generateObj(StatisticsArea statisticsArea, int roomID) {
 
-        LocalDate currentDateLoc = LocalDate.now();
+        // gets today's date
+        LocalDate currentDate = TimeStrategyLogic.getInstance().currentDate();
+        // calculates the start date based on today's date given the number of days used in this strategy
+        Date startDate = Date.valueOf(TimeStrategyLogic.getInstance().startDate(currentDate, FINAL_DAYS_WEEK));
 
-        Date startDate = Date.valueOf(TimeStrategyLogic.getInstance().startDate(currentDateLoc, FINAL_DAYS_WEEK));
-        System.out.println("startDate: " + startDate);
-        Date currentDate = Date.valueOf(LocalDate.now());
 
-        return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAYS_WEEK, startDate, currentDate, statisticsArea);
+        // generates the StatObj using the TimeStrategyLogic
+        return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAYS_WEEK, startDate, Date.valueOf(currentDate), statisticsArea, roomID);
 
     }
 }
