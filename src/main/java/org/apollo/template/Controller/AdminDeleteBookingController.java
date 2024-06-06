@@ -2,7 +2,6 @@ package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Alert.Alert;
@@ -24,12 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AdminDeleteBooking implements Initializable, BookingSelectionListner{
+public class AdminDeleteBookingController implements Initializable, BookingSelectionListner{
 
     @FXML
     private VBox vbox_booking;
-    @FXML
-    private Button button_delete;
 
     private List<BookingComp> bookingComps = new ArrayList<>();
     private int selectedBookingID = -1;
@@ -40,6 +37,7 @@ public class AdminDeleteBooking implements Initializable, BookingSelectionListne
         Date date = Date.valueOf(LocalDate.now());
 
         try {
+            // Loads all bookings from today and going forward
             LoadBookedRooms.loadBookedRooms(GetBookingsByDate.loadBookedRoomsReturnRS(date), vbox_booking, bookingComps, this);
         } catch (SQLException e) {
             throw new RuntimeException(e);
