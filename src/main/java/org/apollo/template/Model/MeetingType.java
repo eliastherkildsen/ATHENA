@@ -9,6 +9,8 @@ public class MeetingType {
     private String meetingTypeName;
     private int meetingTypeID;
 
+    public MeetingType(){}
+
     public MeetingType(String meetingTypeName) {
         this.meetingTypeName = meetingTypeName;
     }

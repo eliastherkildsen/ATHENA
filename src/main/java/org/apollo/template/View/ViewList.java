@@ -77,6 +77,8 @@ public enum ViewList {
 
     ADMINVIEWBOOKINGS("AdminViewBookings.fxml"),
 
+    EDITROOM("EditRoomView.fxml"),
+
     /**
      * Create Room
      */

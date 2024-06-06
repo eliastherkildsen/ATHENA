@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.EditRoomController">
+    <VBox alignment="CENTER" layoutX="85.0" layoutY="56.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <children>
+            <HBox alignment="CENTER" prefHeight="67.0" prefWidth="600.0">
+                <children>
+                    <VBox prefHeight="200.0" prefWidth="160.0">
+                        <children>
+                            <Label text="Room Name" />
+                            <TextField fx:id="textField_RoomName" />
+                        </children>
+                  <HBox.margin>
+                     <Insets right="15.0" />
+                  </HBox.margin>
+                    </VBox>
+                    <VBox prefHeight="200.0" prefWidth="160.0">
+                        <children>
+                            <Label text="Room Type" />
+                            <ChoiceBox fx:id="choiceBox_RoomType" prefHeight="26.0" prefWidth="168.0" />
+                        </children>
+                  <HBox.margin>
+                     <Insets left="15.0" />
+                  </HBox.margin>
+                    </VBox>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="77.0" prefWidth="600.0">
+                <children>
+                    <VBox prefHeight="200.0" prefWidth="160.0">
+                        <children>
+                            <Label text="Max Capacity" />
+                            <TextField fx:id="textField_MaxCapacity" />
+                        </children>
+                  <HBox.margin>
+                     <Insets right="15.0" />
+                  </HBox.margin>
+                    </VBox>
+                    <VBox prefHeight="78.0" prefWidth="160.0">
+                        <children>
+                            <Label text="Floor" />
+                            <TextField fx:id="textField_Floor" />
+                        </children>
+                  <HBox.margin>
+                     <Insets left="15.0" />
+                  </HBox.margin>
+                    </VBox>
+                </children></HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                <children>
+                    <Button mnemonicParsing="false" onAction="#onButton_Confirm" text="Bekræft" />
+                    <Button mnemonicParsing="false" onAction="#onButton_Cancel" text="Cancel" />
+                </children>
+            </HBox>
+        </children></VBox>
+
+</AnchorPane>
