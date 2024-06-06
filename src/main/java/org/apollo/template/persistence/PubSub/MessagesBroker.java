@@ -55,7 +55,6 @@ public class MessagesBroker {
         LoggerMessage.info(this, "Removed pair: " + pair + " from subscriberList");
 
     }
-
     /**
      * Method for publishing an object.
      * @param topic MessagesBrokerTopic
@@ -71,11 +70,8 @@ public class MessagesBroker {
                 pair.getValue().update(messages);
 
             }
-
         }
-
     }
-
 
 
     public static MessagesBroker getInstance(){

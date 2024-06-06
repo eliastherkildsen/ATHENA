@@ -18,14 +18,14 @@ import org.apollo.template.persistence.JDBC.DAO.DAO;
 import org.apollo.template.persistence.JDBC.DAO.ErrorReportDAODB;
 import org.apollo.template.persistence.JDBC.DAO.InventoryItemDAO;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
+import org.apollo.template.persistence.JDBC.StoredProcedure.AddEmailIfNotExists;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetEmailIDByEmailAdress;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-public class ErrorReportController implements Initializable {
+public class CreateErrorReportController implements Initializable {
 
     @FXML
     private Button button_save, button_back;
@@ -102,8 +102,11 @@ public class ErrorReportController implements Initializable {
             return;
         }
 
+
         // saving email
         Email email = new Email(textField_email.getText());
+        // creating email if not exists.
+        AddEmailIfNotExists.addEmailIfNotExists(email);
         // saving selected item
         InventoryItems selectedInventoryItems = inventoryItemsChoiceBox.getSelectionModel().getSelectedItem();
         // saving description

@@ -22,7 +22,11 @@ public enum ViewList {
      * Booing info view.
      */
     BOOKINGINFO("BookingInformationView.fxml"),
+    /**
+    Delete booking view
+     */
     DELETEBOOKING("DeleteBookingView.fxml"),
+
 
     /**
      * AvailableRooms view.
@@ -33,9 +37,26 @@ public enum ViewList {
      * System choose view.
      */
     SYSTEMCHOSE("SystemChoseView.fxml"),
+    /**
+     * booking complite view.
+     */
     BOOKINGCOMPLITE("BookingViewComplete.fxml"),
+    /**
+     * admin menu view
+     */
     ADMINMENU("AdminMenuBar.fxml"),
-    ERRORREPORT("ErrorReportView.fxml"),
+    /**
+     * Error report view
+     */
+    VIEWERRORREPORT("ViewErrorReportView.fxml"),
+    /**
+     * Error report edit view
+     */
+    ERRORREPORTEDIT("ErrorReportEditView.fxml"),
+    /**
+     * Error report create view
+     */
+    CREATEERRORREPORT("CreateErrorReportView.fxml"),
 
     /**
      * Info view.
@@ -52,6 +73,12 @@ public enum ViewList {
      */
     ALLROOMS("AllRoomsView.fxml"),
 
+    ADMINDELETEBOOKING("AdminDeleteBookingView.fxml"),
+
+    ADMINVIEWBOOKINGS("AdminViewBookings.fxml"),
+
+    EDITROOM("EditRoomView.fxml"),
+
     /**
      * Create Room
      */
@@ -60,6 +87,28 @@ public enum ViewList {
     /**
      *  Topbar view.
      */
+    TOPBAR("TopbarView.fxml"),
+    /**
+     * Statistics view
+     */
+    STATISTICS("StatisticsView.fxml"),
+    /**
+     * Inventory items view
+     */
+    INVENTORYITEMS("InventoryItemsView.fxml"),
+    /**
+     * Create inventory items view
+     */
+    CREATEINVENTORYITEMS("CreateInventoryItemView.fxml"),
+    /**
+     * Edit inventory item view
+     */
+    EDITINVENTORYITEMS("EditInventoryItemView.fxml"),
+
+    /**
+     * Admin login view
+     */
+    LOGIN("AdminLoginView.fxml"),
     TOPBAR("TopbarView.fxml"),
     /**
      *  Topbar view.

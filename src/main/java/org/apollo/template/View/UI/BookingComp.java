@@ -3,7 +3,6 @@ package org.apollo.template.View.UI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -17,7 +16,7 @@ import javafx.scene.text.FontWeight;
 public class BookingComp extends HBox {
 
     private int bookingID;
-    private BookingCompColors bookingCompColor;
+    private CompColors bookingCompColor;
 
     /**
      * BookingComp builds an HBox with the information and format we require.
@@ -64,7 +63,7 @@ public class BookingComp extends HBox {
         Label labelBookingTime = buildLabel(startAndEndTime, 18, FontWeight.NORMAL);
 
         // setting booking comp color.
-        setBookingCompColor(BookingCompColors.NORMAL);
+        setBookingCompColor(CompColors.NORMAL);
 
         // Setting this in regard to how we want it to look.
         this.setMinHeight(35);
@@ -77,7 +76,7 @@ public class BookingComp extends HBox {
         return bookingID;
     }
 
-    public void setBookingCompColor(BookingCompColors bookingCompColor) {
+    public void setBookingCompColor(CompColors bookingCompColor) {
         this.bookingCompColor = bookingCompColor;
         this.setStyle("-fx-background-color: "+ this.bookingCompColor.getColor() + "; -fx-background-radius: 40");
     }

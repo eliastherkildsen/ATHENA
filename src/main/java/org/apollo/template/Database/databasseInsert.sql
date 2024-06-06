@@ -335,9 +335,64 @@ END;
             tbl_roomType
     END
 
+        use db_Athena
+go
 
-        USE db_Athena;
-GO
+CREATE PROCEDURE getErrorReports
+AS
+BEGIN
+    SELECT
+        -- Selecting data from error report entity
+        tbl_errorReport.fld_archived, tbl_errorReport.fld_errorReportID,
+        tbl_errorReport.fld_reportDate, tbl_errorReport.fld_reportDescription,
+
+        -- selecting data from email entity
+        tbl_userEmail.fld_userEmail, tbl_userEmail.fld_userID,
+
+        -- selecting data from room entity
+        tbl_room.fld_roomName, tbl_room.fld_roomID,
+
+        -- select data from
+        tbl_inventory.fld_inventoryName, tbl_inventory.fld_inventoryID
+
+
+    FROM tbl_errorReport
+             INNER JOIN tbl_userEmail on tbl_errorReport.fld_userID = tbl_userEmail.fld_userID
+             INNER JOIN tbl_room on tbl_errorReport.fld_roomID = tbl_room.fld_roomID
+             INNER JOIN tbl_inventory on tbl_errorReport.fld_inventoryID = tbl_inventory.fld_inventoryID
+END
+
+    CREATE PROCEDURE GetAllBookingsFromTodayAndOnwards (@date Date)
+    AS
+    BEGIN
+        SELECT tbl_booking.fld_bookingID, tbl_userEmail.fld_userEmail, tbl_room.fld_roomName, fld_startTime, fld_endTime, fld_userName,
+               tbl_meetingType.fld_meetingType
+
+        FROM tbl_booking
+                 INNER JOIN tbl_userEmail ON tbl_booking.fld_userID = tbl_userEmail.fld_userID
+                 INNER JOIN tbl_room ON tbl_booking.fld_roomID = tbl_room.fld_roomID
+                 INNER JOIN tbl_meetingType on tbl_booking.fld_meetingTypeID = tbl_meetingType.fld_meetingTypeID
+
+        WHERE
+            tbl_booking.fld_date >= @date;
+    END
+
+CREATE PROCEDURE getNumberOfBookingsFromRoomID (@roomID INTEGER)
+AS
+BEGIN
+    SELECT COUNT(fld_bookingID)
+    FROM tbl_booking
+    WHERE fld_roomID = @roomID
+END
+
+
+CREATE PROCEDURE GetRoomIDFromName (@roomName varChar(50))
+AS
+BEGIN
+    SELECT fld_roomID
+    FROM tbl_room
+    WHERE fld_roomName = @roomName
+END
 
 CREATE PROCEDURE GetAvailableRoomsForDateTimeRange
     @startDate DATE,

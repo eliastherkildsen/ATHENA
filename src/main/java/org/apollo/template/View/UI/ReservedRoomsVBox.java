@@ -32,7 +32,7 @@ public class ReservedRoomsVBox extends VBox {
             this.setAlignment(Pos.CENTER);
             this.setPadding(new Insets(10));
 
-            LoggerMessage.info(this, "Attempting to generate VBox with Bookings.");
+            LoggerMessage.info(this, "Attempting to generate VBox with Bookings. with " + bookingList.size() + " bookings");
 
             for (Booking i : bookingList) {
                 //Getting our Variables sorted.
