@@ -361,3 +361,26 @@ BEGIN
              INNER JOIN tbl_room on tbl_errorReport.fld_roomID = tbl_room.fld_roomID
              INNER JOIN tbl_inventory on tbl_errorReport.fld_inventoryID = tbl_inventory.fld_inventoryID
 END
+
+    CREATE PROCEDURE GetAllBookingsFromTodayAndOnwards (@date Date)
+    AS
+    BEGIN
+        SELECT tbl_booking.fld_bookingID, tbl_userEmail.fld_userEmail, tbl_room.fld_roomName, fld_startTime, fld_endTime, fld_userName,
+               tbl_meetingType.fld_meetingType
+
+        FROM tbl_booking
+                 INNER JOIN tbl_userEmail ON tbl_booking.fld_userID = tbl_userEmail.fld_userID
+                 INNER JOIN tbl_room ON tbl_booking.fld_roomID = tbl_room.fld_roomID
+                 INNER JOIN tbl_meetingType on tbl_booking.fld_meetingTypeID = tbl_meetingType.fld_meetingTypeID
+
+        WHERE
+            tbl_booking.fld_date >= @date;
+    END
+
+        CREATE PROCEDURE getNumberOfBookingsFromRoomID (@roomID INTEGER)
+        AS
+        BEGIN
+            SELECT COUNT(fld_bookingID)
+            FROM tbl_booking
+            WHERE fld_roomID = @roomID
+        END

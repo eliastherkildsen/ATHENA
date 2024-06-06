@@ -25,10 +25,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.jar.Manifest;
 
-public class AdminViewBookings implements Initializable {
+import static org.apollo.template.Service.Utility.BookingsByDate.laberGenerator;
+
+public class AdminViewBookingsController implements Initializable {
 
     @FXML
     private AnchorPane root;
@@ -67,6 +67,7 @@ public class AdminViewBookings implements Initializable {
             LocalDate date = dateToday.toLocalDate().plusDays(1);
             dateToday = Date.valueOf(date);
             mainVbox.getChildren().clear();
+            laberGenerator(mainVbox,"Dagens Møder og Bookinger:",40,Pos.CENTER_LEFT);
             mainVbox.getChildren().add(BookingsByDate.scrollPaneGenerator(GetBookingsByDate.getBookingsByDate(dateToday)));
             setUpForwardsBackWardsHBox(mainVbox);
             bookRoomToday(mainVbox);
@@ -91,6 +92,7 @@ public class AdminViewBookings implements Initializable {
             LocalDate date = dateToday.toLocalDate().minusDays(1);
             dateToday = Date.valueOf(date);
             mainVbox.getChildren().clear();
+            laberGenerator(mainVbox,"Dagens Møder og Bookinger:",40,Pos.CENTER_LEFT);
             mainVbox.getChildren().add(BookingsByDate.scrollPaneGenerator(GetBookingsByDate.getBookingsByDate(dateToday)));
             setUpForwardsBackWardsHBox(mainVbox);
             bookRoomToday(mainVbox);
@@ -125,12 +127,7 @@ public class AdminViewBookings implements Initializable {
 
         deleteBookingButton.setOnAction(event -> {
             // Code to execute when the button is clicked
-            LocalDate date = dateToday.toLocalDate().plusDays(1);
-            dateToday = Date.valueOf(date);
-            mainVbox.getChildren().clear();
-            mainVbox.getChildren().add(BookingsByDate.scrollPaneGenerator(GetBookingsByDate.getBookingsByDate(dateToday)));
-            bookRoomToday(mainVbox);
-            deleteBooking(mainVbox);
+            MainController.getInstance().setView(ViewList.ADMINDELETEBOOKING, BorderPaneRegion.CENTER);
         });
 
         pane.getChildren().add(deleteBookingButton);

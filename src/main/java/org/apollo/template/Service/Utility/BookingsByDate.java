@@ -8,10 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.Booking;
-import org.apollo.template.Model.MeetingType;
-import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.UI.ReservedRoomsVBox;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetBookingsByDate;
@@ -21,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingsByDate {
-
-    static Boolean meetingsFound;
 
     public static void generateBookingsByDate(AnchorPane root, Date dateToday, VBox mainVbox){
         //Preparing an arraylist with our reservations

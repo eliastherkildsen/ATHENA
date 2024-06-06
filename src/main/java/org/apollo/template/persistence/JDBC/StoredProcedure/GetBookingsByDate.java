@@ -70,4 +70,25 @@ public class GetBookingsByDate {
 
         return null;
     }
+
+
+    /**
+     * Method for findeing bookings by email. calls method for loading thies,
+     * @param date String
+     */
+    public static ResultSet loadBookedRoomsReturnRS(Date date) {
+        ResultSet rs;
+
+        // load all bookings from user email
+        try {
+            PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXEC GetAllBookingsFromTodayAndOnwards @date = ? ");
+            ps.setDate(1, date);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            LoggerMessage.error("LoadbookedRoomsReturnRS", "in LoadBookedRoomsReturnRS; An error occurred " + e.getMessage());
+        }
+        return null;
+    }
+
 }
