@@ -73,7 +73,11 @@ public enum ViewList {
      */
     ALLROOMS("AllRoomsView.fxml"),
 
+    ADMINDELETEBOOKING("AdminDeleteBookingView.fxml"),
+
     ADMINVIEWBOOKINGS("AdminViewBookings.fxml"),
+
+    EDITROOM("EditRoomView.fxml"),
 
     /**
      * Create Room
@@ -88,6 +92,18 @@ public enum ViewList {
      * Statistics view
      */
     STATISTICS("StatisticsView.fxml"),
+    /**
+     * Inventory items view
+     */
+    INVENTORYITEMS("InventoryItemsView.fxml"),
+    /**
+     * Create inventory items view
+     */
+    CREATEINVENTORYITEMS("CreateInventoryItemView.fxml"),
+    /**
+     * Edit inventory item view
+     */
+    EDITINVENTORYITEMS("EditInventoryItemView.fxml"),
 
     /**
      * Admin login view

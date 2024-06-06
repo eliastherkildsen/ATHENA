@@ -12,12 +12,12 @@
             <HBox alignment="CENTER" prefHeight="89.0" prefWidth="600.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onButton_CreateRoom" text="Opret" />
-                  <Button mnemonicParsing="false" text="Rediger">
+                  <Button mnemonicParsing="false" onAction="#onButton_Edit" text="Rediger">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Slet" />
+                  <Button mnemonicParsing="false" onAction="#onButton_Delete" text="Slet" />
                </children>
             </HBox>
          </children>
