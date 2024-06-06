@@ -108,7 +108,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         // establishing preparedStatement
         PreparedStatement ps = null;
         ResultSet rs = null;
-        MeetingType meetingType = null;
+        MeetingType meetingType = new MeetingType();
 
         try {
             ps = conn.prepareStatement("SELECT * FROM tbl_meetingType WHERE fld_meetingTypeID = ?");

@@ -13,6 +13,8 @@ import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetNumberOfBookingsFromRoomID;
+import org.apollo.template.persistence.PubSub.MessagesBroker;
+import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
 
 
 import java.net.URL;
@@ -50,6 +52,22 @@ public class AllRoomsViewController implements Initializable {
     @FXML
     protected void onButton_CreateRoom(){
         MainController.getInstance().setView(ViewList.CREATEROOM, BorderPaneRegion.CENTER);
+    }
+
+    @FXML
+    protected void onButton_Edit(){
+        if (selectedRoomID == -1){
+            new Alert(MainController.getInstance(), 5, AlertType.INFO, "Du har ikke valgt en error report.")
+                    .start();
+            return;
+        }
+        Room room = new Room();
+        room.setRoomID(selectedRoomID);
+
+        MainController.getInstance().setView(ViewList.EDITROOM, BorderPaneRegion.CENTER);
+
+        MessagesBroker.getInstance().publish(MessagesBrokerTopic.ROOM_INFORMATION, room);
+
     }
 
     @FXML
