@@ -2,6 +2,9 @@ package org.apollo.template.Model.Statistics;
 
 public class TimeContext {
 
+    // TODO: LOGMESSAGES
+
+
     private TimeStrategy strategy;
 
 
