@@ -197,7 +197,6 @@ public class StatisticsController implements Initializable {
         } catch (Exception e) {
             LoggerMessage.error(this, "an error occurred: could not generate bar chart " + e.getMessage());
         }
-
     }
 
 
