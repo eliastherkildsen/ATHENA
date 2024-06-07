@@ -438,6 +438,7 @@ public class AdminCreateBooking implements Initializable {
                 // publish booking information object
 
                 for (Booking booking : bookingList) {
+                    booking.setAdHoc(false);
                     booking.setRoom(availableRoom);
                     LoggerMessage.trace(this, "Example Booking : " + booking);
                 }

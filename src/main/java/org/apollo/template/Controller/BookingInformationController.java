@@ -146,6 +146,7 @@ public class BookingInformationController implements Initializable, Subscriber {
                 bookingDAO.add(bookingListObject);
             }
             MainController.getInstance().setView(ViewList.ADMINCREATEBOOKING, BorderPaneRegion.CENTER);
+            new Alert(MainController.getInstance(), 8, AlertType.SUCCESS, "SUCCES! \nDin Booking er nu registeret!").start();
             LoggerMessage.trace(this, "Example of Booking \n" + booking);
             MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION_BATCH, booking);
 

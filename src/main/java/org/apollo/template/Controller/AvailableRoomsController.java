@@ -116,6 +116,7 @@ public class AvailableRoomsController implements Initializable {
 
                 // create booking information object
                 booking.setRoom(availableRoom);
+                booking.setAdHoc(true);
                 LoggerMessage.info(this, "bookingInformation created");
 
 
