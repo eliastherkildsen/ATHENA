@@ -1,10 +1,11 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Room;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
@@ -31,13 +32,8 @@ public class AllRoomsViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        DAO<Room> roomDAO = new RoomDAO();
-        List<Room> roomList = roomDAO.readAll();
-
-        for (Room room : roomList) {
-            listView_RoomList.getItems().add(room);
-        }
-
+        loadAllRooms();
+        // Sets a on Mouse click event, so that when an element is selected the variable is updated
         listView_RoomList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -47,6 +43,20 @@ public class AllRoomsViewController implements Initializable {
             }
         });
 
+    }
+
+    /**
+     * Method that loads all rooms into the listview
+     */
+    public void loadAllRooms(){
+        DAO<Room> roomDAO = new RoomDAO();
+        List<Room> roomList = roomDAO.readAll();
+
+        listView_RoomList.getItems().clear();
+
+        for (Room room : roomList) {
+            listView_RoomList.getItems().add(room);
+        }
     }
 
     @FXML
@@ -65,7 +75,7 @@ public class AllRoomsViewController implements Initializable {
         room.setRoomID(selectedRoomID);
 
         MainController.getInstance().setView(ViewList.EDITROOM, BorderPaneRegion.CENTER);
-
+        // Updates the room object
         MessagesBroker.getInstance().publish(MessagesBrokerTopic.ROOM_INFORMATION, room);
 
     }
@@ -92,6 +102,7 @@ public class AllRoomsViewController implements Initializable {
         dao.delete(room);
         new Alert(MainController.getInstance(), 5, AlertType.SUCCESS, "Du har nu slettet lokalet").start();
 
+        loadAllRooms();
     }
 
 }

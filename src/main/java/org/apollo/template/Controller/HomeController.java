@@ -2,7 +2,7 @@ package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import org.apollo.template.Model.BookingInformation;
+import org.apollo.template.Model.Booking;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
@@ -10,12 +10,13 @@ import org.apollo.template.Service.GenerateCSV;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 
-import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeController {
-
+    // TODO Needs to die
     @FXML
     private AnchorPane root;
 
@@ -27,18 +28,18 @@ public class HomeController {
     }
     public void onBtnInfo(){
 
-        List<BookingInformation> bookingInformationList = new ArrayList<>();
+        List<Booking> bookingInformationList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            BookingInformation bookingInformation = new BookingInformation();
-            bookingInformation.setDate(new Date(10-10-2024));
-            bookingInformation.setRoom((new Room()));
-            bookingInformation.setStartTime("10:00");
-            bookingInformation.setEndTime("11:00");
-            bookingInformation.setNumberOfParticipants(10);
-            bookingInformation.setUserName("Ole Olesen");
+            Booking booking = new Booking();
+            booking.setDate(LocalDate.of(2024, 10, 10));
+            booking.setRoom((new Room()));
+            booking.setStartTime(Time.valueOf("10:00"));
+            booking.setEndTime(Time.valueOf("11:00"));
+            booking.setNumberOfParticipants(10);
+            booking.setUsername("Ole Olesen");
 
-            bookingInformationList.add(bookingInformation);
+            bookingInformationList.add(booking);
         }
 
 

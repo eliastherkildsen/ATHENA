@@ -123,7 +123,7 @@ public class ViewErrorReportController implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         unselectAllErrorReportComps();
-                        errorReportComp.setCompColors(CompColors.SELECTED);
+                        errorReportComp.setCompColor(CompColors.SELECTED);
                         selectedErrorReportComp = errorReportComp;
                     }
                 });
@@ -137,9 +137,8 @@ public class ViewErrorReportController implements Initializable {
 
     private void unselectAllErrorReportComps() {
         for (ErrorReportComp errorReportComp : errorReportCompList){
-            errorReportComp.setCompColors(CompColors.NORMAL);
+            errorReportComp.setCompColor(CompColors.NORMAL);
         }
     }
-
 
 }

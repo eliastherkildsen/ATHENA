@@ -65,8 +65,12 @@ public class BookingsByDate {
         sPane.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
 
         //Populate the ScrollPane with my Bookings.
-        ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(bookingList);
-        sPane.setContent(vboxRooms);
+        if(bookingList == null) {
+            LoggerMessage.info(BookingsByDate.class,"No bookings found. List Empty");
+        } else {
+            ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(bookingList);
+            sPane.setContent(vboxRooms);
+        }
         return sPane;
     }
 

@@ -97,7 +97,7 @@ public class StatisticsController implements Initializable {
                     // unselect all components, to make sure that only one component is seleceted at a time.
                     unselectAllRoomComponents();
                     // changing roomComp color
-                    roomComp.setCompColors(CompColors.SELECTED);
+                    roomComp.setCompColor(CompColors.SELECTED);
                     // settinge the selected room
                     selectedRoom = room;
 
@@ -205,7 +205,7 @@ public class StatisticsController implements Initializable {
      */
     private void unselectAllRoomComponents() {
         for (RoomComp roomComp : roomComps) {
-            roomComp.setCompColors(CompColors.NORMAL);
+            roomComp.setCompColor(CompColors.NORMAL);
         }
     }
 }

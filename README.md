@@ -1,70 +1,68 @@
-# JavaFX Template Menu
+# Athena booking system.
+The purpose of the system is to develop an information and booking system.
+The system should enable employees and students to quickly get an overview 
+of the institution's rooms and their availability. 
+This should be accessible on the institution's information screen 
+or on the admin computer. It should be possible for employees to 
+book rooms for teaching, meetings, etc., and to order catering if necessary.
+As a student, it should be possible to book available 
+rooms on an ad-hoc basis. Furthermore, the system should be able
+to handle data extraction and display booking statistics.
 
-This is a simple structured JavaFX menu template.
+![applicationGaiaAdHoc.gif](src%2Fmain%2Fresources%2Forg%2Fapollo%2Ftemplate%2Fimages%2FapplicationGaiaAdHoc.gif)
 
-## Features
-1. **Debug Logging Integration:** Integrated debug logging via the DebugMessenger by Mads R. Knudsen.
-2. **Alert Popup Feature:** Includes functionality for displaying alert popups.
+## installation guide
+This is a guide for installing the system. Due to the system being developed in java, The JVM should allow 
+you to run the program on any supported operating system.
 
-## How It Works
-1. **Create an FXML View:** Design your menu interface using FXML with a container as the root.
-2. **Controller Creation:** Develop a controller for the view. Avoid linking the controller in the FXML directly; instead, use data binding later.
-3. **Enum Attribute Addition:** Add a new Enum attribute in `View/ViewList.java`. Parse the FXML file name and controller name in the enum.
+### database
+to install the system you will need to follow this steps. 
+1. Install MSSQL database. 
+2. Create a user in MSSQL database, and replace the username, password, port and ipadress in 
+`src/main/java/org/apollo/template/Database/db.properties`. Run the test, `src/test/java/org/apollo/template/Database/JDBCTest.java`
+to insure that a connection has been established. 
+3. Run the databaseCreateScript from `src/main/java/org/apollo/template/Database/databaseCreateScript.sql`
+4. Run the databaseInsertScript from `src/main/java/org/apollo/template/Database/databaseInsertScript.sql`
 
-Example Enum Entry:
-```java
-MENU("MenuView.fxml", MenuController.getInstance());
+to ensure that the system is installed correctly run all tests from 
+`src/test/java/org/apollo/template`
 
-```
-Note that the controller in this example is a singleton. 
+You have now sucessfuly setup the database. 
 
-## `ViewList` Class:
+### Setting up the system
+1. to run the system simply pull it from github, navigate to the branch `main` and run the program
 
-The `ViewList` class defines an enumeration of views along with their corresponding FXML file names and controllers.
+## dependency's 
+1. MSSQL (https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+  MSSQL is used as the database for the system. 
+2. JAVA SDK v. 21  or newer (https://jdk.java.net/21/)
+3. JDBC (https://mvnrepository.com/artifact/mysql/mysql-connector-java) 
+is used for interacting with the database from within the application
 
-- Each enum constant represents a specific view in the application.
-- The `FXML_FILE_NAME` field stores the name of the FXML file associated with the view.
-- The `CONTROLLER` field stores the controller instance associated with the view.
-- The constructor initializes the FXML file name and controller for each view.
-- Getters (`getFxmlFileName()` and `getController()`) provide access to the FXML file name and controller for a given view.
-- The `LOADER_LOCATION` constant specifies the location of FXML files within the project directory structure.
+### User Guide
 
-## `ViewLoader` Class:
+The Athena System consists of two parts: ad-hoc booking and the admin panel. The purpose of the 
+admin panel is to create an interface for managing bookings, rooms, and more.
+The ad-hoc part of the system is an information screen where the day's meetings 
+are presented and meetings can be booked for the same day.
 
-The `ViewLoader` class provides a method `loadView()` for loading JavaFX views from FXML files.
+#### Ad-hoc
+To create a meeting, press the "BOOK" button on the information screen, 
+then select a room and a time frame. Next, the user will be prompted to 
+provide some information relevant to the system. After this, the booking can be confirmed.
 
-- It utilizes the `FXMLLoader` class to load FXML files.
-- The `loadView()` method takes a `ViewList` enum constant as input, representing the view to be loaded.
-- Inside the method, the corresponding FXML file name and controller are retrieved from the `ViewList`.
-- A `FXMLLoader` instance is configured with the retrieved controller and FXML file location.
-- The method attempts to load the FXML file using the `FXMLLoader` and returns the loaded JavaFX node (typically an `AnchorPane`).
-- In case of an `IOException`, an error message is logged, and the method returns `null`.
+If you wish to delete your booking, select the "DELETE BOOKING" button, 
+then the user must enter the email under which the booking was made and select 
+the meeting to be deleted.
 
-### Summary:
+#### Admin
+The admin panel has various functionalities. These can be divided into two sections.
 
-These classes work together to provide a convenient way to load JavaFX views from FXML files in the application. The `ViewList` enum centralizes the definitions of views and their associated resources, while the `ViewLoader` class encapsulates the loading logic, allowing for easy retrieval of JavaFX nodes representing views. Additionally, debug messages are logged to provide insight into the loading process, aiding in debugging and troubleshooting.
+##### System Administration
+The system administration section ensures that relevant classes, 
+rooms, and information are always accurate. Therefore, the system includes
+several different tabs that an admin can navigate to in order to ensure this.
 
-## Alerts
-
-**Note:** Alerts are still under development and may undergo changes.
-
-When creating a new alert, you need to provide the following arguments:
-
-- **Duration:** The duration (in seconds) for which the alert will be visible on the screen.
-- **Alert Image:** The image on which the alert text will be displayed. Supported alert images include:
-    - AlertType.Error
-    - AlertType.INFO
-    - AlertType.Success
-- **message:** the message as a String, with /n as new line. if newLine char is not used, this will end up with the scaling being wrong. 
-
-```JAVA
-// remember to import the class. 
-// ex. 
-
-import org.apollo.template.Service.Alert.Alert;
-
-public void onBtnError() {
-  new Alert(3, AlertType.ERROR, "This is a test of Error \n The test is to show of this Alert component \n Alert component").start();
-}
-
-``` 
+##### Admin Booking
+Admin booking is an extension of ad-hoc booking, which allows for booking a room 
+for multiple days at a time, booking rooms in the future, and deleting bookings.

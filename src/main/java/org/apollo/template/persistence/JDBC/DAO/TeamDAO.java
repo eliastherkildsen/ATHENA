@@ -150,6 +150,6 @@ public class TeamDAO implements DAO<Team> {
                 }
             }
         }
-        return List.of();
+        return teams;
     }
 }

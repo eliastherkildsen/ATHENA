@@ -1,9 +1,10 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Booking;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.Booking;
 import org.apollo.template.Service.Utility.TimeUtils;
 import org.apollo.template.View.BorderPaneRegion;
@@ -60,8 +61,7 @@ public class BookingCompleteController implements Subscriber, Initializable {
      */
     @FXML
     protected void onButton_Back(){
-        //TODO: make this return the user to booked roomes view.
-        MainController.getInstance().setView(ViewList.SYSTEMCHOSE, BorderPaneRegion.CENTER);
+        MainController.getInstance().setView(ViewList.INFOSCREEN, BorderPaneRegion.CENTER);
     }
 
 }

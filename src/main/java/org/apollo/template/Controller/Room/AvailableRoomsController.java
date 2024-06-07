@@ -1,4 +1,4 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Room;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,8 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.Booking;
-import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
@@ -46,7 +46,6 @@ public class AvailableRoomsController implements Initializable {
         // inserts available rooms into custom components and adds these components to the view
         insertComponents(roomsAvailableToday, dateToday);
     }
-
 
     /**
      * Method for inserting available rooms into custom components and adding them to the view.
@@ -84,7 +83,6 @@ public class AvailableRoomsController implements Initializable {
         }
     }
 
-
     /**
      * This method handles if no rooms available for booking today's date and prompts a message to user
      * @param dateToday the today's date
@@ -119,6 +117,7 @@ public class AvailableRoomsController implements Initializable {
 
                 // create booking information object
                 booking.setRoom(availableRoom);
+                booking.setAdHoc(true);
                 LoggerMessage.info(this, "bookingInformation created");
 
 

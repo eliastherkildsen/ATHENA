@@ -1,11 +1,10 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Room;
 
-import com.sun.tools.javac.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.MeetingType;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Model.RoomType;
@@ -41,7 +40,7 @@ public class EditRoomController implements Initializable, Subscriber {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Method for making sure that only Integers can be entered in the text fields
         TextFieldInputValidation.attatchIntegerValidation(textField_MaxCapacity, textField_Floor);
-
+        // Subscribes to the messages broker
         MessagesBroker.getInstance().subscribe(this, MessagesBrokerTopic.ROOM_INFORMATION);
         loadRoomTypesCB();
 
@@ -69,7 +68,7 @@ public class EditRoomController implements Initializable, Subscriber {
         // Updates the room with the new information
         DAO<Room> dao = new RoomDAO();
         dao.update(room);
-
+        // Sets the view to Available rooms
         MainController.getInstance().setView(ViewList.AVAILABLEROOMS, BorderPaneRegion.CENTER);
 
         new Alert(MainController.getInstance(), 5, AlertType.INFO, "The room has been updated.")
@@ -85,9 +84,9 @@ public class EditRoomController implements Initializable, Subscriber {
      * Method for populating the room type choice box
      */
     private void loadRoomTypesCB(){
-
+        // Clears all elements from the Choice box
         choiceBox_RoomType.getItems().clear();
-
+        // Inserts the found elements into the Choice box
         choiceBox_RoomType.getItems().addAll(GetAllRoomTypeNames.getAllRoomTypeNames());
 
     }

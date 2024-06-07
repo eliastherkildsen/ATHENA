@@ -22,7 +22,8 @@ public class AdminLoginController {
      */
     @FXML
     private void onButtonLoginAction(){
-        MainController.getInstance().setView(ViewList.VIEWERRORREPORT, BorderPaneRegion.CENTER);
+        MainController.getInstance().setView(ViewList.ADMINVIEWBOOKINGS, BorderPaneRegion.CENTER);
+        MainController.getInstance().setView(ViewList.ADMINMENU, BorderPaneRegion.LEFT);
     }
 
 
