@@ -427,7 +427,4 @@ BEGIN
                 OR (tbl_booking.fld_startTime < @endTime AND tbl_booking.fld_endTime > @endTime)
                 OR (tbl_booking.fld_startTime < @startTime AND tbl_booking.fld_endTime > @startTime))
         );
-END;
-GO
-
-
+END

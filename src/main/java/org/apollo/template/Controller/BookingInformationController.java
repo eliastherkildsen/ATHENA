@@ -180,7 +180,5 @@ public class BookingInformationController implements Initializable, Subscriber {
         booking.getEmail().setEmailID(GetEmailIDByEmailAdress.getEmailIDByEmailName(email));
         return booking;
     }
-
     // endregion
-
 }

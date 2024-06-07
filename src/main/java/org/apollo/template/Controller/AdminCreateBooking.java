@@ -362,17 +362,6 @@ public class AdminCreateBooking implements Initializable {
         return comboBoxHours;
     }
 
-    //TODO NOT USED DELETE OR USE
-    private static HBox GenerateHBox (ArrayList<Node> controls){
-        HBox hBox = new HBox();
-        for (Node control : controls) {
-            hBox.getChildren().add(control);
-        }
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setSpacing(10);
-        return hBox;
-    }
-
     /**
      * DataPickerSetCell formats a datapicker so that dates before newDate gets disabled.
      * @param datePickerStart datePicker
