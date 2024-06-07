@@ -4,6 +4,7 @@ import javafx.scene.layout.VBox;
 import org.apollo.template.Model.Booking;
 import org.apollo.template.Model.MeetingType;
 import org.apollo.template.Model.Room;
+import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.UI.BookingComp;
 import org.apollo.template.View.UI.CompColors;
 import org.apollo.template.View.UI.ReservedRoomsVBox;
@@ -45,6 +46,7 @@ public class LoadBookedRooms {
             booking.setEndTime(endTime);
 
             bookingList.add(booking);
+            LoggerMessage.debug("LoadBookedRooms","Booking Found ID : " + booking.getBookingID());
         }
 
         // Creating our Component using the list of information we generated above.

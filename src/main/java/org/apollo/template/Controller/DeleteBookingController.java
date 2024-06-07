@@ -7,6 +7,7 @@ import org.apollo.template.Model.*;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.EmailValidator;
+import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.Service.Utility.BookingSelectionListner;
 import org.apollo.template.Service.Utility.LoadBookedRooms;
 import org.apollo.template.View.BorderPaneRegion;
@@ -72,6 +73,7 @@ public class DeleteBookingController implements BookingSelectionListner {
         // load booked rooms by email
         try {
             LoadBookedRooms.loadBookedRooms(loadBookedRoomsByEmail(email), vbox_booking, bookingCompList, this);
+            LoggerMessage.debug(this,"Bookings Tied to email: " + bookingCompList.size());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -165,7 +165,7 @@ BEGIN
     FROM tbl_booking
              INNER JOIN tbl_userEmail ON tbl_booking.fld_userID = tbl_userEmail.fld_userID
              INNER JOIN tbl_room ON tbl_booking.fld_roomID = tbl_room.fld_roomID
-             INNER JOIN tbl_meetingType on tbl_booking.fld_bookingID = tbl_meetingType.fld_meetingTypeID
+             INNER JOIN tbl_meetingType on tbl_booking.fld_meetingTypeID = tbl_meetingType.fld_meetingTypeID
 
     WHERE
         tbl_userEmail.fld_userEmail = @EmailAddress;
