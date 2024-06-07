@@ -17,7 +17,6 @@ import java.util.List;
 
 public class LoadBookedRooms {
 
-
     public static void loadBookedRooms(ResultSet rs, VBox vbox_booking, List<BookingComp> bookingCompList, BookingSelectionListner listner) throws SQLException {
         List<Booking> bookingList = new ArrayList<>();
         while (rs.next()){

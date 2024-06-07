@@ -1,6 +1,7 @@
 package org.apollo.template.Controller.Booking;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import org.apollo.template.Controller.MainController;
@@ -33,6 +34,8 @@ public class DeleteBookingController implements BookingSelectionListner {
 
     private List<BookingComp> bookingCompList = new ArrayList<>();
     private int selectedBookingID = -1;
+
+    private VBox vBox_sPaneBox;
 
     // region buttons.
     @FXML
@@ -71,6 +74,10 @@ public class DeleteBookingController implements BookingSelectionListner {
 
         // load booked rooms by email
         try {
+            ScrollPane sPane = new ScrollPane(vBox_sPaneBox);
+            sPane.getStyleClass().add("custom-scroll-pane");
+            sPane.setFitToWidth(true);
+            vbox_booking.getChildren().add(sPane);
             LoadBookedRooms.loadBookedRooms(loadBookedRoomsByEmail(email), vbox_booking, bookingCompList, this);
             LoggerMessage.debug(this,"Bookings Tied to email: " + bookingCompList.size());
         } catch (SQLException e) {
