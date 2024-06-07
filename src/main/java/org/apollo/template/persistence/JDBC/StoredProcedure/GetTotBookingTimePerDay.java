@@ -14,17 +14,20 @@ public class GetTotBookingTimePerDay {
 
     /**
      * This method retrieves the total booking time per day for a given room and date using a stored procedure
-     * @param roomID the roomID for a selected room
-     * @param startDate the start date from which to retrieve total booking time per day
+     *
+     * @param roomID      the roomID for a selected room
+     * @param startDate   the start date from which to retrieve total booking time per day
      * @param currentDate today's date
      * @return a List af Koordinates objects containing date and total booking time
      */
-    public static List<Koordinates> getTotalBookingDay(int roomID, Date startDate, Date currentDate){
+    public static List<Koordinates> getTotalBookingDay(int roomID, Date startDate, Date currentDate) {
 
+        // establishing preparedStatement
+        PreparedStatement ps = null;
         List<Koordinates> results = new ArrayList<>();
 
         try {
-            PreparedStatement ps = JDBC.get().getConnection().prepareStatement("EXECUTE getTotalBookingTimePerDay @roomID = ? , @startDate = ?, @endDate = ?");
+            ps = JDBC.get().getConnection().prepareStatement("EXECUTE getTotalBookingTimePerDay @roomID = ? , @startDate = ?, @endDate = ?");
             ps.setInt(1, roomID);
             ps.setDate(2, startDate);
             ps.setDate(3, currentDate);
@@ -43,9 +46,18 @@ public class GetTotBookingTimePerDay {
             return results;
 
         } catch (SQLException e) {
-            LoggerMessage.error("GetTotBookingTimePerBok", "Stored Procedure: getTotalBookingTimePerBooking didn't run as intended\n" + e.getMessage() + " " + e.getSQLState());
-            throw new RuntimeException(e);
+            LoggerMessage.error("GetTotBookingTimePerBok", "Stored Procedure: getTotalBookingTimePerBooking didn't run as intended\n" + e.getMessage());
+            // closing prepared statement
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                LoggerMessage.error("GetTotBookingTimerPerDay", "Stored Procedure: an error encountered while closing ps" + e.getMessage());
+            }
         }
+        return results;
     }
-
 }
+
