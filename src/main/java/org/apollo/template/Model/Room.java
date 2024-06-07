@@ -1,5 +1,7 @@
 package org.apollo.template.Model;
 
+import java.util.Objects;
+
 public class Room {
     private int roomID;
     private int roomMaxPersonCount;
@@ -96,5 +98,24 @@ public class Room {
     @Override
     public String toString() {
         return "sal. " + floor + " lok " + roomName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Room room = (Room) o;
+        return roomID == room.roomID;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roomID);
     }
 }

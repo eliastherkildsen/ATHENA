@@ -23,7 +23,8 @@ public class ReservedRoomsVBox extends VBox {
 
         if (bookingList == null || bookingList.isEmpty()){
 
-            LoggerMessage.warning(this,"Booking Array Cannot be NULL");
+            LoggerMessage.warning(this,"Booking Array Cannot be NULL or without Booking objects");
+            LoggerMessage.debug(this,"Size of List: " + bookingList.size());
 
         } else {
 

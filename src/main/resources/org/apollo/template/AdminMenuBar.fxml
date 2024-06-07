@@ -18,7 +18,8 @@
                </font></Label>
             <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onButton_Booking" text="Booking" />
+                   <Button layoutX="108.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButton_GenerateBooking" prefWidth="200.0" text="Opret Booking" />
+                   <Button mnemonicParsing="false" onAction="#onButton_Booking" text="Booking" />
                   <Button mnemonicParsing="false" onAction="#onButton_Statistics" text="Statistik" />
                </children>
             </VBox>

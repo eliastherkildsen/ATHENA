@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class Booking {
 
+    boolean adHoc;
     private int bookingID = -1;
     private Time startTime;
     private Time endTime;
@@ -98,6 +99,14 @@ public class Booking {
 
     public Email getEmail() {
         return email;
+    }
+
+    public boolean isAdHoc() {
+        return adHoc;
+    }
+
+    public void setAdHoc(boolean adHoc) {
+        this.adHoc = adHoc;
     }
 
     @Override
