@@ -121,10 +121,18 @@ public class ChooseTimeController implements Initializable, Subscriber {
         // On action for time selected buttons
         button_Start.setOnAction(event -> {
             startBool = true;
+            if (endBool) {
+                endBool = false;
+                button_End.setStyle("-fx-font-weight: normal; -fx-font-size: 18");
+            }
             button_Start.setStyle("-fx-font-weight: bold; -fx-font-size: 18");
         });
         button_End.setOnAction(event -> {
             endBool = true;
+            if (startBool) {
+                startBool = false;
+                button_Start.setStyle("-fx-font-weight: normal; -fx-font-size: 18");
+            }
             button_End.setStyle("-fx-font-weight: bold; -fx-font-size: 18");
         });
     }
