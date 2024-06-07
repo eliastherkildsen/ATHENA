@@ -52,6 +52,16 @@
 }
 
 
+.chart-bar {
+    -fx-bar-fill: #FBBB2C;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+
+
 /* Root VBox */
 .rootVbox {
     -fx-background-color: background;

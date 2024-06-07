@@ -1,14 +1,11 @@
 package org.apollo.template.Controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -16,16 +13,14 @@ import org.apollo.template.Model.Room;
 import org.apollo.template.Model.Statistics.*;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
-import org.apollo.template.View.UI.AlertComp;
+import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.UI.CompColors;
 import org.apollo.template.View.UI.RoomComp;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class StatisticsController implements Initializable {
@@ -49,10 +44,12 @@ public class StatisticsController implements Initializable {
         loadRoomVbox();
         loadAreaChoiceB();
         loadPeriodChoiceB();
-
     }
 
 
+    /**
+     * This method loads the area choise box
+     */
     private void loadAreaChoiceB() {
 
         choiceBox_statisticArea.getItems().addAll("Booket tid");
@@ -60,6 +57,9 @@ public class StatisticsController implements Initializable {
     }
 
 
+    /**
+     * This method loads the period choise box
+     */
     private void loadPeriodChoiceB() {
 
         choiceBox_statisticPeriod.getItems().addAll("I dag", "Sidste 7 dage", "Sidste måned");
@@ -67,48 +67,11 @@ public class StatisticsController implements Initializable {
     }
 
 
-    private StatisticsArea areaSelection(){
-
-        int indexChosen = choiceBox_statisticArea.getSelectionModel().getSelectedIndex();
-        StatisticsArea statisticsArea = null;
-
-        if (indexChosen == 0) {
-            statisticsArea = StatisticsArea.BOOKINGS;
-        }
-
-        return statisticsArea;
-    }
-
-
-    private int periodSelection(){
-        int indexChosen = choiceBox_statisticPeriod.getSelectionModel().getSelectedIndex();
-        int periodDays = 0;
-
-        switch (indexChosen){
-
-            // today
-            case 0:
-                periodDays = 1;
-                break;
-
-            // last 7 days
-            case 1:
-                periodDays = 7;
-                break;
-
-            // last month
-            case 2:
-                periodDays = 31;
-                break;
-        }
-
-        return periodDays;
-    }
-
-
-
-
-
+    /**
+     * Loads room components into the VBox, clearing it first to avoid duplicates.
+     * Creates a RoomComp for each room from the database, adds event handlers to handle selections,
+     * and displays the corresponding graph when a room is selected.
+     */
     private void loadRoomVbox() {
 
         // clearing vbox to avoid replica data.
@@ -138,35 +101,60 @@ public class StatisticsController implements Initializable {
                     // settinge the selected room
                     selectedRoom = room;
 
-
-                    if (choiceBox_statisticArea.getSelectionModel().getSelectedItem() == null
-                        || choiceBox_statisticPeriod.getSelectionModel().getSelectedItem() == null){
-
-                        new Alert(MainController.getInstance(), 5, AlertType.INFO, "Husk at vælge statistikområde og statistikperiode").start();
-
-                    } else {
-                        // clear barChart
-                        barChart_statistics.getData().clear();
-
-                        int roomID = selectedRoom.getRoomID();
-                        String statisticArea = choiceBox_statisticArea.getSelectionModel().getSelectedItem().toString();
-                        String statisticStrategy = choiceBox_statisticPeriod.getSelectionModel().getSelectedItem().toString();
-
-
-                        createGraph(roomID, statisticArea,statisticStrategy);
-                    }
-
+                    // this method creates and shows the barChart
+                    showGraph();
                 }
             });
-
         }
 
         // adding roomcomponents to vbox_room
         vbox_room.getChildren().addAll(roomComps);
-
     }
 
-    private void createGraph(int roomID, String statisticArea, String statisticStrategy) {
+
+    /**
+     * Method for displaying a graph based on the selected statistic area, statistic period and roomID
+     * If no statistic area or statistic period is selected, it prompts the user to select them.
+     */
+    private void showGraph() {
+
+            // checks if statistic area and statistic period is selected - if not
+            if (choiceBox_statisticArea.getSelectionModel().getSelectedIndex() == -1
+                || choiceBox_statisticPeriod.getSelectionModel().getSelectedIndex() == -1){
+
+                new Alert(MainController.getInstance(), 5, AlertType.INFO, "Husk at vælge statistikområde og statistikperiode").start();
+                LoggerMessage.info(this, "Need to select a statistic area and/or statistic period");
+
+            // if selected
+            } else {
+
+                LoggerMessage.info(this, "All information is selected");
+
+                // clear barChart
+                barChart_statistics.getData().clear();
+
+                try {
+                    int roomID = selectedRoom.getRoomID();
+                    String statisticArea = choiceBox_statisticArea.getSelectionModel().getSelectedItem().toString();
+                    String statisticStrategy = choiceBox_statisticPeriod.getSelectionModel().getSelectedItem().toString();
+
+                    createStatObj(roomID, statisticArea, statisticStrategy);
+                    LoggerMessage.info(this, "Succeeded to create graph");
+
+                } catch (Exception e){
+                    LoggerMessage.error(this, "Failed to create graph");
+                }
+            }
+    }
+
+
+    /**
+     * This method creates a StatObj based on the specified room ID, statistic area, and statistic strategy.
+     * @param roomID the roomID for a selected room
+     * @param statisticArea the area of statistics
+     * @param statisticStrategy the strategy (time period) that should be used to generate the object
+     */
+    private void createStatObj(int roomID, String statisticArea, String statisticStrategy) {
 
         TimeContext timeContext = new TimeContext();
 
@@ -185,18 +173,32 @@ public class StatisticsController implements Initializable {
                     timeContext.setStrategy(new MonthStrategy());
                     break;
             }
+            LoggerMessage.info(this, "Strategi: " + statisticStrategy);
         }
 
         StatObj statObj = timeContext.generateObj(StatisticsArea.BOOKINGS, roomID);
-
-        barChart_statistics.getXAxis().setLabel(statObj.getxNotation());
-        barChart_statistics.getYAxis().setLabel(statObj.getyNotation());
-        barChart_statistics.setTitle(statObj.getGraphTitle());
-        barChart_statistics.setData(statObj.getChartData());
-
+        generateBarChart(statObj);
     }
 
 
+    /**
+     * Method for generating the barChart using a StatObj
+     * @param statObj a StatObj that contains the variables needed to create a barChart
+     */
+    private void generateBarChart(StatObj statObj) {
+
+        try {
+            // generates the barChart
+            barChart_statistics.getXAxis().setLabel(statObj.getxNotation());
+            barChart_statistics.getYAxis().setLabel(statObj.getyNotation());
+            barChart_statistics.setTitle(statObj.getGraphTitle());
+            barChart_statistics.setData(statObj.getChartData());
+
+        } catch (Exception e) {
+            LoggerMessage.error(this, "an error occurred: could not generate bar chart " + e.getMessage());
+        }
+
+    }
 
 
     /**
