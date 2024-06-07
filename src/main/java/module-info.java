@@ -16,4 +16,6 @@ module org.apollo.template {
     opens org.apollo.template.Controller to javafx.fxml;
     exports org.apollo.template.Controller.InventoryItems;
     opens org.apollo.template.Controller.InventoryItems to javafx.fxml;
+    exports org.apollo.template.Controller.Team;
+    opens org.apollo.template.Controller.Team to javafx.fxml;
 }

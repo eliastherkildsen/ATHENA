@@ -34,6 +34,9 @@ public class AdminMenuController {
     @FXML
     protected void onButton_item() { MainController.getInstance().setView(ViewList.INVENTORYITEMS, BorderPaneRegion.CENTER); }
 
+    @FXML
+    protected void onButton_team() { MainController.getInstance().setView(ViewList.TEAMVIEW, BorderPaneRegion.CENTER); }
+
 
 
 

@@ -48,6 +48,7 @@
                   <Button mnemonicParsing="false" onAction="#onButton_Room" text="Lokaler" />
                   <Button mnemonicParsing="false" text="Afdelinger" />
                   <Button layoutX="107.0" layoutY="97.0" mnemonicParsing="false" onAction="#onButton_item" text="Emner" />
+                  <Button layoutX="122.0" layoutY="140.0" mnemonicParsing="false" onAction="#onButton_team" text="Hold" />
                </children>
                <opaqueInsets>
                   <Insets />

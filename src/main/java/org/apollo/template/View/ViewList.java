@@ -53,6 +53,14 @@ public enum ViewList {
     CREATEINVENTORYITEMS("CreateInventoryItemView.fxml"),
 
     EDITINVENTORYITEMS("EditInventoryItemView.fxml"),
+    /**
+     * Team view
+     */
+    TEAMVIEW("teamView.fxml"),
+    /**
+     * Create team view
+     */
+    CREATETEAMVIEW("CreateTeam.fxml"),
 
     LOGIN("AdminLoginView.fxml"),
 
