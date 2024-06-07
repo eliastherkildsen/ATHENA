@@ -1,6 +1,6 @@
 package org.apollo.template.Service;
 
-import org.apollo.template.Model.BookingInformation;
+import org.apollo.template.Model.Booking;
 import org.apollo.template.Service.Logger.LoggerMessage;
 
 import java.io.BufferedWriter;
@@ -20,14 +20,14 @@ import java.util.List;
  */
 public class GenerateCSV {
     String csvFilePath = "data.csv";
-    List<BookingInformation> bookingList = new ArrayList<>();
+    List<Booking> bookingList = new ArrayList<>();
 
     /**
      * Generates a CSV file with predetermined values from List with BookingInformation objects
-     * @param bookingInformationList object
+     * @param bookingList object
      */
-    public GenerateCSV(List<BookingInformation> bookingInformationList){
-        bookingList.addAll(bookingInformationList);
+    public GenerateCSV(List<Booking> bookingList){
+        bookingList.addAll(bookingList);
         generateCSVFile();
     }
 
@@ -47,15 +47,15 @@ public class GenerateCSV {
             bufferedWriter.append("Date,RoomName,NumberOfParticipants,UserName,startTime,endTime");
             bufferedWriter.newLine();
 
-            for (BookingInformation bi : bookingList) {
-                LoggerMessage.debug(this, "Writing INFO :" + bi.getBookingId());
+            for (Booking bi : bookingList) {
+                LoggerMessage.debug(this, "Writing INFO :" + bi.getBookingID());
                 bufferedWriter.append(bi.getDate().toString()); // Assuming getDate returns a date in the correct format
                 bufferedWriter.append(",");
                 bufferedWriter.append(bi.getRoom().getRoomName());
                 bufferedWriter.append(",");
                 bufferedWriter.append(String.valueOf(bi.getNumberOfParticipants()));
                 bufferedWriter.append(",");
-                bufferedWriter.append(bi.getUserName());
+                bufferedWriter.append(bi.getUsername());
                 bufferedWriter.append(",");
                 bufferedWriter.append(bi.getStartTime().toString()); // Assuming getStartTime returns a time in the correct format
                 bufferedWriter.append(",");

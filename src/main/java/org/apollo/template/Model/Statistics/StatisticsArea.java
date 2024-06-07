@@ -1,0 +1,6 @@
+package org.apollo.template.Model.Statistics;
+
+public enum StatisticsArea {
+
+    BOOKINGS;
+}

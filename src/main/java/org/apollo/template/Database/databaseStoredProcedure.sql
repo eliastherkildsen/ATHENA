@@ -288,3 +288,74 @@ BEGIN
         fld_roomTypeName = @RoomTypeName
 END;
 GO
+
+
+-- Stored procedure to find total booking time in minutes per booking in a given room
+CREATE PROCEDURE getTotalBookingTimePerBooking(@roomID int, @date Date)
+AS
+BEGIN
+
+    SELECT
+
+        fld_bookingID,
+
+        -- Calculates total booking time per booking
+        SUM(DATEDIFF(MINUTE, fld_startTime, fld_endTime)) AS total_booking_time
+
+
+    FROM
+        tbl_booking
+
+    WHERE
+        fld_roomID = @roomID
+      AND fld_date = @date
+
+    -- Groups the results by bookingID so each bookingID only appears once (with the the total booking time)
+    GROUP BY
+        fld_bookingID
+    -- Orders the results by bookingID
+    ORDER BY
+        fld_bookingID
+
+END;
+GO
+
+
+-- Stored procedure to find total booking time in minutes per day in a given room
+CREATE PROCEDURE getTotalBookingTimePerDay(@roomID INT, @startDate DATE, @endDate DATE)
+
+AS
+BEGIN
+    -- Generates all dates in the DateRange (from startDate - endDate)
+    WITH DateRange AS (
+
+        SELECT @startDate AS fld_date
+
+        -- Combines all SELECT results
+        UNION ALL
+
+        -- Adds one day to fld_date
+        SELECT DATEADD(DAY, 1, fld_date)
+
+        FROM DateRange
+
+        -- Ensures that we only continue adding dates as long as the new date (after adding one day) is less than or equal to @endDate
+        WHERE DATEADD(DAY, 1, fld_date) <= @endDate
+    )
+
+    SELECT
+        -- Takes a date, sums the total booking time (minutes) for that day in the selected room - 0 if no booking
+        DateRange.fld_date,
+        ISNULL(SUM(DATEDIFF(MINUTE, tbl_booking.fld_startTime, tbl_booking.fld_endTime)), 0) AS total_booking_time
+
+    FROM
+        -- Joins DateRange with tbl_booking, filtering by room ID
+        DateRange
+            LEFT JOIN tbl_booking ON DateRange.fld_date = tbl_booking.fld_date AND tbl_booking.fld_roomID = @roomID
+
+    GROUP BY
+        DateRange.fld_date
+    ORDER BY
+        DateRange.fld_date;
+END;
+GO

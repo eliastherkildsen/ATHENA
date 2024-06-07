@@ -70,8 +70,7 @@ public class BookingCompleteController implements Subscriber, Initializable {
      */
     @FXML
     protected void onButton_Back(){
-        //TODO: make this return the user to booked roomes view.
-        MainController.getInstance().setView(ViewList.SYSTEMCHOSE, BorderPaneRegion.CENTER);
+        MainController.getInstance().setView(ViewList.INFOSCREEN, BorderPaneRegion.CENTER);
     }
 
 }

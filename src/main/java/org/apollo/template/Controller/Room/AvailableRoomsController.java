@@ -27,7 +27,6 @@ import java.util.ResourceBundle;
 
 public class AvailableRoomsController implements Initializable {
 
-    //TODO: remember temporarily button in HomeController
 
     @FXML
     private VBox vbox_Listview;
