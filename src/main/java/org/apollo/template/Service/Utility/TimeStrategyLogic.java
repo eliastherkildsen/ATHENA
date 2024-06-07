@@ -6,6 +6,7 @@ import javafx.scene.chart.XYChart;
 import org.apollo.template.Model.Statistics.Koordinates;
 import org.apollo.template.Model.Statistics.StatObj;
 import org.apollo.template.Model.Statistics.StatisticsArea;
+import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetTotBookingTimePerBok;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetTotBookingTimePerDay;
 import java.sql.Date;

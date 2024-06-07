@@ -1,10 +1,9 @@
 package org.apollo.template.Model.Statistics;
 
+import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.Service.Utility.TimeStrategyLogic;
 import java.sql.Date;
 import java.time.LocalDate;
-
-// TODO: LOGMESSAGES
 
 
 public class MonthStrategy implements TimeStrategy{
@@ -24,9 +23,11 @@ public class MonthStrategy implements TimeStrategy{
 
         // gets today's date
         LocalDate currentDate = TimeStrategyLogic.getInstance().currentDate();
+        LoggerMessage.debug(this, "Current Date: " + LocalDate.now());
+
         // calculates the start date based on today's date given the number of days used in this strategy
         Date startDate = Date.valueOf(TimeStrategyLogic.getInstance().startDate(currentDate, FINAL_DAYS_MONTH));
-
+        LoggerMessage.debug(this, "Start Date: " + startDate);
 
         return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAYS_MONTH, startDate, Date.valueOf(currentDate), statisticsArea, roomID);
     }

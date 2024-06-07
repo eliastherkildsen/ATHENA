@@ -1,10 +1,9 @@
 package org.apollo.template.Model.Statistics;
 
+import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.Service.Utility.TimeStrategyLogic;
 import java.sql.Date;
 import java.time.LocalDate;
-
-// TODO: LOGMESSAGES
 
 
 public class DayStrategy implements TimeStrategy{
@@ -24,6 +23,7 @@ public class DayStrategy implements TimeStrategy{
 
         // gets today's date
         LocalDate currentDate = TimeStrategyLogic.getInstance().currentDate();
+        LoggerMessage.debug(this, "Current Date: " + LocalDate.now());
 
         // start- and end date is the same - that's why 2 x currentDate
         return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAY, Date.valueOf(currentDate), Date.valueOf(currentDate), statisticsArea, roomID);
