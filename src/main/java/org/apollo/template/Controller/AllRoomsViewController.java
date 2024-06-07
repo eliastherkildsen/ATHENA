@@ -37,7 +37,7 @@ public class AllRoomsViewController implements Initializable {
         for (Room room : roomList) {
             listView_RoomList.getItems().add(room);
         }
-
+        // Sets a on Mouse click event, so that when an element is selected the variable is updated
         listView_RoomList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -65,7 +65,7 @@ public class AllRoomsViewController implements Initializable {
         room.setRoomID(selectedRoomID);
 
         MainController.getInstance().setView(ViewList.EDITROOM, BorderPaneRegion.CENTER);
-
+        // Updates the room object
         MessagesBroker.getInstance().publish(MessagesBrokerTopic.ROOM_INFORMATION, room);
 
     }

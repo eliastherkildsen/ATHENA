@@ -131,25 +131,36 @@ public class ChooseTimeController implements Initializable, Subscriber {
      * Method for handling all the logic for the buttons being able to select and switch the chosen times
      * @param selectedTime The time selected by the user
      */
-    private void handleTimeSelection(String selectedTime){
-
+    private void handleTimeSelection(String selectedTime) {
+        // Check if the time is a start time
         if (startBool) {
+            // Check if the selected start time is after or equal to the current end time
+            if (!button_End.getText().isEmpty() && !isEarlier(selectedTime, button_End.getText())) {
+                // Display an error message
+                new Alert(MainController.getInstance(), 5, AlertType.ERROR, "Start time cannot be after or equal to end time.").start();
+                return;
+            }
             button_Start.setText(selectedTime);
             button_Start.setStyle("-fx-font-weight: normal; -fx-font-size: 18");
         }
-
+        // Checks if the time is an end time
         if (endBool) {
+            // Check if the selected end time is before or equal to the current start time
+            if (!button_Start.getText().isEmpty() && !isEarlier(button_Start.getText(), selectedTime)) {
+                // Display an error message
+                new Alert(MainController.getInstance(), 5, AlertType.ERROR, "End time cannot be before or equal to start time.").start();
+                return;
+            }
             button_End.setText(selectedTime);
             button_End.setStyle("-fx-font-weight: normal; -fx-font-size: 18");
         }
 
-        LocalTime selectedLocalTime = LocalTime.parse(selectedTime);
         // All cases where both labels are not filled
-        if (button_Start.getText().isEmpty() && (!startBool || !endBool)){
+        if (button_Start.getText().isEmpty() && (!startBool || !endBool)) {
             button_Start.setText(selectedTime);
 
-        } else if (button_End.getText().isEmpty()){
-            if (isEarlier(button_Start.getText(), selectedTime)){
+        } else if (button_End.getText().isEmpty()) {
+            if (isEarlier(button_Start.getText(), selectedTime)) {
                 button_End.setText(selectedTime);
 
             } else {
@@ -174,7 +185,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
 
         for (int i = 0; i < numberOfTimes; i++) {
-            times.add(startTime.plusMinutes(i * institutionInterval).format(formatter));
+            times.add(startTime.plusMinutes((long) i * institutionInterval).format(formatter));
         }
 
         return times;
@@ -250,7 +261,7 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
         for (Button button : buttonList) {
             LocalTime buttonTime = LocalTime.parse(button.getText(), formatter);
-            if (!buttonTime.isBefore(start) && buttonTime.isAfter(end) && button.isDisabled()) {
+            if (!buttonTime.isBefore(start) && !buttonTime.isAfter(end) && button.isDisabled()) {
                 return true;
             }
         }
@@ -276,7 +287,6 @@ public class ChooseTimeController implements Initializable, Subscriber {
         }catch (SQLException e){
             LoggerMessage.error(this, "Error in setRoomNameLabel: \n" + e.getMessage());
         }
-
     }
 
 
@@ -298,16 +308,12 @@ public class ChooseTimeController implements Initializable, Subscriber {
         startTime += ":00";
         endTime += ":00";
 
-        // creating bookingInformation obj.
-        // TODO needs to check if time has been selected.
+        // Sets the start- and endtime of the booking object
         booking.setStartTime(Time.valueOf(startTime));
         booking.setEndTime(Time.valueOf(endTime));
-
+        // Sets the date of the booking object
         LocalDate currentDate = LocalDate.now();
         booking.setDate(Date.valueOf(currentDate).toLocalDate());
-
-        System.out.println(booking.getStartTime() + " : " + booking.getEndTime());
-
 
         // changing view
         MainController.getInstance().setView(ViewList.BOOKINGINFO, BorderPaneRegion.CENTER);
