@@ -1,8 +1,9 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Booking;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.*;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
@@ -12,8 +13,6 @@ import org.apollo.template.Service.Utility.BookingSelectionListner;
 import org.apollo.template.Service.Utility.LoadBookedRooms;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.BookingComp;
-import org.apollo.template.View.UI.CompColors;
-import org.apollo.template.View.UI.ReservedRoomsVBox;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.BookingInformationDAO;
 import org.apollo.template.persistence.JDBC.DAO.DAO;

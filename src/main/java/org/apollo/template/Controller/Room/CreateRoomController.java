@@ -1,9 +1,10 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Room;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Model.RoomType;
 import org.apollo.template.Service.Alert.Alert;

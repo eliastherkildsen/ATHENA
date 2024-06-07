@@ -1,8 +1,9 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Booking;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;

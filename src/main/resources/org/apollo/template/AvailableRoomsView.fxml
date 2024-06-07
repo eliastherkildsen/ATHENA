@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.AvailableRoomsController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.apollo.template.Controller.Room.AvailableRoomsController">
    <children>
       <VBox fx:id="vbox_listDD" maxHeight="400.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

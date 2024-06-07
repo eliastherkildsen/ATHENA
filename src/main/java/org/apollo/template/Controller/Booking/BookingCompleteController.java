@@ -1,9 +1,10 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Booking;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.Booking;
 import org.apollo.template.Service.Utility.TimeUtils;
 import org.apollo.template.View.BorderPaneRegion;

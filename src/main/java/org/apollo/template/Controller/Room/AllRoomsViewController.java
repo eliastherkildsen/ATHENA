@@ -1,10 +1,11 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Room;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
