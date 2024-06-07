@@ -43,13 +43,6 @@ public class ErrorReportComp extends DefualtComponent {
 
 
     // region getter & setters
-    public CompColors getCompColors() {
-        return super.getCompColor();
-    }
-
-    public void setCompColors(CompColors compColors) {
-        super.setCompColor(compColors);
-    }
 
     public ErrorReport getERROR_REPORT() {
         return ERROR_REPORT;

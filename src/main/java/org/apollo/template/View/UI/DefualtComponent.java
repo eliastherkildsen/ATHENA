@@ -27,7 +27,6 @@ public abstract class DefualtComponent extends HBox {
         label.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, FONT_SIZE));
         LoggerMessage.debug(this, "styled lable: " + label);
     }
-
     /**
      * Method for stylinge a Hbox
      * @param hbox Hbox
@@ -43,11 +42,11 @@ public abstract class DefualtComponent extends HBox {
 
     }
 
-    protected CompColors getCompColor() {
+    public CompColors getCompColor() {
         return compColors;
     }
 
-    protected void setCompColor(CompColors compColors) {
+    public void setCompColor(CompColors compColors) {
         this.compColors = compColors;
         this.setStyle("-fx-background-color: " + compColors.getColor() + "; -fx-background-radius: 40;");
     }

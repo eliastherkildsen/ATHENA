@@ -31,13 +31,5 @@ public class RoomComp extends DefualtComponent{
         return room;
     }
 
-    public CompColors getCompColors() {
-        return super.getCompColor();
-    }
-
-    public void setCompColors(CompColors compColors) {
-        super.setCompColor(compColors);
-    }
-
     // endregion
 }

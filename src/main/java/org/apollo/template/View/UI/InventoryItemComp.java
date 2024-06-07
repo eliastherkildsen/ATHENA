@@ -34,14 +34,6 @@ public class InventoryItemComp extends DefualtComponent{
         return inventoryItems;
     }
 
-    public CompColors getCompColors() {
-        return super.getCompColor();
-    }
-
-    public void setCompColors(CompColors compColors) {
-        super.setCompColor(compColors);
-    }
-
     // endregion
 
 

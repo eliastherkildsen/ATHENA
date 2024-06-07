@@ -61,7 +61,7 @@ public class TeamController implements Initializable {
                     unselectTeamComps();
                     // selecting the clicked component
                     selectedTeam = teamComp;
-                    teamComp.setCompColors(CompColors.SELECTED);
+                    teamComp.setCompColor(CompColors.SELECTED);
                 }
             });
             // adding the teamComp to list for later iterations.
@@ -81,7 +81,7 @@ public class TeamController implements Initializable {
      */
     private void unselectTeamComps() {
         for (TeamComp teamComp : teamList){
-            teamComp.setCompColors(CompColors.NORMAL);
+            teamComp.setCompColor(CompColors.NORMAL);
         }
     }
 
