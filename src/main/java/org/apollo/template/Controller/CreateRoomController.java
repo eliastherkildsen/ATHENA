@@ -67,7 +67,7 @@ public class CreateRoomController implements Initializable {
         DAO<Room> dao = new RoomDAO();
         dao.add(room);
 
-        MainController.getInstance().setView(ViewList.AVAILABLEROOMS, BorderPaneRegion.CENTER);
+        MainController.getInstance().setView(ViewList.ALLROOMS, BorderPaneRegion.CENTER);
 
         new Alert(MainController.getInstance(), 5, AlertType.INFO, "New room has been created.")
                 .start();
