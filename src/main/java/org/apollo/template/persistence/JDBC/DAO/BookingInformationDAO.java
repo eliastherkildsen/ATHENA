@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO KILL ME I AM A MONSTER
+//TODO REMOVE ALL USAGE FIRST OBVIOUSLY
+//TODO PROBABLY MAKE THEM USE BOOKINGDAO IDK
 public class BookingInformationDAO implements DAO<BookingInformation> {
 
     // JDBC Connection

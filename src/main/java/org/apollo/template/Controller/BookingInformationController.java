@@ -6,7 +6,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import org.apollo.template.Model.Booking;
-import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Model.Email;
 import org.apollo.template.Model.MeetingType;
 import org.apollo.template.Service.Alert.Alert;
@@ -17,17 +16,16 @@ import org.apollo.template.Service.TextFieldInputValidation;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.BookingDAO;
-import org.apollo.template.persistence.JDBC.DAO.BookingInformationDAO;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 import org.apollo.template.persistence.JDBC.DAO.MeetingTypeDAO;
 import org.apollo.template.persistence.JDBC.StoredProcedure.AddEmailIfNotExists;
 import org.apollo.template.persistence.JDBC.StoredProcedure.GetEmailIDByEmailAdress;
-import org.apollo.template.persistence.JDBC.StoredProcedure.GetMeetingTypeIDByMeetingType;
 import org.apollo.template.persistence.PubSub.MessagesBroker;
 import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
 import org.apollo.template.persistence.PubSub.Subscriber;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class BookingInformationController implements Initializable, Subscriber {
@@ -41,12 +39,14 @@ public class BookingInformationController implements Initializable, Subscriber {
     @FXML
     private ChoiceBox<MeetingType> choiceBox_meetingType;
     private Booking booking;
+    private List<Booking> bookingList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         // subscribing to messages broker
         MessagesBroker.getInstance().subscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
+        MessagesBroker.getInstance().subscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION_BATCH);
 
         // atatching input validation to textfield
         TextFieldInputValidation.attatchIntegerValidation(textfield_numberOfParticipants);
@@ -78,6 +78,19 @@ public class BookingInformationController implements Initializable, Subscriber {
         // validates that o is an instance of booking
         if (o instanceof Booking) {
             this.booking = (Booking) o;
+        }
+
+        // validates that o is an instance of a list then that it's a list with booking objects.
+        if (o instanceof List<?>) {
+            List<?> tempList = (List<?>) o;
+            if (!tempList.isEmpty() && tempList.get(0) instanceof Booking) {
+                this.bookingList = (List<Booking>) o;
+                this.booking = (Booking) tempList.get(0);
+            }
+        }
+
+        if (booking.getNumberOfParticipants() > 0);{
+            textfield_numberOfParticipants.setText(String.valueOf(booking.getNumberOfParticipants()));
         }
 
     }
@@ -126,20 +139,38 @@ public class BookingInformationController implements Initializable, Subscriber {
         // converting textfield_numberOfParticipants to int.
         int numberOfParticipants = Integer.valueOf(textfield_numberOfParticipants.getText());
 
-        // create bookingInformation obj.
+        if (!booking.isAdHoc()){
+            for (Booking bookingListObject : bookingList) {
+                bookingListObject = generateBooking(bookingListObject, email, numberOfParticipants);
+                DAO<Booking> bookingDAO = new BookingDAO();
+                bookingDAO.add(bookingListObject);
+            }
+            MainController.getInstance().setView(ViewList.ADMINCREATEBOOKING, BorderPaneRegion.CENTER);
+            new Alert(MainController.getInstance(), 8, AlertType.SUCCESS, "SUCCES! \nDin Booking er nu registeret!").start();
+            LoggerMessage.trace(this, "Example of Booking \n" + booking);
+            MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION_BATCH, booking);
+
+        } else {
+            // create bookingInformation obj.
+            booking = generateBooking(booking, email, numberOfParticipants);
+            DAO<Booking> bookingDAO = new BookingDAO();
+            bookingDAO.add(booking);
+
+            LoggerMessage.debug(this, "Insertet new booking: " + booking.toString());
+
+            // sending the user to booking complite view.
+            MainController.getInstance().setView(ViewList.BOOKINGCOMPLITE, BorderPaneRegion.CENTER);
+            // publish bookingInformation obj.
+            MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
+        }
+
+    }
+
+    private Booking generateBooking (Booking booking, Email email, int numberOfParticipants){
         booking.setUsername(textField_name.getText());
         booking.setEmail(email);
         booking.setNumberOfParticipants(numberOfParticipants);
         booking.setMeetingType(choiceBox_meetingType.getSelectionModel().getSelectedItem());
-
-
-        // Check if adhoc
-        //if (booking.getAdhocBool()) {
-        //    // Sets the department to adhoc
-        //    booking.setDepartmentID(2);
-        //    // Sets the team to anonymous
-        //    booking.setTeamId(2);
-        //}
 
         // Inserts the meetingTypeID
         MeetingType meetingType = choiceBox_meetingType.getSelectionModel().getSelectedItem();
@@ -148,21 +179,7 @@ public class BookingInformationController implements Initializable, Subscriber {
 
         // Inserts the userID
         booking.getEmail().setEmailID(GetEmailIDByEmailAdress.getEmailIDByEmailName(email));
-
-        DAO<Booking> bookingDAO = new BookingDAO();
-        bookingDAO.add(booking);
-
-        LoggerMessage.debug(this, "Insertet new booking: " + booking.toString());
-
-        // sending the user to booking complite view.
-        MainController.getInstance().setView(ViewList.BOOKINGCOMPLITE, BorderPaneRegion.CENTER);
-
-        // publish bookingInformation obj.
-        MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
-
-
+        return booking;
     }
-
     // endregion
-
 }

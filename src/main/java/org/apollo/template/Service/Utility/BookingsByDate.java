@@ -64,9 +64,10 @@ public class BookingsByDate {
         sPane.getStyleClass().add("custom-scroll-pane");
         sPane.setStyle("-fx-background-color: rgba(0, 159, 227, 0);");
 
-
-        if(bookingList != null){
-            //Populate the ScrollPane with my Bookings.
+        //Populate the ScrollPane with my Bookings.
+        if(bookingList == null) {
+            LoggerMessage.info(BookingsByDate.class,"No bookings found. List Empty");
+        } else {
             ReservedRoomsVBox vboxRooms = new ReservedRoomsVBox(bookingList);
             sPane.setContent(vboxRooms);
         }

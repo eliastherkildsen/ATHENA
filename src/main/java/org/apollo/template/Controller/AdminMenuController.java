@@ -7,6 +7,11 @@ import org.apollo.template.View.ViewList;
 public class AdminMenuController {
 
     @FXML
+    protected void onButton_GenerateBooking(){
+        MainController.getInstance().setView(ViewList.ADMINCREATEBOOKING, BorderPaneRegion.CENTER);
+    }
+
+    @FXML
     protected void onButton_errorReport(){
         MainController.getInstance().setView(ViewList.CREATEERRORREPORT, BorderPaneRegion.CENTER);
     }

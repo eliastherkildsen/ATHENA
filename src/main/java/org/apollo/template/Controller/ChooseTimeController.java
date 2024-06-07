@@ -18,6 +18,7 @@ import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.PubSub.MessagesBroker;
 import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
 import org.apollo.template.persistence.PubSub.Subscriber;
+import org.jetbrains.annotations.Debug;
 
 import java.net.URL;
 import java.sql.*;
@@ -56,7 +57,8 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
         MessagesBroker.getInstance().subscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
 
-        System.out.println("initialized");
+
+        LoggerMessage.info(this,"Initialized");
 
     }
 
