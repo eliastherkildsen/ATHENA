@@ -1,5 +1,6 @@
 package org.apollo.template.Controller.Booking;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -53,7 +54,15 @@ public class BookingCompleteController implements Subscriber, Initializable {
             label_meetingType.setText(booking.getMeetingType().getMeetingTypeName());
             label_meetingDate.setText(booking.getDate().toString());
 
+            // unsubscribing to messages broker
+            Platform.runLater(this::unsub);
+
         }
+    }
+
+    private void unsub(){
+        // unsubscribing to messages broker
+        MessagesBroker.getInstance().unSubscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
     }
 
     /**

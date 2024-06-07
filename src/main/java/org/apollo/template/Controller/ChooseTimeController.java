@@ -1,5 +1,6 @@
 package org.apollo.template.Controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -56,10 +57,11 @@ public class ChooseTimeController implements Initializable, Subscriber {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         MessagesBroker.getInstance().subscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
-
-
         LoggerMessage.info(this,"Initialized");
+    }
 
+    public ChooseTimeController() {
+        LoggerMessage.debug(this, "Constructor");
     }
 
     /**
@@ -328,14 +330,22 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
     @Override
     public void update(Object o) {
-
         // validates that the object is of instance bookingInformation
         if (o instanceof Booking) {
             this.booking = (Booking) o;
-
             setRoomNameLabel();
             setOnActionForStartAndEnd();
             generateScrollableGridWithButtons();
+            LoggerMessage.trace(this,"Booking Obj : " + booking.toString());
+
+            Platform.runLater(this::unsub);
+
         }
     }
+
+    private void unsub(){
+        // unsubscribing to messages broker
+        MessagesBroker.getInstance().unSubscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
+    }
+
 }

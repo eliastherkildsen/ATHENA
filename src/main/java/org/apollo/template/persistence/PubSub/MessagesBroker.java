@@ -19,7 +19,7 @@ public class MessagesBroker {
      * @param subscriber Subscriber
      * @param topic MessagesBrokerTopic
      */
-    public void subscribe(Subscriber subscriber, MessagesBrokerTopic topic){
+    public synchronized void subscribe(Subscriber subscriber, MessagesBrokerTopic topic){
         // creating pair.
         Pair<MessagesBrokerTopic, Subscriber> pair = new Pair<MessagesBrokerTopic, Subscriber>(topic, subscriber);
 
@@ -39,20 +39,20 @@ public class MessagesBroker {
      * @param subscriber Subscriber
      * @param topic MessagesBrokerTopic
      */
-    public void unSubscribe(Subscriber subscriber, MessagesBrokerTopic topic){
+    public synchronized void unSubscribe(Subscriber subscriber, MessagesBrokerTopic topic){
         // creating pair.
-        Pair<Subscriber, MessagesBrokerTopic> pair = new Pair<Subscriber, MessagesBrokerTopic>(subscriber, topic);
+        Pair<MessagesBrokerTopic, Subscriber> pair = new Pair<MessagesBrokerTopic, Subscriber>(topic,subscriber);
 
         // check if the subscriber is subscribed
         if (!subscriberList.contains(pair)){
-            LoggerMessage.info(this, "The subscriber: " + subscriber +
+            LoggerMessage.warning(this, "The subscriber: " + subscriber +
                     " Does not subscribe to this topic: " + topic);
             return;
         }
 
         // removing the pair from subscriberList
         subscriberList.remove(pair);
-        LoggerMessage.info(this, "Removed pair: " + pair + " from subscriberList");
+        LoggerMessage.warning(this, "Removed pair: " + pair + " from subscriberList");
 
     }
     /**
@@ -60,13 +60,13 @@ public class MessagesBroker {
      * @param topic MessagesBrokerTopic
      * @param messages String
      */
-    public void publish(MessagesBrokerTopic topic, Object messages){
+    public synchronized void publish(MessagesBrokerTopic topic, Object messages){
 
         // looping through all pairs in subscriberList
         for (Pair<MessagesBrokerTopic, Subscriber> pair : subscriberList){
-
-            if (topic == pair.getKey()){
-
+        LoggerMessage.debug(this,pair.getKey() + " - " + pair.getValue());
+            if (topic.equals(pair.getKey())){
+                LoggerMessage.trace(this, "Object : " + messages.toString());
                 pair.getValue().update(messages);
 
             }
@@ -74,7 +74,7 @@ public class MessagesBroker {
     }
 
 
-    public static MessagesBroker getInstance(){
+    public synchronized static MessagesBroker getInstance(){
         if (instance == null){
             instance = new MessagesBroker();
         }

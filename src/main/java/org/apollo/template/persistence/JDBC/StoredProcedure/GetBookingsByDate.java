@@ -68,7 +68,7 @@ public class GetBookingsByDate {
             throw new RuntimeException(e);
         }
 
-        return null;
+        return bookingList;
     }
 
 

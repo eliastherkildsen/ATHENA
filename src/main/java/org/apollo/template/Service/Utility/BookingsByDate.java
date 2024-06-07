@@ -35,8 +35,13 @@ public class BookingsByDate {
         root.setLeftAnchor(mainVbox, 0.0);
         root.setBottomAnchor(mainVbox, 0.0);
 
+        LoggerMessage.debug("BookingsByDate", "Before ");
+
         bookingList = GetBookingsByDate.getBookingsByDate(dateToday);
         scrollPaneGenerator(bookingList);
+
+        LoggerMessage.debug("BookingsByDate", "after ");
+
 
         //If we got something from our stored Procedure we'll display that to the user.
         if (!bookingList.isEmpty()) {

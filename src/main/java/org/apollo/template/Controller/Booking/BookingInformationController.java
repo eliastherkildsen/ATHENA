@@ -1,5 +1,6 @@
 package org.apollo.template.Controller.Booking;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -87,6 +88,8 @@ public class BookingInformationController implements Initializable, Subscriber {
             if (!tempList.isEmpty() && tempList.get(0) instanceof Booking) {
                 this.bookingList = (List<Booking>) o;
                 this.booking = (Booking) tempList.get(0);
+
+                Platform.runLater(this::unsub);
             }
         }
 
@@ -94,6 +97,11 @@ public class BookingInformationController implements Initializable, Subscriber {
             textfield_numberOfParticipants.setText(String.valueOf(booking.getNumberOfParticipants()));
         }
 
+    }
+
+    private void unsub(){
+        // unsubscribing to messages broker
+        MessagesBroker.getInstance().unSubscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
     }
 
 
