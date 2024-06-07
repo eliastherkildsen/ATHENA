@@ -2,6 +2,7 @@ package org.apollo.template.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import org.apollo.template.Model.BookingInformation;
 import org.apollo.template.Service.Alert.Alert;
@@ -31,14 +32,22 @@ public class AdminDeleteBookingController implements Initializable, BookingSelec
     private List<BookingComp> bookingComps = new ArrayList<>();
     private int selectedBookingID = -1;
 
+    private VBox vBox_sPaneBox;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         Date date = Date.valueOf(LocalDate.now());
 
+        ScrollPane sPane = new ScrollPane(vBox_sPaneBox);
+        sPane.getStyleClass().add("custom-scroll-pane");
+        sPane.setFitToWidth(true);
+        vbox_booking.getChildren().add(sPane);
+
+
         try {
             // Loads all bookings from today and going forward
-            LoadBookedRooms.loadBookedRooms(GetBookingsByDate.loadBookedRoomsReturnRS(date), vbox_booking, bookingComps, this);
+            LoadBookedRooms.loadBookedRooms(GetBookingsByDate.loadBookedRoomsReturnRS(date), vBox_sPaneBox, bookingComps, this);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
