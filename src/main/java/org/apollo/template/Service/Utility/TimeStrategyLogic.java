@@ -13,7 +13,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
-// TODO: LOGMESSAGES
 
 public class TimeStrategyLogic {
 
@@ -60,6 +59,8 @@ public class TimeStrategyLogic {
      * @return a StatObj that contains the variables needed to create a barChart
      */
     public StatObj generateStatObj(int numberOfDays, Date startDate, Date currentDate, StatisticsArea statisticsArea, int roomID){
+
+        LoggerMessage.debug("TimeStrategyLogic", String.format("StatisticArea: %s - Start date: %s - Current date: %s",statisticsArea,startDate,currentDate));
 
         String xNotation = null;
         String yNotation = null;
@@ -135,7 +136,11 @@ public class TimeStrategyLogic {
 
         ObservableList<XYChart.Series<String, Number>> chartData = null;
 
+        try {
             chartData = getBookingTimeStatistics(numberOfDays, startDate, currentDate, roomID);
+        } catch (Exception e){
+            LoggerMessage.error("TimeStrategyLogic", "an error occurred getting chart data " + e.getMessage());
+        }
 
         return chartData;
     }
