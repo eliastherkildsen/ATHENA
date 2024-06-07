@@ -54,7 +54,7 @@ public class ItemsController implements Initializable {
 
                    unselectAllComponents();
                    // select this comp
-                   inventoryItemComp.setCompColors(CompColors.SELECTED);
+                   inventoryItemComp.setCompColor(CompColors.SELECTED);
                    selectedItem = item;
 
                 }
@@ -72,7 +72,7 @@ public class ItemsController implements Initializable {
 
     private void unselectAllComponents() {
         for (InventoryItemComp item : items) {
-            item.setCompColors(CompColors.NORMAL);
+            item.setCompColor(CompColors.NORMAL);
         }
     }
 
