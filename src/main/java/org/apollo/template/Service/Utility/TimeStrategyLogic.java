@@ -49,6 +49,15 @@ public class TimeStrategyLogic {
     }
 
 
+    /**
+     * This method generates a StatObj for a selected room within a given strategy period to be used in a bar chart
+     * @param numberOfDays number of days used in the strategy
+     * @param startDate the start date from which to retrieve total booking time per day
+     * @param currentDate today's date
+     * @param statisticsArea the strategy (time period) that should be used to generate the object
+     * @param roomID the roomID for a selected room
+     * @return a StatObj that contains the variables needed to create a barChart
+     */
     public StatObj generateStatObj(int numberOfDays, Date startDate, Date currentDate, StatisticsArea statisticsArea, int roomID){
 
         String xNotation = null;
@@ -65,7 +74,11 @@ public class TimeStrategyLogic {
     }
 
 
-
+    /**
+     * This method retrieves the bar chart's x-axis notation based on the strategy (time period)
+     * @param numberOfDays number of days used in the strategy
+     * @return the x-axis notation to be used in the bar chart
+     */
     private String getXNotation(int numberOfDays) {
 
         String xNotation = null;
@@ -77,6 +90,11 @@ public class TimeStrategyLogic {
     }
 
 
+    /**
+     * This method retrieves the bar chart's y-axis notation based on the strategy (time period)
+     * @param numberOfDays number of days used in the strategy
+     * @return the y-axis notation to be used in the bar chart
+     */
     private String getYNotation(int numberOfDays) {
 
         String yNotation = null;
@@ -88,6 +106,11 @@ public class TimeStrategyLogic {
     }
 
 
+    /**
+     * This method retrieves the bar chart's graph title notation based on the strategy (time period)
+     * @param numberOfDays number of days used in the strategy
+     * @return the graph title notation to be used in the bar chart
+     */
     private String getGraphTitle(int numberOfDays) {
 
         String graphTitle = null;
@@ -99,6 +122,14 @@ public class TimeStrategyLogic {
     }
 
 
+    /**
+     * Method that retrieves all the char data information for a selected room within a given strategy period to be used in a bar chart
+     * @param numberOfDays number of days used in the strategy
+     * @param startDate the start date from which to retrieve total booking time per day
+     * @param currentDate today's date
+     * @param roomID the roomID for a selected room
+     * @return an ObservableList of XYChart.Series containing the chart data
+     */
     private ObservableList<XYChart.Series<String, Number>> getCharData(int numberOfDays, Date startDate, Date currentDate, int roomID) {
 
         ObservableList<XYChart.Series<String, Number>> chartData = null;
@@ -109,6 +140,14 @@ public class TimeStrategyLogic {
     }
 
 
+    /**
+     * This method retrieves the booking time statistics for a selected room within a given strategy period
+     * @param numberOfDays number of days used in the strategy
+     * @param startDate the start date from which to retrieve total booking time per day
+     * @param currentDate today's date
+     * @param roomID the roomID for a selected room
+     * @return an ObservableList of XYChart.Series containing the chart data with booking time statistics
+     */
     private ObservableList<XYChart.Series<String, Number>> getBookingTimeStatistics(int numberOfDays, Date startDate, Date currentDate, int roomID) {
 
         ObservableList<XYChart.Series<String, Number>> chartData = null;
@@ -127,6 +166,11 @@ public class TimeStrategyLogic {
     }
 
 
+    /**
+     * Method for building an ObservableList of XYChart.Series from a list of coordinates
+     * @param koordinates the list of coordinates used to create the chart series
+     * @return an ObservableList of XYChart.Series containing the chart data
+     */
     private ObservableList<XYChart.Series<String, Number>> buildObsList(List<Koordinates> koordinates) {
 
         XYChart.Series<String, Number> seriesDay = createSerie(koordinates);
@@ -137,6 +181,11 @@ public class TimeStrategyLogic {
     }
 
 
+    /**
+     * Method for creating a XYChart.Series given a list of coordinates
+     * @param koordinates the list of coordinates used to create the chart series
+     * @return a XYChart.Series containing the coordinates
+     */
     private XYChart.Series<String, Number> createSerie(List<Koordinates> koordinates) {
 
         XYChart.Series<String, Number> seriesDay = new XYChart.Series<>();
