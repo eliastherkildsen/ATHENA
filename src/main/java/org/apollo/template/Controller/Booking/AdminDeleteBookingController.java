@@ -39,8 +39,9 @@ public class AdminDeleteBookingController implements Initializable, BookingSelec
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         Date date = Date.valueOf(LocalDate.now());
-
+        vBox_sPaneBox = new VBox();
         ScrollPane sPane = new ScrollPane(vBox_sPaneBox);
+        sPane.setMinHeight(550);
         sPane.getStyleClass().add("custom-scroll-pane");
         sPane.setFitToWidth(true);
         vbox_booking.getChildren().add(sPane);

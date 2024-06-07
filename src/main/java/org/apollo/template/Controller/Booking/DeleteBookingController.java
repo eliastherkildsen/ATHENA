@@ -1,6 +1,7 @@
 package org.apollo.template.Controller.Booking;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -18,13 +19,17 @@ import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.JDBC.DAO.BookingDAO;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 
+import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static org.apollo.template.persistence.JDBC.StoredProcedure.LoadbookedRoomsByEmail.loadBookedRoomsByEmail;
 
-public class DeleteBookingController implements BookingSelectionListner {
+public class DeleteBookingController implements Initializable, BookingSelectionListner {
 
     @FXML
     private TextField textField_email;
@@ -35,7 +40,17 @@ public class DeleteBookingController implements BookingSelectionListner {
     private List<BookingComp> bookingCompList = new ArrayList<>();
     private int selectedBookingID = -1;
 
+    private ScrollPane sPane;
     private VBox vBox_sPaneBox;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        vBox_sPaneBox = new VBox();
+        sPane = new ScrollPane(vBox_sPaneBox);
+        sPane.setMinHeight(550);
+        sPane.getStyleClass().add("custom-scroll-pane");
+        sPane.setFitToWidth(true);
+    }
 
     // region buttons.
     @FXML
@@ -74,11 +89,13 @@ public class DeleteBookingController implements BookingSelectionListner {
 
         // load booked rooms by email
         try {
-            ScrollPane sPane = new ScrollPane(vBox_sPaneBox);
-            sPane.getStyleClass().add("custom-scroll-pane");
-            sPane.setFitToWidth(true);
+//            ScrollPane sPane = new ScrollPane(vBox_sPaneBox);
+//            vBox_sPaneBox = new VBox();
+//            sPane.getStyleClass().add("custom-scroll-pane");
+//            sPane.setMinHeight(550);
+//            sPane.setFitToWidth(true);
             vbox_booking.getChildren().add(sPane);
-            LoadBookedRooms.loadBookedRooms(loadBookedRoomsByEmail(email), vbox_booking, bookingCompList, this);
+            LoadBookedRooms.loadBookedRooms(loadBookedRoomsByEmail(email), vBox_sPaneBox, bookingCompList, this);
             LoggerMessage.debug(this,"Bookings Tied to email: " + bookingCompList.size());
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -114,6 +131,7 @@ public class DeleteBookingController implements BookingSelectionListner {
         return true;
 
     }
+
 }
 
     // endregion
