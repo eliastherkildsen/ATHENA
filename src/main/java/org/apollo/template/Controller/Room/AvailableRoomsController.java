@@ -1,4 +1,4 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Room;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.Booking;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Service.Logger.LoggerMessage;

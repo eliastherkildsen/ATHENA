@@ -1,4 +1,4 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Booking;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,7 +9,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -17,23 +16,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.Booking;
-import org.apollo.template.Model.MeetingType;
 import org.apollo.template.Model.Room;
 import org.apollo.template.Model.RoomType;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
-import org.apollo.template.Service.Alert.Alertable;
 import org.apollo.template.Service.Logger.LoggerMessage;
 import org.apollo.template.View.BorderPaneRegion;
 import org.apollo.template.View.UI.AvailableComponent;
 import org.apollo.template.View.ViewList;
-import org.apollo.template.ViewLoader;
 import org.apollo.template.persistence.JDBC.DAO.RoomDAO;
 import org.apollo.template.persistence.PubSub.MessagesBroker;
 import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
-import org.jetbrains.annotations.Debug;
 
 import java.net.URL;
 import java.sql.*;
