@@ -54,7 +54,7 @@ public class TimeStrategyLogic {
      * @param numberOfDays number of days used in the strategy
      * @param startDate the start date from which to retrieve total booking time per day
      * @param currentDate today's date
-     * @param statisticsArea the strategy (time period) that should be used to generate the object
+     * @param statisticsArea the area of statistics to be generated
      * @param roomID the roomID for a selected room
      * @return a StatObj that contains the variables needed to create a barChart
      */
