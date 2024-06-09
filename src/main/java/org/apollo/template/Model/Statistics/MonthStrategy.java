@@ -14,7 +14,7 @@ public class MonthStrategy implements TimeStrategy{
 
     /**
      * This method generates a StatObj based on a specific strategy and its corresponding number of days and a roomID
-     * @param statisticsArea the strategy (time period) that should be used to generate the object
+     * @param statisticsArea the area of statistics to be generated
      * @param roomID the roomID for a selected room
      * @return a StatObj that contains the variables needed to create a barChart
      */
@@ -29,6 +29,7 @@ public class MonthStrategy implements TimeStrategy{
         Date startDate = Date.valueOf(TimeStrategyLogic.getInstance().startDate(currentDate, FINAL_DAYS_MONTH));
         LoggerMessage.debug(this, "Start Date: " + startDate);
 
+        // generates the StatObj using the TimeStrategyLogic
         return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAYS_MONTH, startDate, Date.valueOf(currentDate), statisticsArea, roomID);
     }
 }

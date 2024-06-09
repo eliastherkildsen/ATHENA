@@ -25,7 +25,8 @@ public class DayStrategy implements TimeStrategy{
         LocalDate currentDate = TimeStrategyLogic.getInstance().currentDate();
         LoggerMessage.debug(this, "Current Date: " + LocalDate.now());
 
-        // start- and end date is the same - that's why 2 x currentDate
+        // generates the StatObj using the TimeStrategyLogic
+        // NOTE: start- and end date is the same - that's why 2 x currentDate
         return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAY, Date.valueOf(currentDate), Date.valueOf(currentDate), statisticsArea, roomID);
     }
 
