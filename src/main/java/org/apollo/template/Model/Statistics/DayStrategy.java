@@ -19,7 +19,7 @@ public class DayStrategy implements TimeStrategy{
      * @return a StatObj that contains the variables needed to create a barChart
      */
     @Override
-    public StatObj generateObj(StatisticsArea statisticsArea, int roomID) {
+    public StatObj generateObj(StatisticsArea statisticsArea, int roomID, String roomName) {
 
         // gets today's date
         LocalDate currentDate = TimeStrategyLogic.getInstance().currentDate();
@@ -27,7 +27,7 @@ public class DayStrategy implements TimeStrategy{
 
         // generates the StatObj using the TimeStrategyLogic
         // NOTE: start- and end date is the same - that's why 2 x currentDate
-        return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAY, Date.valueOf(currentDate), Date.valueOf(currentDate), statisticsArea, roomID);
+        return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAY, Date.valueOf(currentDate), Date.valueOf(currentDate), statisticsArea, roomID, roomName);
     }
 
 }

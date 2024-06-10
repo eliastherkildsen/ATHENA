@@ -8,6 +8,6 @@ public interface TimeStrategy {
      * @param roomID the roomID for a selected room
      * @return a StatObj that contains the variables needed to create a barChart.
      */
-    StatObj generateObj(StatisticsArea statisticsArea, int roomID);
+    StatObj generateObj(StatisticsArea statisticsArea, int roomID, String roomName);
 
 }

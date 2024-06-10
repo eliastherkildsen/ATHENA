@@ -135,10 +135,11 @@ public class StatisticsController implements Initializable {
 
                 try {
                     int roomID = selectedRoom.getRoomID();
+                    String roomName = selectedRoom.getRoomName();
                     String statisticArea = choiceBox_statisticArea.getSelectionModel().getSelectedItem().toString();
                     String statisticStrategy = choiceBox_statisticPeriod.getSelectionModel().getSelectedItem().toString();
 
-                    createStatObj(roomID, statisticArea, statisticStrategy);
+                    createStatObj(roomID, roomName, statisticArea, statisticStrategy);
                     LoggerMessage.info(this, "Succeeded to create graph");
 
                 } catch (Exception e){
@@ -154,7 +155,7 @@ public class StatisticsController implements Initializable {
      * @param statisticArea the area of statistics
      * @param statisticStrategy the strategy (time period) that should be used to generate the object
      */
-    private void createStatObj(int roomID, String statisticArea, String statisticStrategy) {
+    private void createStatObj(int roomID, String roomName, String statisticArea, String statisticStrategy) {
 
         TimeContext timeContext = new TimeContext();
 
@@ -176,7 +177,7 @@ public class StatisticsController implements Initializable {
             LoggerMessage.info(this, "Strategi: " + statisticStrategy);
         }
 
-        StatObj statObj = timeContext.generateObj(StatisticsArea.BOOKINGS, roomID);
+        StatObj statObj = timeContext.generateObj(StatisticsArea.BOOKINGS, roomID, roomName);
         generateBarChart(statObj);
     }
 

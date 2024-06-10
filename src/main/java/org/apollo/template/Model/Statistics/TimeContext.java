@@ -19,11 +19,10 @@ public class TimeContext {
      * @param statisticsArea the area of statistics to be generated
      * @return a StatObj that contains the variables needed to create a barChart
      */
-    public StatObj generateObj(StatisticsArea statisticsArea, int roomID){
+    public StatObj generateObj(StatisticsArea statisticsArea, int roomID, String roomName){
         if (strategy == null){
             throw new IllegalStateException("Strategy is not set");
         }
-        return strategy.generateObj(statisticsArea, roomID);
+        return strategy.generateObj(statisticsArea, roomID, roomName);
     }
-
 }

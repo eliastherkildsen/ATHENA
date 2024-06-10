@@ -58,7 +58,7 @@ public class TimeStrategyLogic {
      * @param roomID the roomID for a selected room
      * @return a StatObj that contains the variables needed to create a barChart
      */
-    public StatObj generateStatObj(int numberOfDays, Date startDate, Date currentDate, StatisticsArea statisticsArea, int roomID){
+    public StatObj generateStatObj(int numberOfDays, Date startDate, Date currentDate, StatisticsArea statisticsArea, int roomID, String roomName){
 
         LoggerMessage.debug("TimeStrategyLogic", String.format("StatisticArea: %s - Start date: %s - Current date: %s",statisticsArea,startDate,currentDate));
 
@@ -69,7 +69,7 @@ public class TimeStrategyLogic {
 
             xNotation = getXNotation(numberOfDays);
             yNotation = getYNotation(numberOfDays);
-            graphTitle = getGraphTitle(numberOfDays);
+            graphTitle = getGraphTitle(numberOfDays, roomName);
             chartData = getCharData(numberOfDays, startDate, currentDate, roomID);
 
         return new StatObj(chartData, graphTitle, xNotation, yNotation);
@@ -113,12 +113,12 @@ public class TimeStrategyLogic {
      * @param numberOfDays number of days used in the strategy
      * @return the graph title notation to be used in the bar chart
      */
-    private String getGraphTitle(int numberOfDays) {
+    private String getGraphTitle(int numberOfDays, String roomName) {
 
         String graphTitle = null;
 
-            if (numberOfDays == 1) { graphTitle = "Bookingtid pr. booking"; }
-            if (numberOfDays == 7 || numberOfDays == 31) { graphTitle = "Summeret bookingtid pr. dag"; }
+            if (numberOfDays == 1) { graphTitle = String.format("Lok. %s:  Bookingtid pr. booking", roomName); }
+            if (numberOfDays == 7 || numberOfDays == 31) { graphTitle = String.format("Lok. %s:  Summeret bookingtid pr. dag", roomName); }
 
         return graphTitle;
     }

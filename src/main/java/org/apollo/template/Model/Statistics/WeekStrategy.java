@@ -19,7 +19,7 @@ public class WeekStrategy implements TimeStrategy{
      * @return a StatObj that contains the variables needed to create a barChart
      */
     @Override
-    public StatObj generateObj(StatisticsArea statisticsArea, int roomID) {
+    public StatObj generateObj(StatisticsArea statisticsArea, int roomID, String roomName) {
 
         // gets today's date
         LocalDate currentDate = TimeStrategyLogic.getInstance().currentDate();
@@ -30,6 +30,6 @@ public class WeekStrategy implements TimeStrategy{
         LoggerMessage.debug(this, "Start Date: " + startDate);
 
         // generates the StatObj using the TimeStrategyLogic
-        return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAYS_WEEK, startDate, Date.valueOf(currentDate), statisticsArea, roomID);
+        return TimeStrategyLogic.getInstance().generateStatObj(FINAL_DAYS_WEEK, startDate, Date.valueOf(currentDate), statisticsArea, roomID, roomName);
     }
 }
