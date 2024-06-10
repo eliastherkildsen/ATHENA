@@ -114,16 +114,15 @@ public class AvailableRoomsController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
 
-                // create booking information object
-                booking.setRoom(availableRoom);
-                booking.setAdHoc(true);
-                LoggerMessage.info(this, "bookingInformation created");
+                // create booking object
+                booking.setRoom(availableRoom).setAdHoc(true);
+                LoggerMessage.info(this, "Booking object created");
 
 
                 // sending the user to choose time view
                 MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);
 
-                // publish booking information object
+                // publish booking object
                 MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
             }
         });
