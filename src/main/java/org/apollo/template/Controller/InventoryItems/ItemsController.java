@@ -107,7 +107,11 @@ public class ItemsController implements Initializable {
         MainController.getInstance().setView(ViewList.EDITINVENTORYITEMS, BorderPaneRegion.CENTER);
 
         // publishing selected item
-        MessagesBroker.getInstance().publish(MessagesBrokerTopic.INVENTORY_ITEM, selectedItem);
+        try {
+            MessagesBroker.getInstance().publish(MessagesBrokerTopic.INVENTORY_ITEM, selectedItem);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

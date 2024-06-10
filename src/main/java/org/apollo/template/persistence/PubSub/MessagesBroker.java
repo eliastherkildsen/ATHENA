@@ -2,6 +2,9 @@ package org.apollo.template.persistence.PubSub;
 
 import javafx.util.Pair;
 import org.apollo.template.Service.Logger.LoggerMessage;
+
+import javax.lang.model.element.UnknownElementException;
+import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +42,7 @@ public class MessagesBroker {
      * @param subscriber Subscriber
      * @param topic MessagesBrokerTopic
      */
-    public synchronized void unSubscribe(Subscriber subscriber, MessagesBrokerTopic topic){
+    public synchronized void unSubscribe(Subscriber subscriber, MessagesBrokerTopic topic) throws Exception {
         // creating pair.
         Pair<MessagesBrokerTopic, Subscriber> pair = new Pair<MessagesBrokerTopic, Subscriber>(topic,subscriber);
 
@@ -47,7 +50,8 @@ public class MessagesBroker {
         if (!subscriberList.contains(pair)){
             LoggerMessage.warning(this, "The subscriber: " + subscriber +
                     " Does not subscribe to this topic: " + topic);
-            return;
+            throw new Exception("The subscriber: " + subscriber +
+                    " Does not subscribe to this topic: " + topic);
         }
 
         // removing the pair from subscriberList
@@ -60,7 +64,12 @@ public class MessagesBroker {
      * @param topic MessagesBrokerTopic
      * @param messages String
      */
-    public synchronized void publish(MessagesBrokerTopic topic, Object messages){
+    public synchronized void publish(MessagesBrokerTopic topic, Object messages) throws Exception {
+
+        // validating that the messages object is not null
+        if (messages == null){
+            throw new Exception();
+        }
 
         // looping through all pairs in subscriberList
         for (Pair<MessagesBrokerTopic, Subscriber> pair : subscriberList){
@@ -80,7 +89,9 @@ public class MessagesBroker {
         }
 
         return instance;
-
     }
 
+    public List<Pair<MessagesBrokerTopic, Subscriber>> getSubscriberList() {
+        return subscriberList;
+    }
 }

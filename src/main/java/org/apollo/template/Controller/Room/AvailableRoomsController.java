@@ -122,8 +122,12 @@ public class AvailableRoomsController implements Initializable {
                 // sending the user to choose time view
                 MainController.getInstance().setView(ViewList.CHOOSETIME, BorderPaneRegion.CENTER);
 
-                // publish booking object
-                MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
+                // publish booking information object
+                try {
+                    MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

@@ -101,7 +101,11 @@ public class BookingInformationController implements Initializable, Subscriber {
 
     private void unsub(){
         // unsubscribing to messages broker
-        MessagesBroker.getInstance().unSubscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
+        try {
+            MessagesBroker.getInstance().unSubscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -157,7 +161,11 @@ public class BookingInformationController implements Initializable, Subscriber {
             MainController.getInstance().setView(ViewList.ADMINCREATEBOOKING, BorderPaneRegion.CENTER);
             new Alert(MainController.getInstance(), 8, AlertType.SUCCESS, "SUCCES! \nDin Booking er nu registeret!").start();
             LoggerMessage.trace(this, "Example of Booking \n" + booking);
-            MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION_BATCH, booking);
+            try {
+                MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION_BATCH, booking);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
 
         } else {
             // create bookingInformation obj.
@@ -170,7 +178,11 @@ public class BookingInformationController implements Initializable, Subscriber {
             // sending the user to booking complite view.
             MainController.getInstance().setView(ViewList.BOOKINGCOMPLITE, BorderPaneRegion.CENTER);
             // publish bookingInformation obj.
-            MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
+            try {
+                MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }

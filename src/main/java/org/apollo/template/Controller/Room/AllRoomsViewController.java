@@ -76,7 +76,11 @@ public class AllRoomsViewController implements Initializable {
 
         MainController.getInstance().setView(ViewList.EDITROOM, BorderPaneRegion.CENTER);
         // Updates the room object
-        MessagesBroker.getInstance().publish(MessagesBrokerTopic.ROOM_INFORMATION, room);
+        try {
+            MessagesBroker.getInstance().publish(MessagesBrokerTopic.ROOM_INFORMATION, room);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

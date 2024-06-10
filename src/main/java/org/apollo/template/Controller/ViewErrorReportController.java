@@ -98,7 +98,11 @@ public class ViewErrorReportController implements Initializable {
         MainController.getInstance().setView(ViewList.ERRORREPORTEDIT, BorderPaneRegion.CENTER);
 
         // publish ErrorReport.
-        MessagesBroker.getInstance().publish(MessagesBrokerTopic.ERROR_REPORT, selectedErrorReportComp.getERROR_REPORT());
+        try {
+            MessagesBroker.getInstance().publish(MessagesBrokerTopic.ERROR_REPORT, selectedErrorReportComp.getERROR_REPORT());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

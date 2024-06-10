@@ -442,7 +442,11 @@ public class AdminCreateBooking implements Initializable {
                 debugAdminCreateBookingPrint();
 
                 MainController.getInstance().setView(ViewList.BOOKINGINFO, BorderPaneRegion.CENTER);
-                MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION_BATCH, bookingList);
+                try {
+                    MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION_BATCH, bookingList);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
 
             }
         });
