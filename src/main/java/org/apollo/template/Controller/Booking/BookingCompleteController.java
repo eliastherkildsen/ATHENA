@@ -62,7 +62,11 @@ public class BookingCompleteController implements Subscriber, Initializable {
 
     private void unsub(){
         // unsubscribing to messages broker
-        MessagesBroker.getInstance().unSubscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
+        try {
+            MessagesBroker.getInstance().unSubscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

@@ -117,7 +117,11 @@ public class TeamController implements Initializable {
         MainController.getInstance().setView(ViewList.EDITINVENTORYITEMS, BorderPaneRegion.CENTER);
 
         // publishing selected item
-        MessagesBroker.getInstance().publish(MessagesBrokerTopic.TEAM, selectedTeam);
+        try {
+            MessagesBroker.getInstance().publish(MessagesBrokerTopic.TEAM, selectedTeam);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

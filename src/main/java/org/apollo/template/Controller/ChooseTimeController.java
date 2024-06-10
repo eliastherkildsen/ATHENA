@@ -331,7 +331,11 @@ public class ChooseTimeController implements Initializable, Subscriber {
         MainController.getInstance().setView(ViewList.BOOKINGINFO, BorderPaneRegion.CENTER);
 
         // publishing changes
-        MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
+        try {
+            MessagesBroker.getInstance().publish(MessagesBrokerTopic.BOOKING_INFORMATION, booking);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
@@ -353,7 +357,11 @@ public class ChooseTimeController implements Initializable, Subscriber {
 
     private void unsub(){
         // unsubscribing to messages broker
-        MessagesBroker.getInstance().unSubscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
+        try {
+            MessagesBroker.getInstance().unSubscribe(this, MessagesBrokerTopic.BOOKING_INFORMATION);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
