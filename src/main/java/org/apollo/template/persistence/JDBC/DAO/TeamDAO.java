@@ -8,15 +8,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamDAO implements DAO<Team> {
-
-    Connection conn = JDBC.get().getConnection();
+public class TeamDAO extends DAOAbstract<Team> {
 
     @Override
     public void add(Team team) {
         PreparedStatement ps = null;
         try{
-            ps = conn.prepareStatement("INSERT INTO tbl_team (fld_teamName) values(?)");
+            ps = getCONN().prepareStatement("INSERT INTO tbl_team (fld_teamName) values(?)");
             ps.setString(1, team.getTeamName());
             ps.executeUpdate();
             LoggerMessage.info(this, "In add; added; " + team.getTeamName());
@@ -24,21 +22,15 @@ public class TeamDAO implements DAO<Team> {
         } catch (SQLException e){
             LoggerMessage.error(this,"In add; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In add; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
+            closeprePareStatement(ps);
             }
         }
-    }
 
     @Override
     public void delete(Team team) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("DELETE FROM tbl_team WHERE fld_teamID = ?");
+            ps = getCONN().prepareStatement("DELETE FROM tbl_team WHERE fld_teamID = ?");
             ps.setInt(1, team.getTeamId());
             ps.executeUpdate();
             LoggerMessage.info(this, "In delete; deleted; " + team.getTeamName());
@@ -46,13 +38,7 @@ public class TeamDAO implements DAO<Team> {
         } catch (SQLException e){
             LoggerMessage.error(this,"In delete; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In delete; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
         }
 
     }
@@ -61,7 +47,7 @@ public class TeamDAO implements DAO<Team> {
     public void update(Team team) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("UPDATE tbl_team SET fld_teamName = ? WHERE fld_teamID = ?");
+            ps = getCONN().prepareStatement("UPDATE tbl_team SET fld_teamName = ? WHERE fld_teamID = ?");
             ps.setString(1, team.getTeamName());
             ps.setInt(2, team.getTeamId());
             ps.executeUpdate();
@@ -70,13 +56,7 @@ public class TeamDAO implements DAO<Team> {
         } catch (SQLException e){
             LoggerMessage.error(this,"In update; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In update; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
         }
     }
 
@@ -86,7 +66,7 @@ public class TeamDAO implements DAO<Team> {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = conn.prepareStatement("SELECT * FROM tbl_team WHERE fld_teamID = ?");
+            ps = getCONN().prepareStatement("SELECT * FROM tbl_team WHERE fld_teamID = ?");
             ps.setInt(1, id);
 
             rs = ps.executeQuery();
@@ -100,20 +80,8 @@ public class TeamDAO implements DAO<Team> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In read; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In read; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In read; Error occurred during closing of ResultSet : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
+            closeResultSet(rs);
         }
         return team;
     }
@@ -124,7 +92,7 @@ public class TeamDAO implements DAO<Team> {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = conn.prepareStatement("SELECT * FROM tbl_team");
+            ps = getCONN().prepareStatement("SELECT * FROM tbl_team");
             rs = ps.executeQuery();
             while (rs.next()) {
                 Team team = new Team((rs.getInt("fld_teamID")), rs.getString("fld_teamName"));
@@ -135,20 +103,8 @@ public class TeamDAO implements DAO<Team> {
         } catch (SQLException e){
             LoggerMessage.error(this,"In readAll; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In readAll; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In readAll; Error occurred during closing of ResultSet : " + e.getMessage());
-                }
-            }
+            closeResultSet(rs);
+            closeprePareStatement(ps);
         }
         return teams;
     }

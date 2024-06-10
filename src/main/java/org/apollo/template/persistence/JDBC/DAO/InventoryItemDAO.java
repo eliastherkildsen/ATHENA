@@ -10,9 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryItemDAO implements DAO<InventoryItems> {
-
-    private Connection conn = JDBC.get().getConnection();
+public class InventoryItemDAO extends DAOAbstract<InventoryItems> {
 
     @Override
     public void add(InventoryItems inventoryItems) {
@@ -20,7 +18,7 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement("INSERT INTO tbl_inventory (fld_inventoryName, fld_inventoryDescription) VALUES (?, ?)");
+            ps = getCONN().prepareStatement("INSERT INTO tbl_inventory (fld_inventoryName, fld_inventoryDescription) VALUES (?, ?)");
             ps.setString(1, inventoryItems.getName());
             ps.setString(2, inventoryItems.getDescription());
             ps.executeUpdate();
@@ -40,10 +38,9 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement("DELETE FROM tbl_inventory WHERE fld_inventoryName = ?");
+            ps = getCONN().prepareStatement("DELETE FROM tbl_inventory WHERE fld_inventoryName = ?");
             ps.setString(1, inventoryItems.getName());
             ps.executeUpdate();
-            ps.close();
 
             LoggerMessage.info(this, "DELETED, " + inventoryItems.getName() + " FROM tbl_inventoryItem");
 
@@ -51,6 +48,8 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
         } catch (SQLException e) {
             LoggerMessage.error(this, "IN DELETE; an error occurred: " + e.getMessage());
             throw  new RuntimeException();
+        } finally {
+            closeprePareStatement(ps);
         }
     }
 
@@ -59,18 +58,18 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement("UPDATE tbl_inventory SET fld_inventoryName = ?, fld_inventoryDescription = ? WHERE fld_inventoryID = ?");
+            ps = getCONN().prepareStatement("UPDATE tbl_inventory SET fld_inventoryName = ?, fld_inventoryDescription = ? WHERE fld_inventoryID = ?");
             ps.setString(1, inventoryItems.getName());
             ps.setString(2, inventoryItems.getDescription());
             ps.setInt(3, inventoryItems.getId());
-            ps.executeUpdate();
-            ps.close();
 
             LoggerMessage.info(this, "UPDATE, " + inventoryItems.getName() + " FROM tbl_inventoryItem");
 
 
         } catch (SQLException e) {
             LoggerMessage.error(this, "IN UPDATE; an error occurred: " + e.getMessage());
+        } finally {
+            closeprePareStatement(ps);
         }
     }
 
@@ -81,7 +80,7 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
         ResultSet rs = null;
 
         try {
-            ps = conn.prepareStatement("SELECT * FROM tbl_inventory WHERE fld_inventoryID = ?");
+            ps = getCONN().prepareStatement("SELECT * FROM tbl_inventory WHERE fld_inventoryID = ?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
 
@@ -89,14 +88,14 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
             String inventoryName = rs.getString("fld_inventoryName");
             String inventoryDescription = rs.getString("fld_inventoryDescription");
 
-            ps.close();
-            rs.close();
-
             return new InventoryItems(inventoryID, inventoryName, inventoryDescription);
 
 
         } catch (SQLException e) {
             LoggerMessage.error(this, "IN READ; an error occurred: " + e.getMessage());
+        } finally {
+            closeResultSet(rs);
+            closeprePareStatement(ps);
         }
 
         return null;
@@ -111,7 +110,7 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
         List<InventoryItems> inventoryItemsList = new ArrayList<>();
 
         try {
-            ps = conn.prepareStatement("SELECT * FROM tbl_inventory");
+            ps = getCONN().prepareStatement("SELECT * FROM tbl_inventory");
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -122,11 +121,12 @@ public class InventoryItemDAO implements DAO<InventoryItems> {
                 inventoryItemsList.add(new InventoryItems(inventoryID, inventoryName, inventoryDescription));
 
             }
-            ps.close();
-            rs.close();
 
         } catch (SQLException e) {
             LoggerMessage.error(this, "IN READALL; an error occurred: " + e.getMessage());
+        } finally {
+            closeResultSet(rs);
+            closeprePareStatement(ps);
         }
 
         return inventoryItemsList;

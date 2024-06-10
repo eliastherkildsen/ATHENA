@@ -1,22 +1,18 @@
 package org.apollo.template.persistence.JDBC.DAO;
 
-import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.*;
 import org.apollo.template.Service.Logger.LoggerMessage;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookingDAO implements DAO<Booking> {
-
-    private Connection conn = JDBC.get().getConnection();
+public class BookingDAO extends DAOAbstract<Booking> {
 
     @Override
     public void add(Booking booking) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("INSERT INTO tbl_booking (" +
+            ps = getCONN().prepareStatement("INSERT INTO tbl_booking (" +
                     "fld_startTime, " +
                     "fld_endTime, " +
                     "fld_date, " +
@@ -47,13 +43,7 @@ public class BookingDAO implements DAO<Booking> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In add; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In add; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
         }
     }
 
@@ -61,7 +51,7 @@ public class BookingDAO implements DAO<Booking> {
     public void delete(Booking booking) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("DELETE FROM tbl_booking WHERE fld_bookingID = ?");
+            ps = getCONN().prepareStatement("DELETE FROM tbl_booking WHERE fld_bookingID = ?");
             ps.setInt(1, booking.getBookingID());
             ps.executeUpdate();
             LoggerMessage.info(this, "In delete; deleted; " + booking.getBookingID());
@@ -69,13 +59,7 @@ public class BookingDAO implements DAO<Booking> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In delete; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In delete; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
         }
     }
 
@@ -83,7 +67,7 @@ public class BookingDAO implements DAO<Booking> {
     public void update(Booking booking) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("UPDATE tbl_booking SET " +
+            ps = getCONN().prepareStatement("UPDATE tbl_booking SET " +
                     "fld_startTime, " +
                     "fld_endTime, " +
                     "fld_date, " +
@@ -114,13 +98,7 @@ public class BookingDAO implements DAO<Booking> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In update; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In update; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
         }
     }
 
@@ -130,7 +108,7 @@ public class BookingDAO implements DAO<Booking> {
         ResultSet rs = null;
         Booking booking = null;
         try {
-            ps = conn.prepareStatement("SELECT * FROM tbl_booking WHERE fld_bookingID = ?");
+            ps = getCONN().prepareStatement("SELECT * FROM tbl_booking WHERE fld_bookingID = ?");
             ps.setInt(1, id);
 
             rs = ps.executeQuery();
@@ -154,20 +132,8 @@ public class BookingDAO implements DAO<Booking> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In read; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In read; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In read; Error occurred during closing of ResultSet : " + e.getMessage());
-                }
-            }
+            closeResultSet(rs);
+            closeprePareStatement(ps);
         }
         return booking;
     }
@@ -178,7 +144,7 @@ public class BookingDAO implements DAO<Booking> {
         ResultSet rs = null;
         List<Booking> bookingList = new ArrayList<>();
         try {
-            ps = conn.prepareStatement("SELECT * FROM tbl_booking");
+            ps = getCONN().prepareStatement("SELECT * FROM tbl_booking");
             rs = ps.executeQuery();
             while (rs.next()) {
                 Booking booking = new Booking()
@@ -199,20 +165,8 @@ public class BookingDAO implements DAO<Booking> {
         } catch (SQLException e) {
             LoggerMessage.error(this, "In readAll; an error encountered: " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In readAll; Error occurred during closing of PreparedStatement : \n" + e.getMessage());
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In readAll; Error occurred during closing of ResultSet : " + e.getMessage());
-                }
-            }
+            closeResultSet(rs);
+            closeprePareStatement(ps);
         }
         return bookingList;
     }

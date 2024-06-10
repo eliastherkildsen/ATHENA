@@ -11,15 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDAO implements DAO<Room> {
+public class RoomDAO extends DAOAbstract<Room> {
 
-    Connection conn = JDBC.get().getConnection();
 
     @Override
     public void add(Room room) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("INSERT INTO tbl_room (fld_roomName, fld_roomMaxPersonCount, fld_roomTypeID, fld_floor) VALUES (?, ?, ?, ?)");
+            ps = getCONN().prepareStatement("INSERT INTO tbl_room (fld_roomName, fld_roomMaxPersonCount, fld_roomTypeID, fld_floor) VALUES (?, ?, ?, ?)");
             ps.setString(1, room.getRoomName());
             ps.setInt(2, room.getRoomMaxPersonCount());
             ps.setInt(3, room.getRoomTypeID());
@@ -28,26 +27,20 @@ public class RoomDAO implements DAO<Room> {
             LoggerMessage.info(this, "In add; added; " + room.getRoomName());
 
         } catch (SQLException e) {
-            LoggerMessage.error(this,"In add; An error occurred " + e.getMessage());
+            LoggerMessage.error(this, "In add; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In add; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
         }
-
-
     }
+
+
 
 
     @Override
     public void delete(Room room) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("DELETE FROM tbl_room WHERE fld_roomID = ?");
+            ps = getCONN().prepareStatement("DELETE FROM tbl_room WHERE fld_roomID = ?");
             ps.setInt(1, room.getRoomID());
             ps.executeUpdate();
             LoggerMessage.info(this, "In delete; deleted; " + room.getRoomName());
@@ -55,13 +48,7 @@ public class RoomDAO implements DAO<Room> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In delete; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In delete; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
         }
     }
 
@@ -70,7 +57,7 @@ public class RoomDAO implements DAO<Room> {
     public void update(Room room) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("UPDATE tbl_room SET fld_roomName = ?, fld_roomMaxPersonCount = ?, fld_roomTypeID = ?, fld_floor = ? WHERE fld_roomID = ?");
+            ps = getCONN().prepareStatement("UPDATE tbl_room SET fld_roomName = ?, fld_roomMaxPersonCount = ?, fld_roomTypeID = ?, fld_floor = ? WHERE fld_roomID = ?");
             ps.setString(1, room.getRoomName());
             ps.setInt(2, room.getRoomMaxPersonCount());
             ps.setInt(3, room.getRoomTypeID());
@@ -82,13 +69,7 @@ public class RoomDAO implements DAO<Room> {
         } catch (SQLException e){
             LoggerMessage.error(this,"In update; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In update; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
         }
     }
 
@@ -101,7 +82,7 @@ public class RoomDAO implements DAO<Room> {
         Room room = new Room();
 
         try {
-            ps = conn.prepareStatement("SELECT * FROM tbl_room WHERE fld_roomID = ?");
+            ps = getCONN().prepareStatement("SELECT * FROM tbl_room WHERE fld_roomID = ?");
             ps.setInt(1, id);
 
             rs = ps.executeQuery();
@@ -118,20 +99,8 @@ public class RoomDAO implements DAO<Room> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In read; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In read; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In read; Error occurred during closing of ResultSet : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
+            closeResultSet(rs);
         }
         return room;
     }
@@ -143,7 +112,7 @@ public class RoomDAO implements DAO<Room> {
         ResultSet rs = null;
 
         try {
-            ps = conn.prepareStatement("SELECT * FROM tbl_room");
+            ps = getCONN().prepareStatement("SELECT * FROM tbl_room");
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -160,20 +129,8 @@ public class RoomDAO implements DAO<Room> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In readAll; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In readAll; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In readAll; Error occurred during closing of ResultSet : " + e.getMessage());
-                }
-            }
+            closeResultSet(rs);
+            closeprePareStatement(ps);
         }
         return roomList;
     }

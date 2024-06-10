@@ -11,10 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeetingTypeDAO implements DAO<MeetingType> {
-
-    // fetching connection from JDBC
-    private Connection conn = JDBC.get().getConnection();
+public class MeetingTypeDAO extends DAOAbstract<MeetingType> {
 
     /**
      * Method for adding a new meetingType in to the database.
@@ -27,7 +24,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement("INSERT INTO tbl_meetingType (fld_meetingType) VALUES ?");
+            ps = getCONN().prepareStatement("INSERT INTO tbl_meetingType (fld_meetingType) VALUES ?");
             ps.setString(1, meetingType.getMeetingTypeName()); // replacing the placeholder
             ps.executeQuery();                                          // executing query
 
@@ -39,13 +36,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         }
         // closing prepared statement.
         finally {
-            try {
-                assert ps != null;
-                ps.close();
-            } catch (SQLException e) {
-                LoggerMessage.error(this, "In add; an error encountered while closing ps" + e.getMessage());
-
-            }
+            closeprePareStatement(ps);
         }
 
     }
@@ -57,7 +48,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement("DELETE FROM tbl_meetingType WHERE fld_meetingType = ?");
+            ps = getCONN().prepareStatement("DELETE FROM tbl_meetingType WHERE fld_meetingType = ?");
             ps.setString(1, meetingType.getMeetingTypeName());  // replacing the placeholder
             ps.executeQuery();                                           // executing quarry
 
@@ -66,13 +57,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In delete; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In delete; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
         }
 
     }
@@ -83,7 +68,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement("UPDATE tbl_meetingType SET fld_meetingTypeID = ? WHERE fld_meetingType = ?");
+            ps = getCONN().prepareStatement("UPDATE tbl_meetingType SET fld_meetingTypeID = ? WHERE fld_meetingType = ?");
             ps.setInt(1, meetingType.getMeetingTypeID());       //replacing the placeholder.
             ps.setString(1, meetingType.getMeetingTypeName());      //replacing the placeholder.
             ps.executeUpdate();                                               //executing quarry
@@ -92,13 +77,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         } catch (SQLException e){
             LoggerMessage.error(this,"In update; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In update; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
         }
 
     }
@@ -111,7 +90,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         MeetingType meetingType = new MeetingType();
 
         try {
-            ps = conn.prepareStatement("SELECT * FROM tbl_meetingType WHERE fld_meetingTypeID = ?");
+            ps = getCONN().prepareStatement("SELECT * FROM tbl_meetingType WHERE fld_meetingTypeID = ?");
             ps.setInt(1, id);
 
             // executing the quarry and storing it in a resultset.
@@ -127,20 +106,8 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In read; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In read; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In read; Error occurred during closing of ResultSet : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
+            closeResultSet(rs);
         }
         return meetingType;
 
@@ -154,7 +121,7 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         List<MeetingType> list = new ArrayList<>();
 
         try {
-            ps = conn.prepareStatement("SELECT * FROM tbl_meetingType");
+            ps = getCONN().prepareStatement("SELECT * FROM tbl_meetingType");
             rs = ps.executeQuery();
 
             while (rs.next()){
@@ -171,20 +138,8 @@ public class MeetingTypeDAO implements DAO<MeetingType> {
         } catch (SQLException e) {
             LoggerMessage.error(this,"In readAll; An error occurred " + e.getMessage());
         } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In readAll; Error occurred during closing of PreparedStatement : " + e.getMessage());
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    LoggerMessage.error(this,"In readAll; Error occurred during closing of ResultSet : " + e.getMessage());
-                }
-            }
+            closeprePareStatement(ps);
+            closeResultSet(rs);
         }
 
         return list;
