@@ -19,7 +19,6 @@ import org.apollo.template.View.ViewList;
 import org.apollo.template.persistence.PubSub.MessagesBroker;
 import org.apollo.template.persistence.PubSub.MessagesBrokerTopic;
 import org.apollo.template.persistence.PubSub.Subscriber;
-import org.jetbrains.annotations.Debug;
 
 import java.net.URL;
 import java.sql.*;
@@ -327,6 +326,8 @@ public class ChooseTimeController implements Initializable, Subscriber {
         LocalDate currentDate = LocalDate.now();
         booking.setDate(Date.valueOf(currentDate).toLocalDate());
 
+        LoggerMessage.trace(this,"Booking Object : " + booking.toString());
+
         // changing view
         MainController.getInstance().setView(ViewList.BOOKINGINFO, BorderPaneRegion.CENTER);
 
@@ -348,7 +349,6 @@ public class ChooseTimeController implements Initializable, Subscriber {
             setRoomNameLabel();
             setOnActionForStartAndEnd();
             generateScrollableGridWithButtons();
-            LoggerMessage.trace(this,"Booking Obj : " + booking.toString());
 
             Platform.runLater(this::unsub);
 

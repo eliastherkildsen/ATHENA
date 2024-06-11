@@ -50,8 +50,5 @@ public abstract class DefualtComponent extends HBox {
         this.compColors = compColors;
         this.setStyle("-fx-background-color: " + compColors.getColor() + "; -fx-background-radius: 40;");
     }
-
-
     // endregion
-
 }

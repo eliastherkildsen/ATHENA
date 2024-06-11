@@ -1,9 +1,7 @@
 package org.apollo.template.persistence.JDBC.DAO;
 
-import org.apollo.template.Database.JDBC;
 import org.apollo.template.Model.InventoryItems;
 import org.apollo.template.Service.Logger.LoggerMessage;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,25 +88,20 @@ public class InventoryItemDAO extends DAOAbstract<InventoryItems> {
 
             return new InventoryItems(inventoryID, inventoryName, inventoryDescription);
 
-
         } catch (SQLException e) {
             LoggerMessage.error(this, "IN READ; an error occurred: " + e.getMessage());
         } finally {
             closeResultSet(rs);
             closeprePareStatement(ps);
         }
-
         return null;
-
     }
 
     @Override
     public List<InventoryItems> readAll() {
-
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<InventoryItems> inventoryItemsList = new ArrayList<>();
-
         try {
             ps = getCONN().prepareStatement("SELECT * FROM tbl_inventory");
             rs = ps.executeQuery();
@@ -119,17 +112,13 @@ public class InventoryItemDAO extends DAOAbstract<InventoryItems> {
                 String inventoryDescription = rs.getString("fld_inventoryDescription");
 
                 inventoryItemsList.add(new InventoryItems(inventoryID, inventoryName, inventoryDescription));
-
             }
-
         } catch (SQLException e) {
             LoggerMessage.error(this, "IN READALL; an error occurred: " + e.getMessage());
         } finally {
             closeResultSet(rs);
             closeprePareStatement(ps);
         }
-
         return inventoryItemsList;
-
     }
 }
