@@ -18,9 +18,8 @@ public class SystemChoseController {
 
     @FXML
     protected void onButton_adminClick(){
-        //TODO: Link the admin view and logic.
-        MainController.getInstance().setView(ViewList.ADMINMENU, BorderPaneRegion.LEFT);
-        LoggerMessage.warning(this, "onButton_adminClick needs to be linked to a view.");
+        MainController.getInstance().setView(ViewList.LOGIN, BorderPaneRegion.CENTER);
+        LoggerMessage.warning(this, "Loading Admin Login");
 
     }
 

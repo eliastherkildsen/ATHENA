@@ -13,7 +13,6 @@ public class AdminLoginController {
     @FXML
     private PasswordField passwordField_password;
 
-    //TODO: Change enum in setView(ViewList. to right view)
     /**
      * This method simulates an admin login to separate the functions between users who can only make ad-hoc bookings and admin users who have additional functionalities
      * Regardless of whether something is entered in the password field or the field is empty,

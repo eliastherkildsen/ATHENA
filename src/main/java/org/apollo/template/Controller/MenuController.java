@@ -13,7 +13,7 @@ public class MenuController {
 
     @FXML
     protected void onBtnHome() {
-        MainController.getInstance().setView(ViewList.HOME, BorderPaneRegion.CENTER);
+        MainController.getInstance().setView(ViewList.INFOSCREEN, BorderPaneRegion.CENTER);
     }
 
 
