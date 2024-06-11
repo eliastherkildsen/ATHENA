@@ -66,3 +66,6 @@ several different tabs that an admin can navigate to in order to ensure this.
 ##### Admin Booking
 Admin booking is an extension of ad-hoc booking, which allows for booking a room 
 for multiple days at a time, booking rooms in the future, and deleting bookings.
+
+##### UML
+![mainUMLAthena.png](src%2Fmain%2Fresources%2Forg%2Fapollo%2Ftemplate%2Fimages%2mainUMLAthena.png)
