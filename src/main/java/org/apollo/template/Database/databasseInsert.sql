@@ -68,7 +68,6 @@ VALUES
 -- tbl_userEmail
 INSERT INTO tbl_userEmail (fld_userEmail)
 VALUES
-    ('test123@easv365.dk'),
     ('peterRasmusen@easv365.dk'),
     ('MadsPetersen@easv365.dk'),
     ('KimSøndergård@easv365.dk'),
