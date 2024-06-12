@@ -34,26 +34,34 @@ public class AdminDeleteBookingController implements Initializable, BookingSelec
     private int selectedBookingID = -1;
 
     private VBox vBox_sPaneBox;
+    private ScrollPane scrollPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Date date = Date.valueOf(LocalDate.now());
         vBox_sPaneBox = new VBox();
-        ScrollPane sPane = new ScrollPane(vBox_sPaneBox);
+        scrollPane = loadSpane();
+        vbox_booking.getChildren().add(scrollPane);
+        scrollPane.setContent(vBox_sPaneBox);
+        loadAllBookings();
+    }
+
+    private ScrollPane loadSpane(){
+        ScrollPane sPane = new ScrollPane();
         sPane.setMinHeight(550);
         sPane.getStyleClass().add("custom-scroll-pane");
         sPane.setFitToWidth(true);
-        vbox_booking.getChildren().add(sPane);
+        return sPane;
+    }
 
-
+    private void loadAllBookings(){
+        Date date = Date.valueOf(LocalDate.now());
         try {
             // Loads all bookings from today and going forward
             LoadBookedRooms.loadBookedRooms(GetBookingsByDate.loadBookedRoomsReturnRS(date), vBox_sPaneBox, bookingComps, this);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @FXML
@@ -72,6 +80,12 @@ public class AdminDeleteBookingController implements Initializable, BookingSelec
         DAO<Booking> dao = new BookingDAO();
         dao.delete(booking);
         new Alert(MainController.getInstance(), 5, AlertType.SUCCESS, "Du har nu slettet bookingen").start();
+        vBox_sPaneBox.getChildren().clear();
+
+        loadAllBookings();
+        vbox_booking.getChildren().add(scrollPane);
+        scrollPane.setContent(vBox_sPaneBox);
+        loadAllBookings();
     }
 
     @FXML
