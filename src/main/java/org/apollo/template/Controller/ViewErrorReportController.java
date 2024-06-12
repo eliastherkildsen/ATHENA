@@ -29,7 +29,8 @@ public class ViewErrorReportController implements Initializable {
     @FXML
     private VBox errorReportComps;
     private DAO<ErrorReport> dao = new ErrorReportDAODB();
-    private List<ErrorReportComp> errorReportCompList = new ArrayList<>();
+    private List<ErrorReportComp> activeErrorReportCompList = new ArrayList<>();
+    private List<ErrorReportComp> archivedErrorReportCompList = new ArrayList<>();
     private ErrorReportComp selectedErrorReportComp;
 
     @Override
@@ -120,7 +121,7 @@ public class ViewErrorReportController implements Initializable {
             // checks if the error report is archived.
             if (!errorReport.isArchived()) {
                 ErrorReportComp errorReportComp = new ErrorReportComp(errorReport);
-                errorReportCompList.add(errorReportComp);
+                activeErrorReportCompList.add(errorReportComp);
 
                 // attaching on action
                 errorReportComp.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -132,15 +133,24 @@ public class ViewErrorReportController implements Initializable {
                     }
                 });
 
-                // adding error report comp to vbox.
-                errorReportComps.getChildren().add(errorReportComp);
+            } else if (errorReport.isArchived()) {
+                ErrorReportComp errorReportComp = new ErrorReportComp(errorReport);
+                archivedErrorReportCompList.add(errorReportComp);
+                errorReportComp.setCompColor(CompColors.ARCHIVED);
 
             }
+
         }
+
+        // adding all errorreports to the vbox
+        errorReportComps.getChildren().addAll(activeErrorReportCompList);
+        errorReportComps.getChildren().addAll(archivedErrorReportCompList);
+
+
     }
 
     private void unselectAllErrorReportComps() {
-        for (ErrorReportComp errorReportComp : errorReportCompList){
+        for (ErrorReportComp errorReportComp : activeErrorReportCompList){
             errorReportComp.setCompColor(CompColors.NORMAL);
         }
     }
