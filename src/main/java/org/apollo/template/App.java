@@ -15,7 +15,7 @@ public class App extends Application {
 
     public static int screenWidth = 1200;
     public static int screenHeight = 800;
-    private String screenTitle = "Apollo - JavaFx Template";
+    private String screenTitle = "ATHENA";
     private Image icon = new Image("file:src/main/resources/org/apollo/template/images/TempLogoBG_shadow.png");
 
     @Override
