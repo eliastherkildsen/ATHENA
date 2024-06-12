@@ -11,12 +11,12 @@ to handle data extraction and display booking statistics.
 
 ![applicationGaiaAdHoc.gif](src%2Fmain%2Fresources%2Forg%2Fapollo%2Ftemplate%2Fimages%2FapplicationGaiaAdHoc.gif)
 
-## installation guide
-This is a guide for installing the system. Due to the system being developed in java, The JVM should allow 
+## Installation guide
+This is a guide for installing the system. Due to the system being developed in java, the JVM should allow 
 you to run the program on any supported operating system.
 
-### database
-to install the system you will need to follow this steps. 
+### Database
+To install the system you will need to follow these steps:
 1. Install MSSQL database. 
 2. Create a user in MSSQL database, and replace the username, password, port and ipadress in 
 `src/main/java/org/apollo/template/Database/db.properties`. Run the test, `src/test/java/org/apollo/template/Database/JDBCTest.java`
@@ -24,26 +24,26 @@ to insure that a connection has been established.
 3. Run the databaseCreateScript from `src/main/java/org/apollo/template/Database/databaseCreateScript.sql`
 4. Run the databaseInsertScript from `src/main/java/org/apollo/template/Database/databaseInsertScript.sql`
 
-to ensure that the system is installed correctly run all tests from 
+To ensure that the system is installed correctly run all tests from 
 `src/test/java/org/apollo/template`
 
-You have now sucessfuly setup the database. 
+You have now successfully set up the database. 
 
 ### Setting up the system
-1. to run the system simply pull it from github, navigate to the branch `main` and run the program
+1. To run the system simply pull it from github, navigate to the branch `main` and run the program.
 
-## dependency's 
+## Dependency's 
 1. MSSQL (https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
   MSSQL is used as the database for the system. 
 2. JAVA SDK v. 21  or newer (https://jdk.java.net/21/)
 3. JDBC (https://mvnrepository.com/artifact/mysql/mysql-connector-java) 
-is used for interacting with the database from within the application
+is used for interacting with the database from within the application.
 
 ### User Guide
 
 The Athena System consists of two parts: ad-hoc booking and the admin panel. The purpose of the 
 admin panel is to create an interface for managing bookings, rooms, and more.
-The ad-hoc part of the system is an information screen where the day's meetings 
+The ad-hoc part of the system is an information screen where, today's meetings 
 are presented and meetings can be booked for the same day.
 
 #### Ad-hoc
@@ -66,3 +66,6 @@ several different tabs that an admin can navigate to in order to ensure this.
 ##### Admin Booking
 Admin booking is an extension of ad-hoc booking, which allows for booking a room 
 for multiple days at a time, booking rooms in the future, and deleting bookings.
+
+##### UML
+![mainUMLAthena.png](src/main/resources/org/apollo/template/images/mainUMLAthena.png)

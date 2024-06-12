@@ -15,8 +15,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class TopbarController implements Initializable {
@@ -58,7 +56,6 @@ public class TopbarController implements Initializable {
 
     @FXML
     private void onButtonAdminLoginAction(){
-        //TODO: direct to login screen instead of this!
         MainController.getInstance().setView(ViewList.LOGIN, BorderPaneRegion.CENTER);
     }
 

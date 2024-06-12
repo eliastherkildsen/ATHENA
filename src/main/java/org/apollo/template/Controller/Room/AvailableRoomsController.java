@@ -114,8 +114,11 @@ public class AvailableRoomsController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
 
-                // create booking object
+                // create booking information object
                 booking.setRoom(availableRoom).setAdHoc(true);
+                LoggerMessage.trace(this, "Booking Object : " + booking.toString());
+                LoggerMessage.info(this, "bookingInformation created");
+                // create booking object
                 LoggerMessage.info(this, "Booking object created");
 
 

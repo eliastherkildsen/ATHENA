@@ -74,7 +74,6 @@ public class BookingInformationController implements Initializable, Subscriber {
         choiceBox_meetingType.getItems().addAll(dao.readAll());
     }
 
-
     @Override
     public void update(Object o) {
         // validates that o is an instance of booking
@@ -200,6 +199,7 @@ public class BookingInformationController implements Initializable, Subscriber {
 
         // Inserts the userID
         booking.getEmail().setEmailID(GetEmailIDByEmailAdress.getEmailIDByEmailName(email));
+        LoggerMessage.trace(this,"Booking Object : " + booking);
         return booking;
     }
     // endregion

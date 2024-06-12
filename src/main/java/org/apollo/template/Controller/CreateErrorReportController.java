@@ -74,7 +74,7 @@ public class CreateErrorReportController implements Initializable {
     @FXML
     protected void onButton_back(){
         LoggerMessage.error(this, "button_back needs to be linked to the right view");
-        MainController.getInstance().setView(ViewList.HOME, BorderPaneRegion.CENTER);
+        MainController.getInstance().setView(ViewList.VIEWERRORREPORT, BorderPaneRegion.CENTER);
     }
 
     @FXML

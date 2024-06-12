@@ -22,6 +22,8 @@ public class BookingsByDate {
     public static void generateBookingsByDate(AnchorPane root, Date dateToday, VBox mainVbox){
         //Preparing an arraylist with our reservations
         List<Booking> bookingList = new ArrayList<>();
+        LoggerMessage.debug("generateBookingsByDate"," "+bookingList);
+
 
         //MinMax required on root to display all information correctly.
         root.setMinHeight(700);
@@ -80,11 +82,11 @@ public class BookingsByDate {
     }
 
     /**
-     *
-     * @param container
-     * @param labelText
-     * @param fontSize
-     * @param alignment
+     * Lable Generator, makes a label in a certain style
+     * @param container Pane
+     * @param labelText String
+     * @param fontSize int
+     * @param alignment Pos
      */
     public static void laberGenerator(Pane container, String labelText, int fontSize, Pos alignment ){
         Label label = new Label();

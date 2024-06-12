@@ -1,14 +1,10 @@
 package org.apollo.template.View;
 
-import org.apollo.template.Controller.*;
-
 /**
  * Enum representing different views in the application.
  * Each enum value corresponds to an FXML file name and its associated controller.
  */
 public enum ViewList {
-
-    HOME("HomeView.fxml"),
 
     MENU("MenuView.fxml"),
 

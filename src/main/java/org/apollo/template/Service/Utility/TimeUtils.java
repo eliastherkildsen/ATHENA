@@ -1,7 +1,7 @@
 package org.apollo.template.Service.Utility;
 
 import org.apollo.template.Model.Booking;
-import org.jetbrains.annotations.NotNull;
+import org.apollo.template.Service.Logger.LoggerMessage;
 
 import java.sql.Time;
 
@@ -11,7 +11,8 @@ public class TimeUtils {
      * @param booking
      * @return String
      */
-    public static @NotNull String getStringTimeFormatted(Booking booking) {
+    public static String getStringTimeFormatted(Booking booking) {
+        LoggerMessage.debug("TimeUtils","Booking: " + booking.getBookingID());
         Time starttime = booking.getStartTime();
         Time endtime = booking.getEndTime();
 
