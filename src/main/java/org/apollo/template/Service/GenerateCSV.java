@@ -2,6 +2,7 @@ package org.apollo.template.Service;
 
 import org.apollo.template.Model.Booking;
 import org.apollo.template.Service.Logger.LoggerMessage;
+import org.apollo.template.Service.Utility.BookingAndRoomDAO;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -23,6 +24,14 @@ public class GenerateCSV {
     List<Booking> bookingList = new ArrayList<>();
 
     /**
+     * Generates a CSV file with predetermined values getting ALL bookings from DB.
+     */
+    public GenerateCSV(){
+        bookingList = BookingAndRoomDAO.combinBookingAndRoom();
+        generateCSVFile();
+    }
+
+    /**
      * Generates a CSV file with predetermined values from List with BookingInformation objects
      * @param bookingList object
      */
@@ -31,7 +40,19 @@ public class GenerateCSV {
         generateCSVFile();
     }
 
-    public void generateCSVFile() {
+    @Override
+    public String toString() {
+        return "GenerateCSV{" +
+                "csvFilePath = '" + csvFilePath + '\'' +
+                ", bookingList Size = " + bookingList.size() +
+                '}';
+    }
+
+    public String getCsvFilePath() {
+        return csvFilePath;
+    }
+
+    private void generateCSVFile() {
         BufferedWriter bufferedWriter = null;
         try {
             LoggerMessage.debug(this, "Attempting to Generate CSV File");
@@ -76,6 +97,8 @@ public class GenerateCSV {
                 }
             }
         }
+
+
 
     }
 }

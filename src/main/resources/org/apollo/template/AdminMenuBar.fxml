@@ -21,6 +21,7 @@
                    <Button layoutX="108.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButton_GenerateBooking" prefWidth="200.0" text="Opret Booking" />
                    <Button mnemonicParsing="false" onAction="#onButton_Booking" text="Booking" />
                   <Button mnemonicParsing="false" onAction="#onButton_Statistics" text="Statistik" />
+                  <Button layoutX="117.0" layoutY="95.0" mnemonicParsing="false" onAction="#onButton_GenerateCSV" text="Generere CSV" />
                </children>
             </VBox>
             <Label text="Fejlmelding">
