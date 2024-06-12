@@ -106,24 +106,10 @@ public class TeamController implements Initializable {
         new Alert(MainController.getInstance(), 5, AlertType.SUCCESS, "Du har nu slette holdet!")
                 .start();
 
-    }
-
-    @FXML
-    protected void onButton_edit(){
-        // validate that an inventory item has been selected.
-        if (!checkIfSelected()) return;
-
-        // transfer user to edit inventory item view.
-        MainController.getInstance().setView(ViewList.EDITINVENTORYITEMS, BorderPaneRegion.CENTER);
-
-        // publishing selected item
-        try {
-            MessagesBroker.getInstance().publish(MessagesBrokerTopic.TEAM, selectedTeam);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        vbox_teamComponents.getChildren().remove(selectedTeam);
 
     }
+
 
     @FXML
     protected void onButton_add(){

@@ -22,4 +22,6 @@ module org.apollo.template {
     opens org.apollo.template.Controller.Booking to javafx.fxml;
     exports org.apollo.template.Controller.Room;
     opens org.apollo.template.Controller.Room to javafx.fxml;
+    exports org.apollo.template.Controller.Menu;
+    opens org.apollo.template.Controller.Menu to javafx.fxml;
 }

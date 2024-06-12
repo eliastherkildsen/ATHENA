@@ -88,6 +88,13 @@ public class CreateErrorReportController implements Initializable {
             return;
         }
 
+        // check if a room has been selected.
+        if (roomChoiceBox.getSelectionModel().getSelectedItem() == null){
+            new Alert(MainController.getInstance(), 5, AlertType.INFO,
+                    "Du har ikke valgt et rum.").start();
+            return;
+        }
+
         // checks if an item has been selected.
         if (inventoryItemsChoiceBox.getSelectionModel().getSelectedItem() == null){
             new Alert(MainController.getInstance(), 5, AlertType.INFO,

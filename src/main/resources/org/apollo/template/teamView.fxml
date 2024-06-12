@@ -14,10 +14,13 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <VBox fx:id="vbox_teamComponents" opacity="0.8" prefHeight="419.0" prefWidth="600.0" spacing="20.0" />
+            <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="custom-scroll-pane" stylesheets="@css/Menu.css" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="vbox_teamComponents" opacity="0.8" prefHeight="419.0" prefWidth="600.0" spacing="20.0" />
+               </content>
+            </ScrollPane>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onButton_edit" text="Rediger" textFill="WHITE" />
                   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButton_delete" text="Slet" textFill="WHITE" />
                   <Button layoutX="244.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButton_add" text="tilføj" textFill="WHITE" />
                </children>

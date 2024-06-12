@@ -1,6 +1,7 @@
-package org.apollo.template.Controller;
+package org.apollo.template.Controller.Menu;
 
 import javafx.fxml.FXML;
+import org.apollo.template.Controller.MainController;
 import org.apollo.template.Service.Alert.Alert;
 import org.apollo.template.Service.Alert.AlertType;
 import org.apollo.template.Service.GenerateCSV;

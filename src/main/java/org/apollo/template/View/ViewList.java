@@ -6,8 +6,6 @@ package org.apollo.template.View;
  */
 public enum ViewList {
 
-    MENU("MenuView.fxml"),
-
     BOOKINGINFO("BookingInformationView.fxml"),
 
     DELETEBOOKING("DeleteBookingView.fxml"),
