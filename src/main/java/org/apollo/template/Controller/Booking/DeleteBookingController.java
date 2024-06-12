@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.apollo.template.Controller.MainController;
 import org.apollo.template.Model.*;
@@ -20,9 +21,7 @@ import org.apollo.template.persistence.JDBC.DAO.BookingDAO;
 import org.apollo.template.persistence.JDBC.DAO.DAO;
 
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -40,12 +39,17 @@ public class DeleteBookingController implements Initializable, BookingSelectionL
     private List<BookingComp> bookingCompList = new ArrayList<>();
     private int selectedBookingID = -1;
 
+    private HBox bookinComp;
     private ScrollPane sPane;
     private VBox vBox_sPaneBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         vBox_sPaneBox = new VBox();
+        generateSpaneVbox();
+    }
+
+    private void generateSpaneVbox(){
         sPane = new ScrollPane(vBox_sPaneBox);
         sPane.setMinHeight(550);
         sPane.getStyleClass().add("custom-scroll-pane");
@@ -74,6 +78,21 @@ public class DeleteBookingController implements Initializable, BookingSelectionL
         DAO<Booking> dao = new BookingDAO();
         dao.delete(booking);
         new Alert(MainController.getInstance(), 5, AlertType.SUCCESS, "Du har nu slettet bookingen").start();
+
+        // Removes our BookingComp from vbox holding our search results.
+        /*
+        for (BookingComp bookingComp : bookingCompList) {
+            if(bookingComp.getBookingID() == selectedBookingID){
+                vbox_booking.getChildren().remove(bookingComp);
+            }
+        }
+         */
+        //Due to lack of time and faulty comp impementation.
+        //this is the best implementation we are able to pull off for refreshing our search results after deleting.
+        vbox_booking.getChildren().clear();
+        vBox_sPaneBox.getChildren().clear();
+        generateSpaneVbox();
+        onButton_search();
     }
 
     @FXML
@@ -107,6 +126,7 @@ public class DeleteBookingController implements Initializable, BookingSelectionL
     public void onBookingSelected(int bookingID) {
         System.out.println(bookingID);
         selectedBookingID = bookingID;
+
     }
 
     /**
